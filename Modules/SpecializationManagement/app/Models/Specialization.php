@@ -1,9 +1,10 @@
 <?php
 
-namespace Modules\SpecializationManagement\Models;
+namespace Modules\SpecializationManagement\App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\DoctorManagement\App\Models\DoctorProfile;
 
 class Specialization extends Model
 {

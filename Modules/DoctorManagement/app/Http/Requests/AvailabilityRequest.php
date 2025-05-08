@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DoctorManagement\Http\Requests;
+namespace Modules\DoctorManagement\App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

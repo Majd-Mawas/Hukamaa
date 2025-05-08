@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\AppointmentManagement\Services;
+namespace Modules\AppointmentManagement\App\Services;
 
-use Modules\AppointmentManagement\Models\VideoCall;
+use Modules\AppointmentManagement\App\Models\VideoCall;
 
 class VideoCallService
 {

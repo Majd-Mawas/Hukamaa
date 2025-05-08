@@ -1,15 +1,15 @@
 <?php
 
-namespace Modules\UserManagement\Models;
+namespace Modules\UserManagement\App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Modules\DoctorManagement\Models\DoctorProfile;
-use Modules\PatientManagement\Models\PatientProfile;
+use Modules\DoctorManagement\App\Models\DoctorProfile;
+use Modules\PatientManagement\App\Models\PatientProfile;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Modules\UserManagement\Notifications\VerifyEmailNotification;
+use Modules\UserManagement\App\Notifications\VerifyEmailNotification;
 
 class User extends Authenticatable implements MustVerifyEmail
 {

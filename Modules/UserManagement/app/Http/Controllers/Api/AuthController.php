@@ -1,15 +1,15 @@
 <?php
 
-namespace Modules\UserManagement\Http\Controllers\Api;
+namespace Modules\UserManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Modules\UserManagement\Http\Requests\LoginRequest;
-use Modules\UserManagement\Http\Requests\RegisterRequest;
-use Modules\UserManagement\Http\Resources\UserResource;
-use Modules\UserManagement\Models\User;
+use Modules\UserManagement\App\Http\Requests\LoginRequest;
+use Modules\UserManagement\App\Http\Requests\RegisterRequest;
+use Modules\UserManagement\App\Http\Resources\UserResource;
+use Modules\UserManagement\App\Models\User;
 
 class AuthController extends Controller
 {
@@ -53,7 +53,7 @@ class AuthController extends Controller
 
     public function logout(): JsonResponse
     {
-        auth()->user()->currentAccessToken()->delete();
+        Auth::user()?->currentAccessToken()?->delete();
 
         return $this->successResponse(
             null,
@@ -63,7 +63,7 @@ class AuthController extends Controller
 
     public function verifyToken(): JsonResponse
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         if (!$user) {
             return $this->errorResponse(

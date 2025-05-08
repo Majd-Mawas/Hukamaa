@@ -1,15 +1,15 @@
 <?php
 
-namespace Modules\DoctorManagement\Http\Controllers\Api;
+namespace Modules\DoctorManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Modules\DoctorManagement\Http\Requests\DoctorProfileRequest;
-use Modules\DoctorManagement\Http\Resources\DoctorProfileResource;
-use Modules\DoctorManagement\Models\DoctorProfile;
-use Modules\DoctorManagement\Services\DoctorProfileService;
+use Modules\DoctorManagement\App\Http\Requests\DoctorProfileRequest;
+use Modules\DoctorManagement\App\Http\Resources\DoctorProfileResource;
+use Modules\DoctorManagement\App\Models\DoctorProfile;
+use Modules\DoctorManagement\App\Services\DoctorProfileService;
 
 class DoctorProfileController extends Controller
 {

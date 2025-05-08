@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DoctorManagement\Models;
+namespace Modules\DoctorManagement\App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

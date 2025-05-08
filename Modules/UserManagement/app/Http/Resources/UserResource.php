@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\UserManagement\Http\Resources;
+namespace Modules\UserManagement\App\Http\Resources;
 
 use App\Http\Resources\ApiResource;
 use Illuminate\Http\Request;

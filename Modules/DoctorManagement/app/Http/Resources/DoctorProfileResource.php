@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DoctorManagement\Http\Resources;
+namespace Modules\DoctorManagement\App\Http\Resources;
 
 use App\Http\Resources\ApiResource;
 use Illuminate\Http\Request;

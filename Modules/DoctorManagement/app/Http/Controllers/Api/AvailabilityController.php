@@ -1,14 +1,15 @@
 <?php
 
-namespace Modules\DoctorManagement\Http\Controllers\Api;
+namespace Modules\DoctorManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
-use Modules\DoctorManagement\Http\Requests\AvailabilityRequest;
-use Modules\DoctorManagement\Http\Resources\AvailabilityResource;
-use Modules\DoctorManagement\Models\Availability;
-use Modules\DoctorManagement\Services\AvailabilityService;
+use Illuminate\Support\Facades\Auth;
+use Modules\DoctorManagement\App\Http\Requests\AvailabilityRequest;
+use Modules\DoctorManagement\App\Http\Resources\AvailabilityResource;
+use Modules\DoctorManagement\App\Models\Availability;
+use Modules\DoctorManagement\App\Services\AvailabilityService;
 
 class AvailabilityController extends Controller
 {
@@ -20,7 +21,7 @@ class AvailabilityController extends Controller
 
     public function index(): JsonResponse
     {
-        $availabilities = $this->availabilityService->getDoctorAvailabilities(auth()->id());
+        $availabilities = $this->availabilityService->getDoctorAvailabilities(Auth::id());
 
         return $this->successResponse(
             AvailabilityResource::collection($availabilities),

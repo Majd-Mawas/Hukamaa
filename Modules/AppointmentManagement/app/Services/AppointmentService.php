@@ -1,8 +1,9 @@
 <?php
 
-namespace Modules\AppointmentManagement\Services;
+namespace Modules\AppointmentManagement\App\Services;
 
-use Modules\AppointmentManagement\Models\Appointment;
+use Illuminate\Support\Facades\Auth;
+use Modules\AppointmentManagement\App\Models\Appointment;
 
 class AppointmentService
 {
@@ -33,7 +34,7 @@ class AppointmentService
 
     public function confirmAppointment(Appointment $appointment): Appointment
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         if ($user->role === 'doctor') {
             $appointment->update(['confirmed_by_doctor' => true]);

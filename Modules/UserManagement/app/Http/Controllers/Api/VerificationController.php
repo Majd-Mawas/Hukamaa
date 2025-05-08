@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\UserManagement\Http\Controllers\Api;
+namespace Modules\UserManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Modules\UserManagement\Models\User;
-use Modules\UserManagement\Services\EmailVerificationService;
+use Modules\UserManagement\App\Models\User;
+use Modules\UserManagement\App\Services\EmailVerificationService;
 
 class VerificationController extends Controller
 {

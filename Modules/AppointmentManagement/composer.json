@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/appointmentmanagement",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\AppointmentManagement\\": "",
+            "Modules\\AppointmentManagement\\App\\": "app/",
+            "Modules\\AppointmentManagement\\Database\\Factories\\": "database/factories/",
+            "Modules\\AppointmentManagement\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\AppointmentManagement\\Tests\\": "tests/"
+        }
+    }
+}

@@ -1,14 +1,15 @@
 <?php
 
-namespace Modules\AppointmentManagement\Http\Controllers\Api;
+namespace Modules\AppointmentManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
-use Modules\AppointmentManagement\Http\Requests\AppointmentRequest;
-use Modules\AppointmentManagement\Http\Resources\AppointmentResource;
-use Modules\AppointmentManagement\Models\Appointment;
-use Modules\AppointmentManagement\Services\AppointmentService;
+use Illuminate\Support\Facades\Auth;
+use Modules\AppointmentManagement\App\Http\Requests\AppointmentRequest;
+use Modules\AppointmentManagement\App\Http\Resources\AppointmentResource;
+use Modules\AppointmentManagement\App\Models\Appointment;
+use Modules\AppointmentManagement\App\Services\AppointmentService;
 
 class AppointmentController extends Controller
 {
@@ -20,7 +21,7 @@ class AppointmentController extends Controller
 
     public function index(): JsonResponse
     {
-        $appointments = $this->appointmentService->getUserAppointments(auth()->id());
+        $appointments = $this->appointmentService->getUserAppointments(Auth::id());
 
         return $this->successResponse(
             AppointmentResource::collection($appointments),

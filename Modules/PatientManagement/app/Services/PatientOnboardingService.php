@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\PatientManagement\Services;
+namespace Modules\PatientManagement\App\Services;
 
-use Modules\PatientManagement\Models\PatientProfile;
+use Modules\PatientManagement\App\Models\PatientProfile;
 
 class PatientOnboardingService
 {

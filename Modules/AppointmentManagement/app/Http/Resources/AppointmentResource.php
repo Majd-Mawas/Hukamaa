@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\AppointmentManagement\Http\Resources;
+namespace Modules\AppointmentManagement\App\Http\Resources;
 
 use App\Http\Resources\ApiResource;
 use Illuminate\Http\Request;

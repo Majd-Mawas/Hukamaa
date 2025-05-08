@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\PaymentManagement\Models;
+namespace Modules\PaymentManagement\App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Modules\UserManagement\Models\User;
+use Modules\UserManagement\App\Models\User;
 
 class Payment extends Model
 {

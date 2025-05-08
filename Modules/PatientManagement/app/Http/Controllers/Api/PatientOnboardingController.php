@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\PatientManagement\Http\Controllers\Api;
+namespace Modules\PatientManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
-use Modules\PatientManagement\Http\Requests\BasicInfoRequest;
-use Modules\PatientManagement\Http\Requests\ExtraInfoRequest;
-use Modules\PatientManagement\Http\Resources\PatientProfileResource;
-use Modules\PatientManagement\Services\PatientOnboardingService;
+use Modules\PatientManagement\App\Http\Requests\BasicInfoRequest;
+use Modules\PatientManagement\App\Http\Requests\ExtraInfoRequest;
+use Modules\PatientManagement\App\Http\Resources\PatientProfileResource;
+use Modules\PatientManagement\App\Services\PatientOnboardingService;
 
 class PatientOnboardingController extends Controller
 {

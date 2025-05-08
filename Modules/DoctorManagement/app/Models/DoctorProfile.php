@@ -1,11 +1,12 @@
 <?php
 
-namespace Modules\DoctorManagement\Models;
+namespace Modules\DoctorManagement\App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Modules\UserManagement\Models\User;
-use Modules\SpecializationManagement\Models\Specialization;
+use Modules\UserManagement\App\Models\User;
+use Modules\SpecializationManagement\App\Models\Specialization;
+use Modules\AppointmentManagement\App\Models\Appointment;
 
 class DoctorProfile extends Model
 {

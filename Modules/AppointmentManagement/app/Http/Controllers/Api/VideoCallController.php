@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\AppointmentManagement\Http\Controllers\Api;
+namespace Modules\AppointmentManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
-use Modules\AppointmentManagement\Http\Requests\VideoCallRequest;
-use Modules\AppointmentManagement\Http\Resources\VideoCallResource;
-use Modules\AppointmentManagement\Models\VideoCall;
-use Modules\AppointmentManagement\Services\VideoCallService;
+use Modules\AppointmentManagement\App\Http\Requests\VideoCallRequest;
+use Modules\AppointmentManagement\App\Http\Resources\VideoCallResource;
+use Modules\AppointmentManagement\App\Models\VideoCall;
+use Modules\AppointmentManagement\App\Services\VideoCallService;
 
 class VideoCallController extends Controller
 {

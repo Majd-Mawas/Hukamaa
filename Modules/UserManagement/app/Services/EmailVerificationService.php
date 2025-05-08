@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\UserManagement\Services;
+namespace Modules\UserManagement\App\Services;
 
-use Modules\UserManagement\Models\User;
-use Modules\UserManagement\Notifications\VerifyEmailNotification;
+use Modules\UserManagement\App\Models\User;
+use Modules\UserManagement\App\Notifications\VerifyEmailNotification;
 
 class EmailVerificationService
 {

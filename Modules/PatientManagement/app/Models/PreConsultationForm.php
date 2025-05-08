@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\PatientManagement\Models;
+namespace Modules\PatientManagement\App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Modules\UserManagement\Models\User;
+use Modules\UserManagement\App\Models\User;
 
 class PreConsultationForm extends Model
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\DoctorManagement\Services;
+namespace Modules\DoctorManagement\App\Services;
 
-use Modules\DoctorManagement\Models\DoctorProfile;
+use Modules\DoctorManagement\App\Models\DoctorProfile;
 
 class DoctorProfileService
 {
