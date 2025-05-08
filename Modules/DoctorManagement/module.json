@@ -1,0 +1,11 @@
+{
+    "name": "DoctorManagement",
+    "alias": "doctormanagement",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        
+    ],
+    "files": []
+}

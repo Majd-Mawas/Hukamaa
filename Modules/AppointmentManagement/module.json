@@ -1,0 +1,11 @@
+{
+    "name": "AppointmentManagement",
+    "alias": "appointmentmanagement",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        
+    ],
+    "files": []
+}

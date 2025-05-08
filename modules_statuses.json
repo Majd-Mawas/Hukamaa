@@ -1,0 +1,9 @@
+{
+    "UserManagement": true,
+    "PatientManagement": true,
+    "DoctorManagement": true,
+    "SpecializationManagement": true,
+    "PaymentManagement": true,
+    "AppointmentManagement": true,
+    "AdminPanel": true
+}
