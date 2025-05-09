@@ -19,7 +19,6 @@ return [
         'call_duration' => 'call duration',
         'status' => 'status',
         'user_id' => 'user',
-        'age' => 'age',
         'gender' => 'gender',
         'profile_picture' => 'profile picture',
         'specialization_id' => 'specialization',
@@ -65,7 +64,7 @@ return [
         'gender' => [
             'required' => 'The gender field is required.',
             'string' => 'The gender must be a string.',
-            'in' => 'The gender must be either male, female, or other.',
+            'in' => 'The gender must be either male or female',
         ],
         'birth_date' => [
             'required' => 'The birth date field is required.',
@@ -112,16 +111,10 @@ return [
             'required' => 'The user field is required.',
             'exists' => 'The selected user is invalid.',
         ],
-        'age' => [
-            'required' => 'The age field is required.',
-            'integer' => 'The age must be an integer.',
-            'min' => 'The age must be at least 18.',
-            'max' => 'The age cannot exceed 100.',
-        ],
         'gender' => [
             'required' => 'The gender field is required.',
             'string' => 'The gender must be a string.',
-            'in' => 'The gender must be either male, female, or other.',
+            'in' => 'The gender must be either male or female.',
         ],
         'profile_picture' => [
             'string' => 'The profile picture must be a string.',

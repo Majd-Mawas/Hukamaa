@@ -15,8 +15,8 @@ class DoctorProfileRequest extends BaseRequest
     {
         return [
             'user_id' => ['required', 'exists:users,id'],
-            'age' => ['required', 'integer', 'min:18', 'max:100'],
-            'gender' => ['required', 'string', 'in:male,female,other'],
+            'birth_date' => ['required', 'integer', 'min:18', 'max:100'],
+            'gender' => ['required', 'string', 'in:male,female'],
             'profile_picture' => ['nullable', 'string', 'max:255'],
             'specialization_id' => ['required', 'exists:specializations,id'],
             'title' => ['required', 'string', 'max:255'],

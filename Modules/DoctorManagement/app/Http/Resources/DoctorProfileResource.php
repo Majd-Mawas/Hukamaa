@@ -12,7 +12,7 @@ class DoctorProfileResource extends ApiResource
         return [
             ...parent::toArray($request),
             'user_id' => $this->user_id,
-            'age' => $this->age,
+            'birth_date' => $this->birth_date,
             'gender' => $this->gender,
             'profile_picture' => $this->profile_picture,
             'specialization_id' => $this->specialization_id,

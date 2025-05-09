@@ -14,7 +14,7 @@ class BasicInfoRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'gender' => ['required', 'string', 'in:male,female,other'],
+            'gender' => ['required', 'string', 'in:male,female'],
             'birth_date' => ['required', 'date', 'before:today'],
             'medical_history' => ['nullable', 'string'],
             'chronic_conditions' => ['nullable', 'string'],

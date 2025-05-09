@@ -14,7 +14,7 @@ class DoctorProfile extends Model
 
     protected $fillable = [
         'user_id',
-        'age',
+        'birth_date',
         'gender',
         'profile_picture',
         'specialization_id',

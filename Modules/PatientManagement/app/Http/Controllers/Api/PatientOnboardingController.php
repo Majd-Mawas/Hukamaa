@@ -7,7 +7,6 @@ use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Modules\PatientManagement\App\Http\Requests\BasicInfoRequest;
 use Modules\PatientManagement\App\Http\Requests\ExtraInfoRequest;
-use Modules\PatientManagement\App\Http\Resources\PatientProfileResource;
 use Modules\PatientManagement\App\Services\PatientOnboardingService;
 
 class PatientOnboardingController extends Controller
@@ -15,18 +14,18 @@ class PatientOnboardingController extends Controller
     use ApiResponse;
 
     public function __construct(
-        private readonly PatientOnboardingService $onboardingService
+        private readonly PatientOnboardingService $patientOnboardingService
     ) {}
 
     public function updateBasicInfo(BasicInfoRequest $request): JsonResponse
     {
-        $profile = $this->onboardingService->updateBasicInfo(
+        $result = $this->patientOnboardingService->updateBasicInfo(
             $request->user()->id,
             $request->validated()
         );
 
         return $this->successResponse(
-            new PatientProfileResource($profile),
+            $result,
             'Basic medical information updated successfully',
             201
         );
@@ -34,13 +33,13 @@ class PatientOnboardingController extends Controller
 
     public function updateExtraInfo(ExtraInfoRequest $request): JsonResponse
     {
-        $profile = $this->onboardingService->updateExtraInfo(
+        $result = $this->patientOnboardingService->updateExtraInfo(
             $request->user()->id,
             $request->validated()
         );
 
         return $this->successResponse(
-            new PatientProfileResource($profile->load('media')),
+            $result,
             'Supplementary health information updated successfully',
             201
         );
