@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Modules\UserManagement\App\Http\Requests\LoginRequest;
 use Modules\UserManagement\App\Http\Requests\RegisterRequest;
 use Modules\UserManagement\App\Http\Resources\UserResource;
@@ -20,12 +21,28 @@ class AuthController extends Controller
         $user = User::create($request->validated());
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        // Generate a 6-digit code
+        $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+
+        // Store the code in the database
+        DB::table('email_verifications')->updateOrInsert(
+            ['user_id' => $user->id],
+            [
+                'code' => $code,
+                'created_at' => now(),
+                'expires_at' => now()->addMinutes(60),
+            ]
+        );
+
+        // Send verification email
+        $user->notify(new \Modules\UserManagement\App\Notifications\VerifyEmailNotification($code));
+
         return $this->successResponse(
             [
                 'user' => new UserResource($user),
                 'token' => $token
             ],
-            'Registration successful',
+            'Registration successful. Please check your email for verification.',
             201
         );
     }

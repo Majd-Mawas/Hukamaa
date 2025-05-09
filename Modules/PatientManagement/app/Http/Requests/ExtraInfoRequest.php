@@ -2,9 +2,9 @@
 
 namespace Modules\PatientManagement\App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
 
-class ExtraInfoRequest extends FormRequest
+class ExtraInfoRequest extends BaseRequest
 {
     public function authorize(): bool
     {

@@ -2,9 +2,9 @@
 
 namespace Modules\DoctorManagement\App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
 
-class AvailabilityRequest extends FormRequest
+class AvailabilityRequest extends BaseRequest
 {
     public function authorize(): bool
     {

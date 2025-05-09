@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Validation\ValidationException;
 
 trait ApiResponse
 {
@@ -21,11 +22,19 @@ trait ApiResponse
 
     protected function errorResponse(string $message, int $code, $errors = null): JsonResponse
     {
-        return response()->json([
+        $response = [
             'success' => false,
             'message' => $message,
-            'errors' => $errors
-        ], $code);
+        ];
+
+        if ($errors instanceof ValidationException) {
+            $response['errors'] = $errors->errors();
+            $code = 422;
+        } elseif ($errors !== null) {
+            $response['errors'] = $errors;
+        }
+
+        return response()->json($response, $code);
     }
 
     protected function getMetaData($data): ?array

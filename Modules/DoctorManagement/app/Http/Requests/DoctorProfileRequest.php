@@ -2,9 +2,9 @@
 
 namespace Modules\DoctorManagement\App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
 
-class DoctorProfileRequest extends FormRequest
+class DoctorProfileRequest extends BaseRequest
 {
     public function authorize(): bool
     {
@@ -16,7 +16,7 @@ class DoctorProfileRequest extends FormRequest
         return [
             'user_id' => ['required', 'exists:users,id'],
             'age' => ['required', 'integer', 'min:18', 'max:100'],
-            'sex' => ['required', 'string', 'in:male,female,other'],
+            'gender' => ['required', 'string', 'in:male,female,other'],
             'profile_picture' => ['nullable', 'string', 'max:255'],
             'specialization_id' => ['required', 'exists:specializations,id'],
             'title' => ['required', 'string', 'max:255'],

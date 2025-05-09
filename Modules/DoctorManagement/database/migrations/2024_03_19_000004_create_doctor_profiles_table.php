@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->unsignedTinyInteger('age');
-            $table->enum('sex', ['male', 'female', 'other']);
+            $table->enum('gender', ['male', 'female', 'other']);
             $table->string('profile_picture')->nullable();
             $table->foreignId('specialization_id')->constrained();
             $table->string('title');

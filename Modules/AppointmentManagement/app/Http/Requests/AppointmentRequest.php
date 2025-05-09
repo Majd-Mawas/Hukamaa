@@ -2,9 +2,9 @@
 
 namespace Modules\AppointmentManagement\App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
 
-class AppointmentRequest extends FormRequest
+class AppointmentRequest extends BaseRequest
 {
     public function authorize(): bool
     {
