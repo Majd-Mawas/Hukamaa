@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\AppointmentManagement\Http\Controllers\Api\AppointmentController;
-use Modules\AppointmentManagement\Http\Controllers\Api\VideoCallController;
+use Modules\AppointmentManagement\App\Http\Controllers\Api\AppointmentController;
+use Modules\AppointmentManagement\App\Http\Controllers\Api\VideoCallController;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('appointments')->group(function () {

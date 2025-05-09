@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\DoctorManagement\Http\Controllers\Api\DoctorProfileController;
-use Modules\DoctorManagement\Http\Controllers\Api\AvailabilityController;
+use Modules\DoctorManagement\App\Http\Controllers\Api\DoctorProfileController;
+use Modules\DoctorManagement\App\Http\Controllers\Api\AvailabilityController;
 
 Route::middleware('auth:sanctum')->group(function () {
     // Doctor profile routes
