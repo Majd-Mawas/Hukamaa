@@ -67,4 +67,30 @@ class DoctorProfileController extends Controller
             'Doctor profile deleted successfully'
         );
     }
+
+    /**
+     * Get featured doctors for the home page with search capabilities
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function featured(Request $request): JsonResponse
+    {
+        $limit = $request->get('limit', 10);
+        $query = $request->get('query');
+        $gender = $request->get('gender');
+        $specializationId = $request->get('specialization_id');
+
+        $doctors = $this->doctorProfileService->getFeaturedDoctors(
+            $limit,
+            $query,
+            $gender,
+            $specializationId
+        );
+
+        return $this->successResponse(
+            DoctorProfileResource::collection($doctors),
+            'Featured doctors retrieved successfully'
+        );
+    }
 }

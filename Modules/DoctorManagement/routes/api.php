@@ -8,6 +8,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Doctor profile routes
     Route::prefix('doctors')->group(function () {
         Route::get('/', [DoctorProfileController::class, 'index']);
+        Route::get('/featured', [DoctorProfileController::class, 'featured']);
         Route::post('/', [DoctorProfileController::class, 'store']);
         Route::get('/{doctorProfile}', [DoctorProfileController::class, 'show']);
         Route::put('/{doctorProfile}', [DoctorProfileController::class, 'update']);

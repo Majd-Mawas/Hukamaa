@@ -16,6 +16,8 @@ class DoctorProfile extends Model
         'user_id',
         'birth_date',
         'gender',
+        'phone_number',
+        'address',
         'profile_picture',
         'specialization_id',
         'title',
@@ -23,11 +25,16 @@ class DoctorProfile extends Model
         'experience_description',
         'certificates',
         'status',
+        'services',
+        'coverage_area',
+        'expertise_focus'
     ];
 
     protected $casts = [
         'certificates' => 'array',
         'experience_years' => 'integer',
+        'services' => 'array',
+        'birth_date' => 'date'
     ];
 
     public function user()
@@ -42,7 +49,7 @@ class DoctorProfile extends Model
 
     public function availabilities()
     {
-        return $this->hasMany(Availability::class);
+        return $this->hasMany(Availability::class, 'doctor_id');
     }
 
     public function appointments()

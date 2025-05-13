@@ -17,12 +17,12 @@ class Availability extends Model
     ];
 
     protected $casts = [
-        'start_time' => 'datetime',
-        'end_time' => 'datetime',
+        'start_time' => 'time',
+        'end_time' => 'time'
     ];
 
     public function doctor()
     {
-        return $this->belongsTo(DoctorProfile::class);
+        return $this->belongsTo(DoctorProfile::class, 'doctor_id');
     }
 }
