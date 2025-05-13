@@ -13,16 +13,18 @@ return new class extends Migration
             $table->foreignId('patient_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('doctor_id')->constrained('users')->onDelete('cascade');
             $table->date('date');
-            $table->string('time_slot');
             $table->enum('status', ['scheduled', 'completed', 'cancelled'])->default('scheduled');
             $table->boolean('confirmed_by_doctor')->default(false);
             $table->boolean('confirmed_by_patient')->default(false);
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
+            $table->text('description')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
 
             $table->index(['patient_id', 'status']);
             $table->index(['doctor_id', 'status']);
-            $table->index(['date', 'time_slot']);
         });
     }
 

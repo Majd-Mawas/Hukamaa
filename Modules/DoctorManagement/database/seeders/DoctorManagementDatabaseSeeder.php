@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DoctorManagement\Database\seeders;
+namespace Modules\DoctorManagement\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -11,6 +11,10 @@ class DoctorManagementDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            UserSeeder::class,
+            DoctorProfileSeeder::class,
+            AvailabilitySeeder::class,
+        ]);
     }
 }

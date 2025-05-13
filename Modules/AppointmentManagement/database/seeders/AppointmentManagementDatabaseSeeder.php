@@ -3,6 +3,7 @@
 namespace Modules\AppointmentManagement\Database\seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\AppointmentManagement\Database\seeders\AppointmentSeeder;
 
 class AppointmentManagementDatabaseSeeder extends Seeder
 {
@@ -11,6 +12,8 @@ class AppointmentManagementDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            AppointmentSeeder::class,
+        ]);
     }
 }

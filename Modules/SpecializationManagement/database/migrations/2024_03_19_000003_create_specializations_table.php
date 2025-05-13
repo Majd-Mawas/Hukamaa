@@ -12,11 +12,11 @@ return new class extends Migration
             $table->id();
             $table->string('department_name');
             $table->string('specialization_name');
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
             $table->unique(['department_name', 'specialization_name']);
-            $table->index('department_name');
         });
     }
 

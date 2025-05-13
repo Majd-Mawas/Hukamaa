@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\PaymentManagement\Database\seeders;
+namespace Modules\PaymentManagement\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -11,6 +11,8 @@ class PaymentManagementDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            PaymentSeeder::class,
+        ]);
     }
 }

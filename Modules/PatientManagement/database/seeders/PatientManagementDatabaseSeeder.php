@@ -3,6 +3,8 @@
 namespace Modules\PatientManagement\Database\seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\PatientManagement\Database\seeders\PatientProfileSeeder;
+use Modules\PatientManagement\Database\seeders\PreConsultationFormSeeder;
 
 class PatientManagementDatabaseSeeder extends Seeder
 {
@@ -11,6 +13,9 @@ class PatientManagementDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            PatientProfileSeeder::class,
+            PreConsultationFormSeeder::class,
+        ]);
     }
 }
