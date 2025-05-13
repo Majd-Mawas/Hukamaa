@@ -45,7 +45,6 @@ class PaymentSeeder extends Seeder
                         'patient_id' => $patient->id,
                         'doctor_id' => $doctor->id,
                         'amount' => $faker->randomFloat(2, 50, 500),
-                        'payment_receipt_url' => $faker->imageUrl(),
                         'status' => $paymentStatus,
                         'approved_by' => $paymentStatus === 'approved' ? $admins->random()->id : null,
                         'approved_at' => $paymentStatus === 'approved' ? now() : null,

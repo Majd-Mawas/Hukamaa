@@ -41,19 +41,6 @@ class PreConsultationFormSeeder extends Seeder
                     DB::table('pre_consultation_forms')->insert([
                         'patient_id' => $patient->id,
                         'doctor_id' => $doctor->id,
-                        'symptoms' => json_encode($faker->randomElements([
-                            'Fever',
-                            'Cough',
-                            'Headache',
-                            'Fatigue',
-                            'Muscle pain',
-                            'Sore throat',
-                            'Shortness of breath',
-                            'Loss of taste',
-                            'Loss of smell',
-                            'Nausea',
-                            'Diarrhea'
-                        ], $faker->numberBetween(1, 5))),
                         'condition_description' => $faker->paragraph(),
                         'status' => $formStatus,
                         'response_at' => $formStatus !== FormStatus::PENDING->value ? now() : null,

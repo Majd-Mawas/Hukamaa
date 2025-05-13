@@ -12,7 +12,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('patient_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('doctor_id')->constrained('users')->onDelete('cascade');
-            $table->json('symptoms');
             $table->text('condition_description');
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamp('response_at')->nullable();
