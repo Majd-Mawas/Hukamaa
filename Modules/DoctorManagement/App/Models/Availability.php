@@ -17,8 +17,8 @@ class Availability extends Model
     ];
 
     protected $casts = [
-        'start_time' => 'time',
-        'end_time' => 'time'
+        'start_time' => 'datetime',
+        'end_time' => 'datetime'
     ];
 
     public function doctor()
