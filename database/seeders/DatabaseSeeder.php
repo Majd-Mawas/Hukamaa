@@ -13,19 +13,19 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             // First, seed specializations as they are required by doctors
-            \Modules\SpecializationManagement\Database\Seeders\SpecializationManagementDatabaseSeeder::class,
+            \Modules\SpecializationManagement\Database\seeders\SpecializationManagementDatabaseSeeder::class,
 
             // Then seed doctors and their availabilities
-            \Modules\DoctorManagement\Database\Seeders\DoctorManagementDatabaseSeeder::class,
+            \Modules\DoctorManagement\Database\seeders\DoctorManagementDatabaseSeeder::class,
 
             // Then seed patients
-            \Modules\PatientManagement\Database\Seeders\PatientManagementDatabaseSeeder::class,
+            \Modules\PatientManagement\Database\seeders\PatientManagementDatabaseSeeder::class,
 
             // Then seed appointments
-            \Modules\AppointmentManagement\Database\Seeders\AppointmentManagementDatabaseSeeder::class,
+            \Modules\AppointmentManagement\Database\seeders\AppointmentManagementDatabaseSeeder::class,
 
             // Finally, seed payments and pre-consultation forms
-            \Modules\PaymentManagement\Database\Seeders\PaymentManagementDatabaseSeeder::class,
+            \Modules\PaymentManagement\Database\seeders\PaymentManagementDatabaseSeeder::class,
         ]);
     }
 }
