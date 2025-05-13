@@ -17,7 +17,6 @@ return new class extends Migration
             $table->time('end_time');
             $table->timestamps();
 
-            $table->unique(['doctor_id', 'weekday']);
             $table->index('weekday');
         });
     }
