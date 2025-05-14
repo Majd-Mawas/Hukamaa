@@ -7,16 +7,24 @@ use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Modules\AppointmentManagement\App\Http\Requests\AppointmentRequest;
+use Modules\AppointmentManagement\App\Http\Requests\ConfirmAppointmentRequest;
+use Modules\AppointmentManagement\App\Http\Requests\ConfirmPaymentRequest;
+use Modules\AppointmentManagement\App\Http\Requests\CreateAppointmentRequest;
+use Modules\AppointmentManagement\App\Http\Requests\GetAvailableSlotsRequest;
 use Modules\AppointmentManagement\App\Http\Resources\AppointmentResource;
 use Modules\AppointmentManagement\App\Models\Appointment;
 use Modules\AppointmentManagement\App\Services\AppointmentService;
+use Modules\DoctorManagement\App\Services\AvailabilityService;
+use Modules\DoctorManagement\App\Services\DoctorAvailabilityService;
 
 class AppointmentController extends Controller
 {
     use ApiResponse;
 
     public function __construct(
-        private readonly AppointmentService $appointmentService
+        private readonly AppointmentService $appointmentService,
+        private readonly AvailabilityService $availabilityService,
+        private readonly DoctorAvailabilityService $doctorAvailabilityService
     ) {}
 
     public function index(): JsonResponse
@@ -29,7 +37,7 @@ class AppointmentController extends Controller
         );
     }
 
-    public function store(AppointmentRequest $request): JsonResponse
+    public function store(CreateAppointmentRequest $request): JsonResponse
     {
         $appointment = $this->appointmentService->createAppointment($request->validated());
 
@@ -68,13 +76,47 @@ class AppointmentController extends Controller
         );
     }
 
-    public function confirm(Appointment $appointment): JsonResponse
+    public function confirmDateTime(ConfirmAppointmentRequest $request, Appointment $appointment): JsonResponse
     {
-        $this->appointmentService->confirmAppointment($appointment);
+        $user = Auth::user();
+        $timeSlots = null;
+
+        // if ($user->role === 'doctor') {
+        // }
+        $timeSlots = $request->only(['start_time', 'end_time', 'date']);
+
+        $updatedAppointment = $this->appointmentService->confirmAppointmentDateTime($appointment, $timeSlots);
 
         return $this->successResponse(
-            new AppointmentResource($appointment->fresh()),
-            'Appointment confirmed successfully'
+            new AppointmentResource($updatedAppointment),
+            'Appointment date and time confirmed successfully'
+        );
+    }
+
+    public function confirmPayment(ConfirmPaymentRequest $request, Appointment $appointment): JsonResponse
+    {
+        $data = $request->validated();
+
+        $updatedAppointment = $this->appointmentService->confirmPayment($appointment, $data);
+
+        return $this->successResponse(
+            new AppointmentResource($updatedAppointment),
+            'Payment confirmed successfully'
+        );
+    }
+
+    public function getAvailableSlots(GetAvailableSlotsRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $slots = $this->doctorAvailabilityService->getAvailableSlots(
+            $data['doctor_id'],
+            $data['date'],
+        );
+
+        return $this->successResponse(
+            $slots,
+            'Available slots retrieved successfully'
         );
     }
 }

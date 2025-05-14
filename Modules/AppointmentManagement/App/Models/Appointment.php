@@ -4,20 +4,25 @@ namespace Modules\AppointmentManagement\App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\UserManagement\App\Models\User;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Appointment extends Model
+class Appointment extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes, InteractsWithMedia;
 
     protected $fillable = [
         'patient_id',
         'doctor_id',
         'date',
-        'time_slot',
+        'start_time',
+        'end_time',
         'status',
         'confirmed_by_doctor',
         'confirmed_by_patient',
+        'condition_description',
     ];
 
     protected $casts = [
@@ -39,5 +44,20 @@ class Appointment extends Model
     public function videoCall()
     {
         return $this->hasOne(VideoCall::class);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('appointment_files')
+            ->acceptsMimeTypes(['application/pdf', 'image/jpeg', 'image/png']);
+
+        $this->addMediaCollection('payment_invoices')
+            ->acceptsMimeTypes(['application/pdf', 'image/jpeg', 'image/png'])
+            ->singleFile();
+    }
+
+    public function getPaymentInvoiceAttribute()
+    {
+        return $this->getFirstMedia('payment_invoices');
     }
 }

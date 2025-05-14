@@ -13,21 +13,23 @@ class AppointmentResource extends ApiResource
             ...parent::toArray($request),
             'patient_id' => $this->patient_id,
             'doctor_id' => $this->doctor_id,
-            'date' => $this->date->format('Y-m-d'),
-            'time_slot' => $this->time_slot,
+            'date' => $this->date?->format('Y-m-d'),
+            'start_time' => $this->start_time,
+            'end_time' => $this->end_time,
             'status' => $this->status,
             'confirmed_by_doctor' => $this->confirmed_by_doctor,
             'confirmed_by_patient' => $this->confirmed_by_patient,
+            'condition_description' => $this->condition_description,
             'patient' => $this->whenLoaded('patient', function () {
                 return [
                     'id' => $this->patient->id,
-                    'name' => $this->patient->user->name,
+                    'name' => $this->patient->name,
                 ];
             }),
             'doctor' => $this->whenLoaded('doctor', function () {
                 return [
                     'id' => $this->doctor->id,
-                    'name' => $this->doctor->user->name,
+                    'name' => $this->doctor->name,
                 ];
             }),
             'video_call' => $this->whenLoaded('videoCall', function () {
@@ -39,6 +41,20 @@ class AppointmentResource extends ApiResource
                     'status' => $this->videoCall->status,
                 ];
             }),
+            'files' => collect()
+                ->concat($this->getMedia('appointment_files'))
+                ->concat([$this->getFirstMedia('payment_invoices')])
+                ->filter()
+                ->map(function ($media) {
+                    return [
+                        'id' => $media->id,
+                        'name' => $media->file_name,
+                        'mime_type' => $media->mime_type,
+                        'size' => $media->size,
+                        'url' => $media->getUrl(),
+                        'collection' => $media->collection_name,
+                    ];
+                }),
         ];
     }
 }

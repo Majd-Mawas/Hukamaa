@@ -6,12 +6,13 @@ use Modules\AppointmentManagement\App\Http\Controllers\Api\VideoCallController;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('appointments')->group(function () {
-        Route::get('/', [AppointmentController::class, 'index']);
-        Route::post('/', [AppointmentController::class, 'store']);
-        Route::get('/{appointment}', [AppointmentController::class, 'show']);
-        Route::put('/{appointment}', [AppointmentController::class, 'update']);
-        Route::delete('/{appointment}', [AppointmentController::class, 'destroy']);
-        Route::post('/{appointment}/confirm', [AppointmentController::class, 'confirm']);
+        Route::apiResource('/', AppointmentController::class);
+        Route::post('/{appointment}/cancel', [AppointmentController::class, 'cancel']);
+        Route::get('/available-slots', [AppointmentController::class, 'getAvailableSlots']);
+        Route::prefix('/{appointment}/confirm')->group(function () {
+            Route::post('datetime', [AppointmentController::class, 'confirmDateTime']);
+            Route::post('payment', [AppointmentController::class, 'confirmPayment']);
+        });
     });
 
     Route::prefix('video-calls')->group(function () {

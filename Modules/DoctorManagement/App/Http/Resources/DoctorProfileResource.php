@@ -16,6 +16,7 @@ class DoctorProfileResource extends ApiResource
             'gender' => $this->gender,
             'profile_picture' => $this->profile_picture,
             'specialization_id' => $this->specialization_id,
+            'consultation_fee' => $this->consultation_fee,
             'title' => $this->title,
             'experience_years' => $this->experience_years,
             'experience_description' => $this->experience_description,

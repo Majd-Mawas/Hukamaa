@@ -14,10 +14,11 @@ class Payment extends Model
         'patient_id',
         'doctor_id',
         'amount',
-        'payment_receipt_url',
         'status',
         'approved_by',
         'approved_at',
+        'appointment_id',
+        'payment_reference',
     ];
 
     protected $casts = [

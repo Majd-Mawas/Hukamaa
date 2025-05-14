@@ -20,6 +20,7 @@ class DoctorProfile extends Model
         'address',
         'profile_picture',
         'specialization_id',
+        'consultation_fee',
         'title',
         'experience_years',
         'experience_description',
@@ -34,7 +35,8 @@ class DoctorProfile extends Model
         'certificates' => 'array',
         'experience_years' => 'integer',
         'services' => 'array',
-        'birth_date' => 'date'
+        'birth_date' => 'date',
+        'consultation_fee' => 'decimal:2'
     ];
 
     public function user()
