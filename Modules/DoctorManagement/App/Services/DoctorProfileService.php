@@ -62,8 +62,12 @@ class DoctorProfileService
                 $q->where('specialization_id', $specializationId);
             })
             ->whereHas('availabilities', function ($query) {
-                $query->where('weekday', now()->format('l'))
-                    ->where('start_time', '>', now()->format('H:i:s'));
+                $query->where(function ($q) {
+                    $days = collect(range(0, 6))->map(function ($day) {
+                        return now()->addDays($day)->format('l');
+                    })->toArray();
+                    $q->whereIn('weekday', $days);
+                });
             })
             ->orderBy('experience_years', 'desc')
             ->latest()

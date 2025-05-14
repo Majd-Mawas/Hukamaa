@@ -17,7 +17,7 @@ trait HasCrudActions
     public function index(): JsonResponse
     {
         $items = $this->getModelClass()::latest()->paginate(10);
-        return $this->success($this->getResourceClass()::collection($items));
+        return $this->successResponse($this->getResourceClass()::collection($items));
     }
 
     /**
@@ -27,7 +27,7 @@ trait HasCrudActions
     {
         $validated = app($this->getRequestClass())->validated();
         $item = $this->getModelClass()::create($validated);
-        return $this->success(new ($this->getResourceClass())($item), 'Created successfully', 201);
+        return $this->successResponse(new ($this->getResourceClass())($item), 'Created successfully', 201);
     }
 
     /**
@@ -36,7 +36,7 @@ trait HasCrudActions
     public function show($id): JsonResponse
     {
         $item = $this->getModelClass()::findOrFail($id);
-        return $this->success(new ($this->getResourceClass())($item));
+        return $this->successResponse(new ($this->getResourceClass())($item));
     }
 
     /**
@@ -47,7 +47,7 @@ trait HasCrudActions
         $item = $this->getModelClass()::findOrFail($id);
         $validated = app($this->getRequestClass())->validated();
         $item->update($validated);
-        return $this->success(new ($this->getResourceClass())($item), 'Updated successfully');
+        return $this->successResponse(new ($this->getResourceClass())($item), 'Updated successfully');
     }
 
     /**
@@ -57,7 +57,7 @@ trait HasCrudActions
     {
         $item = $this->getModelClass()::findOrFail($id);
         $item->delete();
-        return $this->success(null, 'Deleted successfully', 204);
+        return $this->successResponse(null, 'Deleted successfully', 204);
     }
 
     // These methods must be implemented in the controller
