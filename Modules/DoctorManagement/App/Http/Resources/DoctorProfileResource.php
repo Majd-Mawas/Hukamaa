@@ -39,8 +39,8 @@ class DoctorProfileResource extends ApiResource
                     return [
                         'id' => $availability->id,
                         'weekday' => $availability->weekday,
-                        'start_time' => $availability->start_time,
-                        'end_time' => $availability->end_time,
+                        'start_time' => $availability->start_time->format('H:i'),
+                        'end_time' => $availability->end_time->format('H:i'),
                     ];
                 });
             }),

@@ -7,12 +7,8 @@ use Modules\DoctorManagement\App\Http\Controllers\Api\AvailabilityController;
 Route::middleware('auth:sanctum')->group(function () {
     // Doctor profile routes
     Route::prefix('doctors')->group(function () {
-        Route::get('/', [DoctorProfileController::class, 'index']);
         Route::get('/featured', [DoctorProfileController::class, 'featured']);
-        Route::post('/', [DoctorProfileController::class, 'store']);
-        Route::get('/{doctorProfile}', [DoctorProfileController::class, 'show']);
-        Route::put('/{doctorProfile}', [DoctorProfileController::class, 'update']);
-        Route::delete('/{doctorProfile}', [DoctorProfileController::class, 'destroy']);
+        Route::apiResource('/', DoctorProfileController::class);
     });
 
     // Doctor availability routes

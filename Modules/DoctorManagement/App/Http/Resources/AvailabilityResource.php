@@ -13,8 +13,8 @@ class AvailabilityResource extends ApiResource
             ...parent::toArray($request),
             'doctor_id' => $this->doctor_id,
             'weekday' => $this->weekday,
-            'start_time' => $this->start_time,
-            'end_time' => $this->end_time,
+            'start_time' => $this->start_time->format('H:i'),
+            'end_time' => $this->end_time->format('H:i'),
             'doctor' => $this->whenLoaded('doctor', function () {
                 return [
                     'id' => $this->doctor->id,
