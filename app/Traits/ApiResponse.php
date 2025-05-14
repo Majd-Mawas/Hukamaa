@@ -10,31 +10,22 @@ use Illuminate\Validation\ValidationException;
 
 trait ApiResponse
 {
-    protected function successResponse($data, string $message = null, int $code = 200): JsonResponse
+    protected function success($data = null, $message = 'Success', $status = 200)
     {
         return response()->json([
             'success' => true,
             'message' => $message,
-            'data' => $data instanceof JsonResource ? $data->response()->getData(true)['data'] : $data,
-            'meta' => $this->getMetaData($data)
-        ], $code);
+            'data'    => $data,
+        ], $status);
     }
 
-    protected function errorResponse(string $message, int $code, $errors = null): JsonResponse
+    protected function error($message = 'Error', $status = 400, $data = null)
     {
-        $response = [
+        return response()->json([
             'success' => false,
             'message' => $message,
-        ];
-
-        if ($errors instanceof ValidationException) {
-            $response['errors'] = $errors->errors();
-            $code = 422;
-        } elseif ($errors !== null) {
-            $response['errors'] = $errors;
-        }
-
-        return response()->json($response, $code);
+            'data'    => $data,
+        ], $status);
     }
 
     protected function getMetaData($data): ?array
