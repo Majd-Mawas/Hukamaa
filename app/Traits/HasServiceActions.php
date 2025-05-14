@@ -5,7 +5,6 @@ namespace App\Traits;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 trait HasServiceActions
 {
@@ -17,7 +16,7 @@ trait HasServiceActions
     public function index(): JsonResponse
     {
         $items = $this->getService()->index();
-        return $this->success($this->getResourceClass()::collection($items));
+        return $this->successResponse($this->getResourceClass()::collection($items));
     }
 
     /**
@@ -27,7 +26,7 @@ trait HasServiceActions
     {
         $validated = app($this->getRequestClass())->validated();
         $item = $this->getService()->store($validated);
-        return $this->success(new ($this->getResourceClass())($item), 'Created successfully', 201);
+        return $this->successResponse(new ($this->getResourceClass())($item), 'Created successfully', 201);
     }
 
     /**
@@ -36,7 +35,7 @@ trait HasServiceActions
     public function show($id): JsonResponse
     {
         $item = $this->getService()->show($id);
-        return $this->success(new ($this->getResourceClass())($item));
+        return $this->successResponse(new ($this->getResourceClass())($item));
     }
 
     /**
@@ -46,7 +45,7 @@ trait HasServiceActions
     {
         $validated = app($this->getRequestClass())->validated();
         $item = $this->getService()->update($id, $validated);
-        return $this->success(new ($this->getResourceClass())($item), 'Updated successfully');
+        return $this->successResponse(new ($this->getResourceClass())($item), 'Updated successfully');
     }
 
     /**
@@ -55,7 +54,7 @@ trait HasServiceActions
     public function destroy($id): JsonResponse
     {
         $this->getService()->destroy($id);
-        return $this->success(null, 'Deleted successfully', 204);
+        return $this->successResponse(null, 'Deleted successfully', 204);
     }
 
     // These methods must be implemented in the controller
