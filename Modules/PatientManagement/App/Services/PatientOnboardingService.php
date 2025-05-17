@@ -33,6 +33,6 @@ class PatientOnboardingService
             }
         }
 
-        return $profile->fresh();
+        return $profile->load('media')->fresh();
     }
 }

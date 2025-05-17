@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Modules\PatientManagement\App\Http\Requests\BasicInfoRequest;
 use Modules\PatientManagement\App\Http\Requests\ExtraInfoRequest;
 use Modules\PatientManagement\App\Services\PatientOnboardingService;
+use Modules\PatientManagement\App\Http\Resources\PatientProfileResource;
 
 class PatientOnboardingController extends Controller
 {
@@ -25,7 +26,7 @@ class PatientOnboardingController extends Controller
         );
 
         return $this->successResponse(
-            $result,
+            new PatientProfileResource($result->load('media', 'user')),
             'Basic medical information updated successfully',
             201
         );
@@ -39,7 +40,7 @@ class PatientOnboardingController extends Controller
         );
 
         return $this->successResponse(
-            $result,
+            new PatientProfileResource($result->load('media', 'user')),
             'Supplementary health information updated successfully',
             201
         );

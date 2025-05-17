@@ -61,7 +61,7 @@ class AuthController extends Controller
 
         return $this->successResponse(
             [
-                'user' => new UserResource($user),
+                'user' => new UserResource($user->load('patientProfile', 'doctorProfile')),
                 'token' => $token
             ],
             'Login successful'
