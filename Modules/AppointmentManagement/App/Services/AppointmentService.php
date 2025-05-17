@@ -24,7 +24,7 @@ class AppointmentService
 
     public function createAppointment(array $data): Appointment
     {
-        $doctorProfile = DoctorProfile::where('user_id', $data['doctor_id'])->firstOrFail();
+        $doctorProfile = DoctorProfile::where('id', $data['doctor_id'])->firstOrFail();
         $appointment = Appointment::create([
             'patient_id' => Auth::id(),
             'doctor_id' => $doctorProfile->user_id,
