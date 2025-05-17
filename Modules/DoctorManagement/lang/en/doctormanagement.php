@@ -17,6 +17,8 @@ return [
     'status.approved' => 'Approved',
     'status.rejected' => 'Rejected',
     'status.suspended' => 'Suspended',
+    'status.active' => 'Active',
+    'status.inactive' => 'Inactive',
 
     // Services
     'services.remote_video_consultation' => 'Remote Video Consultation',
@@ -28,6 +30,14 @@ return [
     'messages.doctor_updated' => 'Doctor profile updated successfully',
     'messages.doctor_deleted' => 'Doctor profile deleted successfully',
     'messages.featured_doctors_retrieved' => 'Featured doctors retrieved successfully',
+    'messages.doctor_profile_created' => 'Doctor profile created successfully',
+    'messages.doctor_profile_retrieved' => 'Doctor profile retrieved successfully',
+    'messages.doctor_profile_updated' => 'Doctor profile updated successfully',
+    'messages.doctor_profile_deleted' => 'Doctor profile deleted successfully',
+    'messages.availabilities_retrieved' => 'Availabilities retrieved successfully',
+    'messages.availability_created' => 'Availability created successfully',
+    'messages.availability_updated' => 'Availability updated successfully',
+    'messages.availability_deleted' => 'Availability deleted successfully',
 
     // Validation
     'validation.required' => 'This field is required',
@@ -56,4 +66,10 @@ return [
     'titles.prof' => 'Prof.',
     'titles.assoc_prof' => 'Assoc. Prof.',
     'titles.asst_prof' => 'Asst. Prof.',
+
+    // User Roles
+    'roles.admin' => 'Administrator',
+    'roles.doctor' => 'Doctor',
+    'roles.patient' => 'Patient',
+    'roles.staff' => 'Staff',
 ];

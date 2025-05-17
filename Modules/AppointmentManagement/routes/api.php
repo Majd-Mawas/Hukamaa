@@ -9,6 +9,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('/', AppointmentController::class);
         Route::post('/{appointment}/cancel', [AppointmentController::class, 'cancel']);
         Route::get('/available-slots', [AppointmentController::class, 'getAvailableSlots']);
+        Route::get('/upcoming', [AppointmentController::class, 'getUpcomingAppointments']);
         Route::prefix('/{appointment}/confirm')->group(function () {
             Route::post('datetime', [AppointmentController::class, 'confirmDateTime']);
             Route::post('payment', [AppointmentController::class, 'confirmPayment']);

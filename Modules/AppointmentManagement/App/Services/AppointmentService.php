@@ -103,4 +103,11 @@ class AppointmentService
 
         return $appointment->fresh();
     }
+
+    public function getUpcomingAppointments(int $userId)
+    {
+        return Appointment::where('patient_id', $userId)
+            ->whereNot('status', AppointmentStatus::COMPLETED)
+            ->get();
+    }
 }

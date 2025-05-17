@@ -119,4 +119,14 @@ class AppointmentController extends Controller
             'Available slots retrieved successfully'
         );
     }
+
+    public function getUpcomingAppointments(): JsonResponse
+    {
+        $appointments = $this->appointmentService->getUpcomingAppointments(Auth::id());
+
+        return $this->successResponse(
+            AppointmentResource::collection($appointments),
+            'Upcoming appointments retrieved successfully'
+        );
+    }
 }

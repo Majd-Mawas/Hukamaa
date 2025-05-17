@@ -16,7 +16,7 @@ class AppointmentResource extends ApiResource
             'date' => $this->date?->format('Y-m-d'),
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,
-            'status' => $this->status,
+            'status' => trans('appointmentmanagement::appointments.status.' . $this->status),
             'confirmed_by_doctor' => $this->confirmed_by_doctor,
             'confirmed_by_patient' => $this->confirmed_by_patient,
             'condition_description' => $this->condition_description,

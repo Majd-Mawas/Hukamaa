@@ -7,13 +7,16 @@ return [
     'specialization' => 'التخصص',
     'experience' => 'الخبرة',
     'years' => 'سنوات',
-    'status' => 'الحالة',
+    'status' => [
+        'active' => 'نشط',
+        'inactive' => 'غير نشط',
+        'pending' => 'قيد الانتظار',
+    ],
     'services' => 'الخدمات',
     'availability' => 'التوفر',
     'appointments' => 'المواعيد',
 
     // Status
-    'status.pending' => 'قيد الانتظار',
     'status.approved' => 'تمت الموافقة',
     'status.rejected' => 'مرفوض',
     'status.suspended' => 'معلق',
@@ -24,10 +27,15 @@ return [
 
     // Messages
     'messages.doctors_retrieved' => 'تم استرجاع الأطباء بنجاح',
-    'messages.doctor_created' => 'تم إنشاء ملف الطبيب بنجاح',
-    'messages.doctor_updated' => 'تم تحديث ملف الطبيب بنجاح',
-    'messages.doctor_deleted' => 'تم حذف ملف الطبيب بنجاح',
+    'messages.doctor_profile_created' => 'تم إنشاء ملف الطبيب بنجاح',
+    'messages.doctor_profile_retrieved' => 'تم استرجاع ملف الطبيب بنجاح',
+    'messages.doctor_profile_updated' => 'تم تحديث ملف الطبيب بنجاح',
+    'messages.doctor_profile_deleted' => 'تم حذف ملف الطبيب بنجاح',
     'messages.featured_doctors_retrieved' => 'تم استرجاع الأطباء المميزين بنجاح',
+    'messages.availabilities_retrieved' => 'تم استرجاع المواعيد المتاحة بنجاح',
+    'messages.availability_created' => 'تم إنشاء الموعد المتاح بنجاح',
+    'messages.availability_updated' => 'تم تحديث الموعد المتاح بنجاح',
+    'messages.availability_deleted' => 'تم حذف الموعد المتاح بنجاح',
 
     // Validation
     'validation.required' => 'هذا الحقل مطلوب',
@@ -56,4 +64,10 @@ return [
     'titles.prof' => 'أ.د.',
     'titles.assoc_prof' => 'أ.د. مشارك',
     'titles.asst_prof' => 'أ.د. مساعد',
+
+    // User Roles
+    'roles.admin' => 'مدير النظام',
+    'roles.doctor' => 'طبيب',
+    'roles.patient' => 'مريض',
+    'roles.staff' => 'موظف',
 ];
