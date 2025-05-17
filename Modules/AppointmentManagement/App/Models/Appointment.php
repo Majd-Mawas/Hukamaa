@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\UserManagement\App\Models\User;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Modules\AppointmentManagement\App\Enums\AppointmentStatus;
 
 class Appointment extends Model implements HasMedia
 {
@@ -29,6 +30,7 @@ class Appointment extends Model implements HasMedia
         'date' => 'date',
         'confirmed_by_doctor' => 'boolean',
         'confirmed_by_patient' => 'boolean',
+        'status' => AppointmentStatus::class,
     ];
 
     public function patient()
