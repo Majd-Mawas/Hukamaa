@@ -4,6 +4,8 @@ namespace Modules\AppointmentManagement\App\Http\Resources;
 
 use App\Http\Resources\ApiResource;
 use Illuminate\Http\Request;
+use Modules\DoctorManagement\App\Http\Resources\DoctorProfileResource;
+use Modules\UserManagement\App\Http\Resources\UserResource;
 
 class AppointmentResource extends ApiResource
 {
@@ -27,10 +29,7 @@ class AppointmentResource extends ApiResource
                 ];
             }),
             'doctor' => $this->whenLoaded('doctor', function () {
-                return [
-                    'id' => $this->doctor->id,
-                    'name' => $this->doctor->name,
-                ];
+                return new UserResource($this->doctor->load(['doctorProfile']));
             }),
             'video_call' => $this->whenLoaded('videoCall', function () {
                 return [

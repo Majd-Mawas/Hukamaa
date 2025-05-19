@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\UserManagement\App\Models\User;
 use Modules\SpecializationManagement\App\Models\Specialization;
 use Modules\AppointmentManagement\App\Models\Appointment;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class DoctorProfile extends Model
+class DoctorProfile extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $fillable = [
         'user_id',
@@ -42,6 +44,14 @@ class DoctorProfile extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('patient_files')
+            ->useDisk('public')
+            ->acceptsMimeTypes(['application/pdf', 'image/jpeg', 'image/png'])
+            ->withResponsiveImages();
     }
 
     public function specialization()

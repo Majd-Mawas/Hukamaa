@@ -32,7 +32,8 @@ class DoctorProfileResource extends ApiResource
             'specialization' => $this->whenLoaded('specialization', function () {
                 return [
                     'id' => $this->specialization->id,
-                    'name' => $this->specialization->name,
+                    'name' => $this->specialization->specialization_name,
+                    'description' => $this->specialization->description,
                 ];
             }),
             'availabilities' => $this->whenLoaded('availabilities', function () {
