@@ -10,6 +10,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/{appointment}/cancel', [AppointmentController::class, 'cancel']);
         Route::get('/available-slots', [AppointmentController::class, 'getAvailableSlots']);
         Route::get('/upcoming', [AppointmentController::class, 'getUpcomingAppointments']);
+        Route::get('/done', [AppointmentController::class, 'getDoneAppointments']);
         Route::prefix('/{appointment}/confirm')->group(function () {
             Route::post('datetime', [AppointmentController::class, 'confirmDateTime']);
             Route::post('payment', [AppointmentController::class, 'confirmPayment']);

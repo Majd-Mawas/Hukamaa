@@ -110,4 +110,10 @@ class AppointmentService
             ->whereNot('status', AppointmentStatus::COMPLETED)
             ->get();
     }
+    public function getDoneAppointments(int $userId)
+    {
+        return Appointment::where('patient_id', $userId)
+            ->where('status', AppointmentStatus::COMPLETED)
+            ->get();
+    }
 }
