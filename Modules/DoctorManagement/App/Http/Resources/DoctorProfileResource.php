@@ -14,14 +14,53 @@ class DoctorProfileResource extends ApiResource
             'user_id' => $this->user_id,
             'birth_date' => $this->birth_date,
             'gender' => $this->gender,
-            'profile_picture' => $this->profile_picture,
             'specialization_id' => $this->specialization_id,
             'consultation_fee' => $this->consultation_fee,
             'title' => $this->title,
             'experience_years' => $this->experience_years,
             'experience_description' => $this->experience_description,
-            'certificates' => $this->certificates,
             'status' => $this->status,
+            'services' => $this->services,
+            'files' => $this->whenLoaded('media', function () {
+                return [
+                    'practice_license' => $this->getMedia('practice_license')->map(function ($media) {
+                        return [
+                            'id' => $media->id,
+                            'url' => $media->getUrl(),
+                            'name' => $media->file_name,
+                            'mime_type' => $media->mime_type,
+                            'size' => $media->size,
+                        ];
+                    })->first(),
+                    'medical_certificates' => $this->getMedia('medical_certificates')->map(function ($media) {
+                        return [
+                            'id' => $media->id,
+                            'url' => $media->getUrl(),
+                            'name' => $media->file_name,
+                            'mime_type' => $media->mime_type,
+                            'size' => $media->size,
+                        ];
+                    }),
+                    'identity_document' => $this->getMedia('identity_document')->map(function ($media) {
+                        return [
+                            'id' => $media->id,
+                            'url' => $media->getUrl(),
+                            'name' => $media->file_name,
+                            'mime_type' => $media->mime_type,
+                            'size' => $media->size,
+                        ];
+                    })->first(),
+                    'profile_picture' =>  $this->getMedia('profile_picture')->map(function ($media) {
+                        return [
+                            'id' => $media->id,
+                            'url' => $media->getUrl(),
+                            'name' => $media->file_name,
+                            'mime_type' => $media->mime_type,
+                            'size' => $media->size,
+                        ];
+                    })->first(),
+                ];
+            }),
             'user' => $this->whenLoaded('user', function () {
                 return [
                     'id' => $this->user->id,

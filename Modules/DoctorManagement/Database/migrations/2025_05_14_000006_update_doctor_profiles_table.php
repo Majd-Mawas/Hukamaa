@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('doctor_profiles', function (Blueprint $table) {
-            $table->decimal('consultation_fee', 10, 2)->default(0.00)->after('specialization_id');
+            $table->decimal('consultation_fee', 10, 2)->default(0.00)->nullable()->after('specialization_id');
         });
     }
 

@@ -48,10 +48,10 @@ class DoctorProfile extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('patient_files')
-            ->useDisk('public')
-            ->acceptsMimeTypes(['application/pdf', 'image/jpeg', 'image/png'])
-            ->withResponsiveImages();
+        $this->addMediaCollection('profile_picture')->singleFile();
+        $this->addMediaCollection('identity_document')->singleFile();
+        $this->addMediaCollection('practice_license')->singleFile();
+        $this->addMediaCollection('medical_certificates');
     }
 
     public function specialization()

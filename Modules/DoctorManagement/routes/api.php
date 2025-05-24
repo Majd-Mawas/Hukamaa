@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\DoctorManagement\App\Http\Controllers\Api\DoctorProfileController;
 use Modules\DoctorManagement\App\Http\Controllers\Api\AvailabilityController;
+use Modules\DoctorManagement\App\Http\Controllers\Api\DoctorOnboardingController;
 
 Route::middleware('auth:sanctum')->group(function () {
     // Doctor profile routes
@@ -13,6 +14,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{doctor}', [DoctorProfileController::class, 'show'])->name('show');
         Route::put('/{doctor}', [DoctorProfileController::class, 'update'])->name('update');
         Route::delete('/{doctor}', [DoctorProfileController::class, 'destroy'])->name('destroy');
+
+        // Doctor onboarding routes
+        Route::prefix('/onboarding')->name('onboarding.')->group(function () {
+            Route::post('/basic', [DoctorOnboardingController::class, 'updateBasicInfo']);
+            Route::post('/medical', [DoctorOnboardingController::class, 'updateMedicalInfo']);
+            Route::post('/documents', [DoctorOnboardingController::class, 'uploadDocuments']);
+        });
     });
 
     // Doctor availability routes
