@@ -31,4 +31,18 @@ return [
         'video_call_updated' => 'Video call session updated successfully',
         'video_call_ended' => 'Video call session ended successfully',
     ],
+    'months' => [
+        'january' => 'January',
+        'february' => 'February',
+        'march' => 'March',
+        'april' => 'April',
+        'may' => 'May',
+        'june' => 'June',
+        'july' => 'July',
+        'august' => 'August',
+        'september' => 'September',
+        'october' => 'October',
+        'november' => 'November',
+        'december' => 'December',
+    ],
 ];

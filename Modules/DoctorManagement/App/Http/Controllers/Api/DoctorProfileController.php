@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Modules\DoctorManagement\App\Http\Requests\DoctorProfileRequest;
 use Modules\DoctorManagement\App\Http\Resources\DoctorProfileResource;
 use Modules\DoctorManagement\App\Models\DoctorProfile;
 use Modules\DoctorManagement\App\Services\DoctorProfileService;
+use Modules\DoctorManagement\App\Services\DoctorStatisticsService;
 
 class DoctorProfileController extends Controller
 {
@@ -91,6 +93,16 @@ class DoctorProfileController extends Controller
         return $this->successResponse(
             DoctorProfileResource::collection($doctors),
             'Featured doctors retrieved successfully'
+        );
+    }
+
+    public function statistics(DoctorStatisticsService $statisticsService): JsonResponse
+    {
+        $statistics = $statisticsService->getDoctorStatistics(Auth::id());
+
+        return $this->successResponse(
+            $statistics,
+            __('doctor.statistics_retrieved_successfully')
         );
     }
 }

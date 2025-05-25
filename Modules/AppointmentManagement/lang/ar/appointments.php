@@ -31,4 +31,18 @@ return [
         'video_call_updated' => 'تم تحديث جلسة المكالمة المرئية بنجاح',
         'video_call_ended' => 'تم إنهاء جلسة المكالمة المرئية بنجاح',
     ],
+    'months' => [
+        'january' => 'يناير',
+        'february' => 'فبراير',
+        'march' => 'مارس',
+        'april' => 'أبريل',
+        'may' => 'مايو',
+        'june' => 'يونيو',
+        'july' => 'يوليو',
+        'august' => 'أغسطس',
+        'september' => 'سبتمبر',
+        'october' => 'أكتوبر',
+        'november' => 'نوفمبر',
+        'december' => 'ديسمبر',
+    ],
 ];
