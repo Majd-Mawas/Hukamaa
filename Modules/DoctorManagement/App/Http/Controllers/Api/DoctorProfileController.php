@@ -102,7 +102,7 @@ class DoctorProfileController extends Controller
 
         return $this->successResponse(
             $statistics,
-            __('doctor.statistics_retrieved_successfully')
+            __('doctormanagement::doctor.messages.statistics_retrieved_successfully')
         );
     }
 }

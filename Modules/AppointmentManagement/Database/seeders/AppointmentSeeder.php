@@ -43,8 +43,8 @@ class AppointmentSeeder extends Seeder
 
                 if ($availability) {
                     DB::table('appointments')->insert([
-                        'doctor_id' => $doctor->id,
-                        'patient_id' => $patient->id,
+                        'doctor_id' => $doctor->user_id,
+                        'patient_id' => $patient->user_id,
                         'date' => $appointmentDate,
                         'start_time' => $availability->start_time,
                         'end_time' => $availability->end_time,

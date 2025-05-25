@@ -33,7 +33,7 @@ class AppointmentController extends Controller
 
         return $this->successResponse(
             AppointmentResource::collection($appointments),
-            'Appointments retrieved successfully'
+            __('appointmentmanagement::appointments.messages.appointments_retrieved'),
         );
     }
 
@@ -43,7 +43,7 @@ class AppointmentController extends Controller
 
         return $this->successResponse(
             new AppointmentResource($appointment),
-            'Appointment created successfully',
+            __('appointmentmanagement::appointments.messages.appointment_created'),
             201
         );
     }
@@ -52,7 +52,7 @@ class AppointmentController extends Controller
     {
         return $this->successResponse(
             new AppointmentResource($appointment->load(['patient', 'doctor', 'videoCall'])),
-            'Appointment retrieved successfully'
+            __('appointmentmanagement::appointments.messages.appointment_retrieved')
         );
     }
 
@@ -62,7 +62,7 @@ class AppointmentController extends Controller
 
         return $this->successResponse(
             new AppointmentResource($updatedAppointment),
-            'Appointment updated successfully'
+            __('appointmentmanagement::appointments.messages.appointment_updated')
         );
     }
 
@@ -72,7 +72,7 @@ class AppointmentController extends Controller
 
         return $this->successResponse(
             null,
-            'Appointment cancelled successfully'
+            __('appointmentmanagement::appointments.messages.appointment_cancelled')
         );
     }
 
@@ -89,7 +89,7 @@ class AppointmentController extends Controller
 
         return $this->successResponse(
             new AppointmentResource($updatedAppointment),
-            'Appointment date and time confirmed successfully'
+            __('appointmentmanagement::appointments.messages.appointment_confirmed')
         );
     }
 
@@ -101,7 +101,8 @@ class AppointmentController extends Controller
 
         return $this->successResponse(
             new AppointmentResource($updatedAppointment),
-            'Payment confirmed successfully'
+            __('appointmentmanagement::appointments.messages.payment_confirmed')
+
         );
     }
 
@@ -116,7 +117,8 @@ class AppointmentController extends Controller
 
         return $this->successResponse(
             $slots,
-            'Available slots retrieved successfully'
+            __('appointmentmanagement::appointments.messages.available_slots')
+
         );
     }
 
@@ -126,7 +128,7 @@ class AppointmentController extends Controller
 
         return $this->successResponse(
             AppointmentResource::collection($appointments->load('doctor')),
-            'Upcoming appointments retrieved successfully'
+            __('appointmentmanagement::appointments.messages.upcoming_appointments')
         );
     }
     public function getDoneAppointments(): JsonResponse
@@ -135,7 +137,19 @@ class AppointmentController extends Controller
 
         return $this->successResponse(
             AppointmentResource::collection($appointments->load('doctor')),
-            'Upcoming appointments retrieved successfully'
+            __('appointmentmanagement::appointments.messages.appointments_retrieved')
+
+        );
+    }
+
+    public function pendingAppointments(): JsonResponse
+    {
+        $doctorId = Auth::id();
+        $appointments = $this->appointmentService->getDoctorPendingAppointments($doctorId);
+
+        return $this->successResponse(
+            AppointmentResource::collection($appointments),
+            __('appointmentmanagement::appointments.messages.appointments_retrieved')
         );
     }
 }

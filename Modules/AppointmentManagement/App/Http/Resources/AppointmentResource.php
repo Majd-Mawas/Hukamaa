@@ -5,6 +5,7 @@ namespace Modules\AppointmentManagement\App\Http\Resources;
 use App\Http\Resources\ApiResource;
 use Illuminate\Http\Request;
 use Modules\DoctorManagement\App\Http\Resources\DoctorProfileResource;
+use Modules\PatientManagement\App\Http\Resources\PatientProfileResource;
 use Modules\UserManagement\App\Http\Resources\UserResource;
 
 class AppointmentResource extends ApiResource
@@ -26,6 +27,7 @@ class AppointmentResource extends ApiResource
                 return [
                     'id' => $this->patient->id,
                     'name' => $this->patient->name,
+                    'profile' => new PatientProfileResource($this->patient->patientProfile->load('media'))
                 ];
             }),
             'doctor' => $this->whenLoaded('doctor', function () {
@@ -42,7 +44,7 @@ class AppointmentResource extends ApiResource
             }),
             'files' => collect()
                 ->concat($this->getMedia('appointment_files'))
-                ->concat([$this->getFirstMedia('payment_invoices')])
+                // ->concat([$this->getFirstMedia('payment_invoices')])
                 ->filter()
                 ->map(function ($media) {
                     return [

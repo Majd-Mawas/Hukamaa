@@ -116,4 +116,16 @@ class AppointmentService
             ->where('status', AppointmentStatus::COMPLETED)
             ->get();
     }
+
+    public function getDoctorPendingAppointments(int $doctorId)
+    {
+        return Appointment::where('doctor_id', $doctorId)
+            ->whereIn('status', [
+                AppointmentStatus::PENDING->value,
+                AppointmentStatus::PENDING_PAYMENT->value
+            ])
+            ->with(['patient'])
+            ->latest()
+            ->paginate(10);
+    }
 }
