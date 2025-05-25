@@ -17,5 +17,11 @@ return [
         'invalid_token' => 'Invalid or expired token',
         'email_already_verified' => 'Email already verified',
         'invalid_verification_code' => 'Invalid or expired verification code',
+        // Password Reset Translations
+        'password_reset_link_sent' => 'Password reset link sent to your email',
+        'password_reset_successful' => 'Password has been successfully reset',
+        'user_not_found' => 'User not found',
+        'password_reset_token_expired' => 'Password reset token has expired',
+        'invalid_reset_token' => 'Invalid reset token',
     ],
 ];

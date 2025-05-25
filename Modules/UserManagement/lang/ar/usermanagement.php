@@ -17,5 +17,11 @@ return [
         'invalid_token' => 'رمز غير صالح أو منتهي الصلاحية',
         'email_already_verified' => 'تم التحقق من البريد الإلكتروني مسبقاً',
         'invalid_verification_code' => 'رمز تحقق غير صالح أو منتهي الصلاحية',
+        // Password Reset Translations
+        'password_reset_link_sent' => 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني',
+        'password_reset_successful' => 'تم إعادة تعيين كلمة المرور بنجاح',
+        'user_not_found' => 'المستخدم غير موجود',
+        'password_reset_token_expired' => 'انتهت صلاحية رمز إعادة تعيين كلمة المرور',
+        'invalid_reset_token' => 'رمز إعادة التعيين غير صالح',
     ],
 ];
