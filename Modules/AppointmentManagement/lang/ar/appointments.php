@@ -6,6 +6,7 @@ return [
         'completed' => 'مكتمل',
         'cancelled' => 'ملغي',
         'pending' => 'قيد الانتظار',
+        'pending_payment' => 'قيد الدفع',
     ],
     'messages' => [
         'appointment_created' => 'تم إنشاء الموعد بنجاح',

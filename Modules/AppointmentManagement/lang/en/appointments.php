@@ -6,6 +6,7 @@ return [
         'completed' => 'Completed',
         'cancelled' => 'Cancelled',
         'pending' => 'Pending',
+        'pending_payment' => 'Pending Payment',
     ],
     'messages' => [
         'appointment_created' => 'Appointment created successfully',
