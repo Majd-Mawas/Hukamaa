@@ -42,7 +42,7 @@ class AppointmentService
             }
         }
 
-        return $appointment->load(['patient', 'doctor']);
+        return $appointment->fresh();
     }
 
     public function updateAppointment(Appointment $appointment, array $data): Appointment
@@ -127,5 +127,12 @@ class AppointmentService
             ->with(['patient'])
             ->latest()
             ->paginate(10);
+    }
+    public function decideAppointment(Appointment $appointment, array $data): Appointment
+    {
+        $appointment->update([
+            'status' => $data['action'] === 'accept' ? AppointmentStatus::PENDING_PAYMENT : AppointmentStatus::CANCELLED,
+        ]);
+        return $appointment->fresh();
     }
 }

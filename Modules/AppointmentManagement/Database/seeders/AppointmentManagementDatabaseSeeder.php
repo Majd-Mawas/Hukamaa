@@ -14,6 +14,7 @@ class AppointmentManagementDatabaseSeeder extends Seeder
     {
         $this->call([
             AppointmentSeeder::class,
+            AppointmentReportSeeder::class,
         ]);
     }
 }

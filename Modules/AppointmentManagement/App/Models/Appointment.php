@@ -62,4 +62,9 @@ class Appointment extends Model implements HasMedia
     {
         return $this->getFirstMedia('payment_invoices');
     }
+
+    public function appointmentReport()
+    {
+        return $this->hasOne(AppointmentReport::class);
+    }
 }

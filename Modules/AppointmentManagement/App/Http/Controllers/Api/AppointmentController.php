@@ -11,9 +11,12 @@ use Modules\AppointmentManagement\App\Http\Requests\ConfirmAppointmentRequest;
 use Modules\AppointmentManagement\App\Http\Requests\ConfirmPaymentRequest;
 use Modules\AppointmentManagement\App\Http\Requests\CreateAppointmentRequest;
 use Modules\AppointmentManagement\App\Http\Requests\GetAvailableSlotsRequest;
+use Modules\AppointmentManagement\App\Http\Requests\AppointmentReportRequest;
+use Modules\AppointmentManagement\App\Models\AppointmentReport;
 use Modules\AppointmentManagement\App\Http\Resources\AppointmentResource;
 use Modules\AppointmentManagement\App\Models\Appointment;
 use Modules\AppointmentManagement\App\Services\AppointmentService;
+use Modules\AppointmentManagement\App\Http\Requests\DoctorDecideAppointmentRequest;
 use Modules\DoctorManagement\App\Services\AvailabilityService;
 use Modules\DoctorManagement\App\Services\DoctorAvailabilityService;
 
@@ -42,7 +45,7 @@ class AppointmentController extends Controller
         $appointment = $this->appointmentService->createAppointment($request->validated());
 
         return $this->successResponse(
-            new AppointmentResource($appointment),
+            new AppointmentResource($appointment->load(['patient', 'doctor'])),
             __('appointmentmanagement::appointments.messages.appointment_created'),
             201
         );
@@ -136,7 +139,7 @@ class AppointmentController extends Controller
         $appointments = $this->appointmentService->getDoneAppointments(Auth::id());
 
         return $this->successResponse(
-            AppointmentResource::collection($appointments->load('doctor')),
+            AppointmentResource::collection($appointments->load(['doctor', 'appointmentReport'])),
             __('appointmentmanagement::appointments.messages.appointments_retrieved')
 
         );
@@ -150,6 +153,33 @@ class AppointmentController extends Controller
         return $this->successResponse(
             AppointmentResource::collection($appointments),
             __('appointmentmanagement::appointments.messages.appointments_retrieved')
+        );
+    }
+
+    public function submitReport(AppointmentReportRequest $request, Appointment $appointment): JsonResponse
+    {
+        try {
+            $report = AppointmentReport::updateOrCreate(
+                ['appointment_id' => $appointment->id],
+                $request->validated()
+            );
+
+            return $this->successResponse(
+                data: $report,
+                message: __('appointmentmanagement::appointments.messages.report_submitted')
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
+    public function decideAppointment(DoctorDecideAppointmentRequest $request, Appointment $appointment)
+    {
+        $appointment = $this->appointmentService->decideAppointment($appointment, $request->validated());
+
+        return $this->successResponse(
+            new AppointmentResource($appointment),
+            __('appointmentmanagement::appointments.messages.appointment_decided')
         );
     }
 }

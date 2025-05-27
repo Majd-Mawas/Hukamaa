@@ -30,6 +30,7 @@ return [
         'video_call_created' => 'تم إنشاء جلسة المكالمة المرئية بنجاح',
         'video_call_updated' => 'تم تحديث جلسة المكالمة المرئية بنجاح',
         'video_call_ended' => 'تم إنهاء جلسة المكالمة المرئية بنجاح',
+        'appointment_decided' => 'تم تقرير الموعد بنجاح',
     ],
     'months' => [
         'january' => 'يناير',

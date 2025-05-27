@@ -30,6 +30,7 @@ return [
         'video_call_created' => 'Video call session created successfully',
         'video_call_updated' => 'Video call session updated successfully',
         'video_call_ended' => 'Video call session ended successfully',
+        'appointment_decided' => 'Appointment decided successfully',
     ],
     'months' => [
         'january' => 'January',

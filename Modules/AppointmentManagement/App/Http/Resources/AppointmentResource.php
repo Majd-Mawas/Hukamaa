@@ -42,6 +42,15 @@ class AppointmentResource extends ApiResource
                     'status' => $this->videoCall->status,
                 ];
             }),
+            'report' => $this->whenLoaded('appointmentReport', function () {
+                return [
+                    'diagnosis' => $this->appointmentReport->diagnosis,
+                    'prescription' => $this->appointmentReport->prescription,
+                    'additional_notes' => $this->appointmentReport->additional_notes,
+                    'created_at' => $this->appointmentReport->created_at?->toISOString(),
+                    'updated_at' => $this->appointmentReport->updated_at?->toISOString(),
+                ];
+            }),
             'files' => collect()
                 ->concat($this->getMedia('appointment_files'))
                 // ->concat([$this->getFirstMedia('payment_invoices')])

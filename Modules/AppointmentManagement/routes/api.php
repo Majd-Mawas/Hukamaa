@@ -17,6 +17,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         });
         Route::prefix('doctor')->group(function () {
             Route::get('/pending', [AppointmentController::class, 'pendingAppointments']);
+            Route::post('/{appointment}/decide', [AppointmentController::class, 'decideAppointment']);
+            Route::post('/{appointment}/report', [AppointmentController::class, 'submitReport']);
         });
     });
 
