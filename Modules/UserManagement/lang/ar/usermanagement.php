@@ -17,6 +17,7 @@ return [
         'invalid_token' => 'رمز غير صالح أو منتهي الصلاحية',
         'email_already_verified' => 'تم التحقق من البريد الإلكتروني مسبقاً',
         'invalid_verification_code' => 'رمز تحقق غير صالح أو منتهي الصلاحية',
+        'verify_email_address' => 'يرجى التحقق من بريدك الإلكتروني قبل تسجيل الدخول.',
         // Password Reset Translations
         'password_reset_link_sent' => 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني',
         'password_reset_successful' => 'تم إعادة تعيين كلمة المرور بنجاح',

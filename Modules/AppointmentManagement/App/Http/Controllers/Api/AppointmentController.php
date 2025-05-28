@@ -182,4 +182,23 @@ class AppointmentController extends Controller
             __('appointmentmanagement::appointments.messages.appointment_decided')
         );
     }
+
+    public function getDoctorUpcomingAppointments(): JsonResponse
+    {
+        $appointments = $this->appointmentService->getDoctorUpcomingAppointments(Auth::id());
+
+        return $this->successResponse(
+            AppointmentResource::collection($appointments->load('patient')),
+            __('appointmentmanagement::appointments.messages.upcoming_appointments')
+        );
+    }
+    public function getDoctorDoneAppointments(): JsonResponse
+    {
+        $appointments = $this->appointmentService->getDoctorDoneAppointments(Auth::id());
+
+        return $this->successResponse(
+            AppointmentResource::collection($appointments->load('patient')),
+            __('appointmentmanagement::appointments.messages.upcoming_appointments')
+        );
+    }
 }

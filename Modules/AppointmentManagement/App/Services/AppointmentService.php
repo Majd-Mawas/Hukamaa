@@ -132,7 +132,21 @@ class AppointmentService
     {
         $appointment->update([
             'status' => $data['action'] === 'accept' ? AppointmentStatus::PENDING_PAYMENT : AppointmentStatus::CANCELLED,
+            'confirmed_by_doctor' => $data['action'] === 'accept' ? true : false,
         ]);
         return $appointment->fresh();
+    }
+
+    public function getDoctorUpcomingAppointments(int $userId)
+    {
+        return Appointment::where('doctor_id', $userId)
+            ->where('status', AppointmentStatus::SCHEDULED)
+            ->get();
+    }
+    public function getDoctorDoneAppointments(int $userId)
+    {
+        return Appointment::where('doctor_id', $userId)
+            ->where('status', AppointmentStatus::COMPLETED)
+            ->get();
     }
 }
