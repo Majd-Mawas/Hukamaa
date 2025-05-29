@@ -58,12 +58,12 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user->hasVerifiedEmail()) {
-            return $this->errorResponse(
-                'Please verify your email address before logging in.',
-                403
-            );
-        }
+        // if (!$user->hasVerifiedEmail()) {
+        //     return $this->errorResponse(
+        //         'Please verify your email address before logging in.',
+        //         403
+        //     );
+        // }
 
         $token = $user->createToken('auth_token')->plainTextToken;
 

@@ -4,18 +4,22 @@ namespace Modules\AppointmentManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
+use Auth;
 use Illuminate\Http\JsonResponse;
 use Modules\AppointmentManagement\App\Http\Requests\VideoCallRequest;
 use Modules\AppointmentManagement\App\Http\Resources\VideoCallResource;
+use Modules\AppointmentManagement\App\Models\Appointment;
 use Modules\AppointmentManagement\App\Models\VideoCall;
 use Modules\AppointmentManagement\App\Services\VideoCallService;
+use Modules\AppointmentManagement\App\Services\ZegoTokenService;
 
 class VideoCallController extends Controller
 {
     use ApiResponse;
 
     public function __construct(
-        private readonly VideoCallService $videoCallService
+        private readonly VideoCallService $videoCallService,
+        protected ZegoTokenService $zego
     ) {}
 
     public function store(VideoCallRequest $request): JsonResponse
@@ -47,5 +51,46 @@ class VideoCallController extends Controller
             new VideoCallResource($endedVideoCall),
             'Video call session ended successfully'
         );
+    }
+
+    public function start(Appointment $appointment)
+    {
+        $user = Auth::user();
+
+        if (!in_array($user->id, [$appointment->doctor_id, $appointment->patient_id])) {
+            abort(403);
+        }
+
+        // Create or reuse VideoCall
+        $videoCall = VideoCall::firstOrCreate(
+            ['appointment_id' => $appointment->id],
+            [
+                'room_id' => $this->zego->createRoomId(),
+                'started_at' => now(),
+            ]
+        );
+
+        if ($user->id === $appointment->doctor_id && !$videoCall->doctor_token) {
+            $videoCall->doctor_token = $this->zego->generateToken("doctor_{$user->id}");
+        }
+
+        if ($user->id === $appointment->patient_id && !$videoCall->patient_token) {
+            $videoCall->patient_token = $this->zego->generateToken("patient_{$user->id}");
+        }
+
+        $videoCall->save();
+
+        return $this->successResponse(new VideoCallResource($videoCall));
+        // return $this->successResponse([
+        //     'id' => $videoCall->id,
+        //     'room_id' => $videoCall->room_id,
+        //     'token' => $user->id === $appointment->doctor_id
+        //         ? $videoCall->doctor_token
+        //         : $videoCall->patient_token,
+        //     'user_id' => $user->id === $appointment->doctor_id
+        //         ? "doctor_{$user->id}"
+        //         : "patient_{$user->id}",
+        //     'app_id' => config('services.zegocloud.app_id'),
+        // ]);
     }
 }

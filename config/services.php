@@ -34,5 +34,9 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'zegocloud' => [
+        'app_id' => env('ZEGO_APP_ID'),
+        'server_secret' => env('ZEGO_SERVER_SECRET'),
+    ],
 
 ];

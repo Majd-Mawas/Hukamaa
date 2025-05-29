@@ -15,6 +15,9 @@ class VideoCall extends Model
         'ended_at',
         'call_duration',
         'status',
+        'room_id',
+        'doctor_token',
+        'patient_token',
     ];
 
     protected $casts = [
