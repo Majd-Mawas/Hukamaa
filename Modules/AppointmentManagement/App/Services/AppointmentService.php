@@ -5,14 +5,20 @@ namespace Modules\AppointmentManagement\App\Services;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Modules\AppointmentManagement\App\Enums\AppointmentStatus;
 use Modules\AppointmentManagement\App\Models\Appointment;
 use Modules\DoctorManagement\App\Models\DoctorProfile;
+use Modules\DoctorManagement\App\Services\DoctorAvailabilityService;
 use Modules\PaymentManagement\App\Models\Payment;
 
 class AppointmentService
 {
+    public function __construct(
+        private readonly DoctorAvailabilityService $doctorAvailabilityService
+    ) {}
     public function getUserAppointments(int $userId)
     {
         return Appointment::where('patient_id', $userId)
@@ -24,25 +30,36 @@ class AppointmentService
 
     public function createAppointment(array $data): Appointment
     {
-        $doctorProfile = DoctorProfile::where('id', $data['doctor_id'])->firstOrFail();
-        $appointment = Appointment::create([
-            'patient_id' => Auth::id(),
-            'doctor_id' => $doctorProfile->user_id,
-            'date' => $data['date'] ?? now(),
-            'condition_description' => $data['condition_description'],
-            'status' => AppointmentStatus::PENDING,
-            'confirmed_by_doctor' => false,
-            'confirmed_by_patient' => true,
-        ]);
+        DB::beginTransaction();
+        try {
+            $doctorProfile = DoctorProfile::where('id', $data['doctor_id'])->firstOrFail();
+            $appointment = Appointment::create([
+                'patient_id' => Auth::id(),
+                'doctor_id' => $doctorProfile->user_id,
+                'date' => $data['date'] ?? today(),
+                'condition_description' => $data['condition_description'],
+                'status' => AppointmentStatus::PENDING,
+                'confirmed_by_doctor' => false,
+                'confirmed_by_patient' => true,
+            ]);
 
-        if (isset($data['files'])) {
-            foreach ($data['files'] as $file) {
-                $appointment->addMedia($file)
-                    ->toMediaCollection('appointment_files');
+            if (isset($data['schedule'])) {
+                $this->scheduleAppointment($appointment, $data['schedule'], $data['doctor_id']);
             }
-        }
 
-        return $appointment->fresh();
+            if (isset($data['files'])) {
+                foreach ($data['files'] as $file) {
+                    $appointment->addMedia($file)
+                        ->toMediaCollection('appointment_files');
+                }
+            }
+
+            DB::commit();
+            return $appointment->fresh(['patient', 'doctor']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 
     public function updateAppointment(Appointment $appointment, array $data): Appointment
@@ -59,13 +76,6 @@ class AppointmentService
     public function confirmAppointmentDateTime(Appointment $appointment, ?array $timeSlots = null): Appointment
     {
         $updates = [];
-
-        // $user = Auth::user();
-        // if ($user->role === 'doctor') {
-        //     $updates['confirmed_by_doctor'] = true;
-        // } else {
-        //     $updates['confirmed_by_patient'] = true;
-        // }
 
         if ($timeSlots) {
             $updates['start_time'] = Carbon::parse($timeSlots['start_time']);
@@ -148,5 +158,25 @@ class AppointmentService
         return Appointment::where('doctor_id', $userId)
             ->where('status', AppointmentStatus::COMPLETED)
             ->get();
+    }
+
+    private function scheduleAppointment(Appointment $appointment, array $schedule, $doctorId): void
+    {
+        if (!$this->doctorAvailabilityService->isSlotAvailable(
+            $doctorId,
+            $schedule['date'],
+            $schedule['start_time'],
+            $schedule['end_time']
+        )) {
+            throw ValidationException::withMessages([
+                'schedule' => ['Selected time slot is not available.']
+            ]);
+        }
+
+        $appointment->update([
+            'date' => $schedule['date'],
+            'start_time' => $schedule['start_time'],
+            'end_time' => $schedule['end_time'],
+        ]);
     }
 }

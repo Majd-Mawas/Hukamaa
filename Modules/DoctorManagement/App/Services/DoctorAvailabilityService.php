@@ -82,4 +82,14 @@ class DoctorAvailabilityService
 
         return $slots;
     }
+
+    public function isSlotAvailable(int $doctorProfileId, string $date, string $startTime, string $endTime): bool
+    {
+        $availableSlots = $this->getAvailableSlots($doctorProfileId, $date);
+
+        return in_array([
+            'start_time' => Carbon::parse($startTime)->format('H:i'),
+            'end_time' => Carbon::parse($endTime)->format('H:i')
+        ], $availableSlots);
+    }
 }
