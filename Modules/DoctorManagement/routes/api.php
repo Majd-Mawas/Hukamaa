@@ -10,25 +10,27 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('doctors')->name('doctors.')->group(function () {
         Route::get('/statistics', [DoctorProfileController::class, 'statistics'])->name('statistics');
         Route::get('/featured', [DoctorProfileController::class, 'featured'])->name('featured');
-        Route::get('/', [DoctorProfileController::class, 'index'])->name('index');
-        Route::post('/', [DoctorProfileController::class, 'store'])->name('store');
+        // Route::get('/', [DoctorProfileController::class, 'index'])->name('index');
+        // Route::post('/', [DoctorProfileController::class, 'store'])->name('store');
         Route::get('/{doctor}', [DoctorProfileController::class, 'show'])->name('show');
-        Route::put('/{doctor}', [DoctorProfileController::class, 'update'])->name('update');
-        Route::delete('/{doctor}', [DoctorProfileController::class, 'destroy'])->name('destroy');
+        // Route::put('/{doctor}', [DoctorProfileController::class, 'update'])->name('update');
+        // Route::delete('/{doctor}', [DoctorProfileController::class, 'destroy'])->name('destroy');
 
         // Doctor onboarding routes
-        Route::prefix('/onboarding')->name('onboarding.')->group(function () {
-            Route::post('/basic', [DoctorOnboardingController::class, 'updateBasicInfo']);
-            Route::post('/medical', [DoctorOnboardingController::class, 'updateMedicalInfo']);
-            Route::post('/documents', [DoctorOnboardingController::class, 'uploadDocuments']);
-        });
+        Route::prefix('/onboarding')
+            ->name('onboarding.')
+            ->group(function () {
+                Route::post('/basic', [DoctorOnboardingController::class, 'updateBasicInfo']);
+                Route::post('/medical', [DoctorOnboardingController::class, 'updateMedicalInfo']);
+                Route::post('/documents', [DoctorOnboardingController::class, 'uploadDocuments']);
+            });
     });
 
     // Doctor availability routes
-    Route::prefix('availabilities')->name('availabilities.')->group(function () {
-        Route::get('/', [AvailabilityController::class, 'index'])->name('index');
-        Route::post('/', [AvailabilityController::class, 'store'])->name('store');
-        Route::put('/{availability}', [AvailabilityController::class, 'update'])->name('update');
-        Route::delete('/{availability}', [AvailabilityController::class, 'destroy'])->name('destroy');
-    });
+    // Route::prefix('availabilities')->name('availabilities.')->group(function () {
+    //     Route::get('/', [AvailabilityController::class, 'index'])->name('index');
+    //     Route::post('/', [AvailabilityController::class, 'store'])->name('store');
+    //     Route::put('/{availability}', [AvailabilityController::class, 'update'])->name('update');
+    //     Route::delete('/{availability}', [AvailabilityController::class, 'destroy'])->name('destroy');
+    // });
 });
