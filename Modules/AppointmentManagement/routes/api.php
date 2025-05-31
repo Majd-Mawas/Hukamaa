@@ -6,6 +6,7 @@ use Modules\AppointmentManagement\App\Http\Controllers\Api\VideoCallController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('appointments')
+        ->name('appointments.')
         ->group(function () {
 
             Route::apiResource('/', AppointmentController::class);
