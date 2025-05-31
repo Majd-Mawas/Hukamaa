@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\PaymentManagement\App\Http\Controllers\PaymentManagementController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,4 @@ use Modules\PaymentManagement\App\Http\Controllers\PaymentManagementController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('paymentmanagement', PaymentManagementController::class)->names('paymentmanagement');
-});
+Route::group([], function () {});

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\DoctorManagement\App\Http\Controllers\DoctorManagementController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,4 @@ use Modules\DoctorManagement\App\Http\Controllers\DoctorManagementController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('doctormanagement', DoctorManagementController::class)->names('doctormanagement');
-});
+Route::group([], function () {});

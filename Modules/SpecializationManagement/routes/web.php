@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\SpecializationManagement\App\Http\Controllers\SpecializationManagementController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,4 @@ use Modules\SpecializationManagement\App\Http\Controllers\SpecializationManageme
 |
 */
 
-Route::group([], function () {
-    Route::resource('specializationmanagement', SpecializationManagementController::class)->names('specializationmanagement');
-});
+Route::group([], function () {});
