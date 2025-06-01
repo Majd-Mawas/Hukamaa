@@ -1,4 +1,4 @@
-@extends('adminpanel::layouts.master')
+@extends('layouts.master')
 
 @section('content')
     <h1>Hello World</h1>

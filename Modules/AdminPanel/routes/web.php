@@ -14,39 +14,43 @@ use Modules\AdminPanel\App\Http\Controllers\TableController;
 use Modules\AdminPanel\App\Http\Controllers\UsersController;
 use Modules\AdminPanel\App\Http\Controllers\CryptocurrencyController;
 
-Route::controller(DashboardController::class)->group(function () {
-    Route::get('/', 'index')->name('index');
+// Route::name('dashboard.')
+//     ->group(function () {
+
+Route::controller(DashboardController::class)
+    ->prefix('/')
+    ->group(function () {
+        Route::get('/', 'index8')->name('index');
+    });
+// });
+Route::controller(HomeController::class)->group(function () {
+    Route::get('calendar-Main', 'calendarMain')->name('calendarMain');
+    Route::get('chatempty', 'chatempty')->name('chatempty');
+    Route::get('chat-message', 'chatMessage')->name('chatMessage');
+    Route::get('chat-profile', 'chatProfile')->name('chatProfile');
+    Route::get('email', 'email')->name('email');
+    Route::get('faq', 'faq')->name('faq');
+    Route::get('gallery', 'gallery')->name('gallery');
+    Route::get('image-upload', 'imageUpload')->name('HomeimageUpload');
+    Route::get('kanban', 'kanban')->name('kanban');
+    Route::get('page-error', 'pageError')->name('pageError');
+    Route::get('pricing', 'pricing')->name('pricing');
+    Route::get('starred', 'starred')->name('starred');
+    Route::get('terms-condition', 'termsCondition')->name('termsCondition');
+    Route::get('veiw-details', 'veiwDetails')->name('veiwDetails');
+    Route::get('widgets', 'widgets')->name('widgets');
 });
 
-Route::controller(HomeController::class)->group(function () {
-    Route::get('calendar-Main','calendarMain')->name('calendarMain');
-    Route::get('chatempty','chatempty')->name('chatempty');
-    Route::get('chat-message','chatMessage')->name('chatMessage');
-    Route::get('chat-profile','chatProfile')->name('chatProfile');
-    Route::get('email','email')->name('email');
-    Route::get('faq','faq')->name('faq');
-    Route::get('gallery','gallery')->name('gallery');
-    Route::get('image-upload','imageUpload')->name('HomeimageUpload');
-    Route::get('kanban','kanban')->name('kanban');
-    Route::get('page-error','pageError')->name('pageError');
-    Route::get('pricing','pricing')->name('pricing');
-    Route::get('starred','starred')->name('starred');
-    Route::get('terms-condition','termsCondition')->name('termsCondition');
-    Route::get('veiw-details','veiwDetails')->name('veiwDetails');
-    Route::get('widgets','widgets')->name('widgets');
-
-    });
-
-    // aiApplication
+// aiApplication
 Route::prefix('aiapplication')->group(function () {
     Route::controller(AiapplicationController::class)->group(function () {
         Route::get('/code-generator', 'codeGenerator')->name('codeGenerator');
         Route::get('/code-generatornew', 'codeGeneratorNew')->name('codeGeneratorNew');
-        Route::get('/image-generator','imageGenerator')->name('imageGenerator');
-        Route::get('/text-generator','textGenerator')->name('textGenerator');
-        Route::get('/text-generatornew','textGeneratorNew')->name('textGeneratorNew');
-        Route::get('/video-generator','videoGenerator')->name('videoGenerator');
-        Route::get('/voice-generator','voiceGenerator')->name('voiceGenerator');
+        Route::get('/image-generator', 'imageGenerator')->name('imageGenerator');
+        Route::get('/text-generator', 'textGenerator')->name('textGenerator');
+        Route::get('/text-generatornew', 'textGeneratorNew')->name('textGeneratorNew');
+        Route::get('/video-generator', 'videoGenerator')->name('videoGenerator');
+        Route::get('/voice-generator', 'voiceGenerator')->name('voiceGenerator');
     });
 });
 
@@ -98,22 +102,22 @@ Route::prefix('componentspage')->group(function () {
 // Dashboard
 Route::prefix('cryptocurrency')->group(function () {
     Route::controller(CryptocurrencyController::class)->group(function () {
-        Route::get('/wallet','wallet')->name('wallet');
+        Route::get('/wallet', 'wallet')->name('wallet');
     });
 });
 
 // Dashboard
 Route::prefix('dashboard')->group(function () {
     Route::controller(DashboardController::class)->group(function () {
-        Route::get('/index', 'index')->name('index');
+        Route::get('/index', 'index')->name('index1');
         Route::get('/index-2', 'index2')->name('index2');
         Route::get('/index-3', 'index3')->name('index3');
         Route::get('/index-4', 'index4')->name('index4');
-        Route::get('/index-5','index5')->name('index5');
-        Route::get('/index-6','index6')->name('index6');
-        Route::get('/index-7','index7')->name('index7');
-        Route::get('/index-8','index8')->name('index8');
-        Route::get('/index-9','index9')->name('index9');
+        Route::get('/index-5', 'index5')->name('index5');
+        Route::get('/index-6', 'index6')->name('index6');
+        Route::get('/index-7', 'index7')->name('index7');
+        Route::get('/index-8', 'index8')->name('index8');
+        Route::get('/index-9', 'index9')->name('index9');
     });
 });
 
