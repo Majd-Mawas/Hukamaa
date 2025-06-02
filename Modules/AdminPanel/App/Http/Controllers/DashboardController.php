@@ -3,53 +3,21 @@
 namespace Modules\AdminPanel\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Modules\AdminPanel\App\Services\DashboardService;
 
 class DashboardController extends Controller
 {
+    private $dashboardService;
+
+    public function __construct(DashboardService $dashboardService)
+    {
+        $this->dashboardService = $dashboardService;
+    }
 
     public function index()
     {
-        return view('dashboard/index');
-    }
-
-    public function index2()
-    {
-        return view('dashboard/index2');
-    }
-
-    public function index3()
-    {
-        return view('dashboard/index3');
-    }
-
-    public function index4()
-    {
-        return view('dashboard/index4');
-    }
-
-    public function index5()
-    {
-        return view('dashboard/index5');
-    }
-
-    public function index6()
-    {
-        return view('dashboard/index6');
-    }
-
-    public function index7()
-    {
-        return view('dashboard/index7');
-    }
-
-    public function index8()
-    {
-        return view('dashboard/index8');
-    }
-
-    public function index9()
-    {
-        return view('dashboard/index9');
+        $stats = (object) $this->dashboardService->getDashboardStats();
+        // return $stats;
+        return view('dashboard.index', compact('stats'));
     }
 }

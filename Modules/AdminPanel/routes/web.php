@@ -20,7 +20,7 @@ use Modules\AdminPanel\App\Http\Controllers\CryptocurrencyController;
 Route::controller(DashboardController::class)
     ->prefix('/')
     ->group(function () {
-        Route::get('/', 'index8')->name('index');
+        Route::get('/', 'index')->name('index');
     });
 // });
 Route::controller(HomeController::class)->group(function () {
