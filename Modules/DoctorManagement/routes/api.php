@@ -7,9 +7,10 @@ use Modules\DoctorManagement\App\Http\Controllers\Api\DoctorOnboardingController
 
 Route::middleware('auth:sanctum')->group(function () {
     // Doctor profile routes
-    Route::prefix('doctors')->name('doctors.')->group(function () {
+    Route::prefix('doctors')->name('api.doctors.')->group(function () {
         Route::get('/statistics', [DoctorProfileController::class, 'statistics'])->name('statistics');
         Route::get('/featured', [DoctorProfileController::class, 'featured'])->name('featured');
+        Route::get('/coverage-areas', [DoctorProfileController::class, 'getCoverageAreas'])->name('coverage-areas');
         // Route::get('/', [DoctorProfileController::class, 'index'])->name('index');
         // Route::post('/', [DoctorProfileController::class, 'store'])->name('store');
         Route::get('/{doctor}', [DoctorProfileController::class, 'show'])->name('show');

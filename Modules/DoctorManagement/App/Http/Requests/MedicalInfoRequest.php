@@ -24,9 +24,10 @@ class MedicalInfoRequest extends BaseRequest
         ];
 
         // Add conditional validation for coverage_area if home_visit is selected
-        // if ($this->has('services') && in_array('home_visit', $this->input('services', []))) {
-        //     $rules['coverage_area'] = ['required', 'string'];
-        // }
+        if ($this->has('services') && in_array('home_visit', $this->input('services', []))) {
+            $rules['coverage_area'] = ['required', 'array'];
+            $rules['coverage_area.*'] = ['required', 'integer', 'exists:coverage_areas,id'];
+        }
 
         return $rules;
     }

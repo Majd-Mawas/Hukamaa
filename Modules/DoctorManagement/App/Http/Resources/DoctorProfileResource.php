@@ -85,6 +85,7 @@ class DoctorProfileResource extends ApiResource
                     ];
                 });
             }),
+            'coverage_areas' => CoverageAreaResource::collection($this->coverageAreas)
         ];
     }
 }

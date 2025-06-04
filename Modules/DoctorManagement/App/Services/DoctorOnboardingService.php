@@ -46,9 +46,9 @@ class DoctorOnboardingService
             // 'expertise_focus' => $data['expertise_focus'] ?? null,
         ];
 
-        // if (in_array('home_visit', $data['services'])) {
-        //     $updateData['coverage_area'] = $data['coverage_area'];
-        // }
+        if (in_array('home_visit', $data['services'])) {
+            $profile->coverageAreas()->sync($data['coverage_area']);
+        }
 
         $profile->update($updateData);
 

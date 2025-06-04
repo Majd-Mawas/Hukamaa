@@ -15,6 +15,7 @@ class DoctorManagementDatabaseSeeder extends Seeder
             UserSeeder::class,
             DoctorProfileSeeder::class,
             AvailabilitySeeder::class,
+            CoverageAreaSeeder::class,
         ]);
     }
 }

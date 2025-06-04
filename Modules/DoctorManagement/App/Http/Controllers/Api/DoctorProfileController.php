@@ -8,7 +8,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\DoctorManagement\App\Http\Requests\DoctorProfileRequest;
+use Modules\DoctorManagement\App\Http\Resources\CoverageAreaResource;
 use Modules\DoctorManagement\App\Http\Resources\DoctorProfileResource;
+use Modules\DoctorManagement\App\Models\CoverageArea;
 use Modules\DoctorManagement\App\Models\DoctorProfile;
 use Modules\DoctorManagement\App\Services\DoctorProfileService;
 use Modules\DoctorManagement\App\Services\DoctorStatisticsService;
@@ -70,12 +72,6 @@ class DoctorProfileController extends Controller
         );
     }
 
-    /**
-     * Get featured doctors for the home page with search capabilities
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
     public function featured(Request $request): JsonResponse
     {
         $limit = $request->get('limit', 10);
@@ -103,6 +99,13 @@ class DoctorProfileController extends Controller
         return $this->successResponse(
             $statistics,
             __('doctormanagement::doctor.messages.statistics_retrieved_successfully')
+        );
+    }
+
+    public function getCoverageAreas()
+    {
+        return $this->successResponse(
+            CoverageAreaResource::collection(CoverageArea::all())
         );
     }
 }
