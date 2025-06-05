@@ -13,16 +13,22 @@ use Modules\AdminPanel\App\Http\Controllers\SettingsController;
 use Modules\AdminPanel\App\Http\Controllers\TableController;
 use Modules\AdminPanel\App\Http\Controllers\UsersController;
 use Modules\AdminPanel\App\Http\Controllers\CryptocurrencyController;
+use Modules\AdminPanel\App\Http\Controllers\DoctorController;
 
-// Route::name('dashboard.')
-//     ->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::controller(DashboardController::class)
+        ->prefix('/')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
 
-Route::controller(DashboardController::class)
-    ->prefix('/')
-    ->group(function () {
-        Route::get('/', 'index')->name('index');
-    });
-// });
+            Route::prefix('admin')->name('admin.')->group(function () {
+
+                Route::resource('doctors', DoctorController::class);
+            });
+        });
+
+    Route::post('/logout', [AuthenticationController::class, 'logout'])->name('logout');
+});
 Route::controller(HomeController::class)->group(function () {
     Route::get('calendar-Main', 'calendarMain')->name('calendarMain');
     Route::get('chatempty', 'chatempty')->name('chatempty');

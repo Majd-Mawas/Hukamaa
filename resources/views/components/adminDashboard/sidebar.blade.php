@@ -18,9 +18,8 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('index') }}">
-                    {{-- <iconify-icon icon="solar:home-smile-angle-outline" class="menu-icon"></iconify-icon> --}}
-                    <i class="ri-nurse-fill circle-icon text-primary-600 w-auto"></i>
+                <a href="{{ route('admin.doctors.index') }}">
+                    <iconify-icon icon="healthicons:doctor" class="menu-icon"></iconify-icon>
                     <span>Doctors</span>
                 </a>
             </li>

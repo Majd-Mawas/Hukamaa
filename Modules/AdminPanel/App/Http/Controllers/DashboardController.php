@@ -18,6 +18,6 @@ class DashboardController extends Controller
     {
         $stats = (object) $this->dashboardService->getDashboardStats();
         // return $stats;
-        return view('dashboard.index', compact('stats'));
+        return view('adminDashboard.index', compact('stats'));
     }
 }
