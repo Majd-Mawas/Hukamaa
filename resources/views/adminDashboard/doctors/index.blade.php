@@ -1,4 +1,4 @@
-@extends('admindashboard.layout.layout')
+@extends('adminDashboard.layout.layout')
 
 @php
     $title = 'Basic Table';
