@@ -43,9 +43,9 @@ class AppointmentService
                 'confirmed_by_patient' => true,
             ]);
 
-            if (isset($data['schedule'])) {
-                $this->scheduleAppointment($appointment, $data['schedule'], $data['doctor_id']);
-            }
+            // if (isset($data['schedule'])) {
+            //     $this->scheduleAppointment($appointment, $data['schedule'], $data['doctor_id']);
+            // }
 
             if (isset($data['files'])) {
                 foreach ($data['files'] as $file) {

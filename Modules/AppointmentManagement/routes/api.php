@@ -15,10 +15,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/upcoming', [AppointmentController::class, 'getUpcomingAppointments']);
             Route::get('/done', [AppointmentController::class, 'getDoneAppointments']);
             Route::prefix('/{appointment}/confirm')->group(function () {
-                // Route::post('datetime', [AppointmentController::class, 'confirmDateTime']);
+                Route::post('datetime', [AppointmentController::class, 'confirmDateTime']);
                 Route::post('payment', [AppointmentController::class, 'confirmPayment']);
             });
-            // Option 1: Apply middleware to the entire group
             Route::prefix('doctor')
                 ->group(function () {
                     Route::get('/pending', [AppointmentController::class, 'pendingAppointments']);
