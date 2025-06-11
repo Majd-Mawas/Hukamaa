@@ -117,7 +117,8 @@ class AppointmentService
     public function getUpcomingAppointments(int $userId)
     {
         return Appointment::where('patient_id', $userId)
-            ->whereNot('status', AppointmentStatus::COMPLETED)
+            ->whereNotIn('status', [AppointmentStatus::COMPLETED, AppointmentStatus::CANCELLED, AppointmentStatus::PENDING])
+            ->with(['doctor'])
             ->get();
     }
     public function getDoneAppointments(int $userId)
@@ -132,7 +133,7 @@ class AppointmentService
         return Appointment::where('doctor_id', $doctorId)
             ->whereIn('status', [
                 AppointmentStatus::PENDING->value,
-                AppointmentStatus::PENDING_PAYMENT->value
+                // AppointmentStatus::PENDING_PAYMENT->value
             ])
             ->with(['patient'])
             ->latest()
