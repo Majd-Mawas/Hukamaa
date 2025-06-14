@@ -17,7 +17,7 @@ use Modules\AdminPanel\App\Http\Controllers\DoctorController;
 
 Route::middleware(['auth'])->group(function () {
     Route::controller(DashboardController::class)
-        ->prefix('/')
+        ->prefix('/dashboard')
         ->group(function () {
             Route::get('/', 'index')->name('index');
 

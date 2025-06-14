@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/privacy-policy', 'privacy-policy')->name('privacy.policy');
 
+Route::view('/', 'comingSoon')->name('comingSoon');
+
 Route::controller(AuthController::class)
     ->middleware('guest')
     ->group(function () {
