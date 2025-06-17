@@ -72,7 +72,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td>{{ $doctor->specialization->specialization_name ?? 'Not specified' }}
+                                                <td>{{ $doctor?->specialization?->specialization_name ?? 'Not specified' }}
                                                 </td>
                                                 <td>{{ $doctor->experience_years }} years</td>
                                                 <td>

@@ -408,7 +408,7 @@
                                             <div class="flex-grow-1">
                                                 <h6 class="text-base mb-0">{{ $doctor->user->name }}</h6>
                                                 <span
-                                                    class="text-sm text-gray-600 font-medium">{{ $doctor->specialization->specialization_name }}</span>
+                                                    class="text-sm text-gray-600 font-medium">{{ $doctor?->specialization?->specialization_name ?? 'Not specified' }}</span>
                                             </div>
                                         </div>
                                         <span

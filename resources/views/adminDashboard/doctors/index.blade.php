@@ -62,7 +62,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900 dark:text-white">
-                                        {{ $doctor->specialization->specialization_name }}
+                                        {{ $doctor?->specialization?->specialization_name ?? 'Not specified' }}
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
