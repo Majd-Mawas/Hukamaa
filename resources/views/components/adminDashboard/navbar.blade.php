@@ -9,16 +9,17 @@
                 <button type="button" class="sidebar-mobile-toggle d-flex !leading-[0]">
                     <iconify-icon icon="heroicons:bars-3-solid" class="icon !text-[30px]"></iconify-icon>
                 </button>
-                <form class="navbar-search">
+                {{-- <form class="navbar-search">
                     <input type="text" name="search" placeholder="Search">
                     <iconify-icon icon="ion:search-outline" class="icon"></iconify-icon>
-                </form>
+                </form> --}}
 
             </div>
         </div>
         <div class="col-auto">
             <div class="flex flex-wrap items-center gap-3">
-                <button type="button" id="theme-toggle" class="w-10 h-10 bg-neutral-200 dark:bg-neutral-700 dark:text-white rounded-full flex justify-center items-center">
+                <button type="button" id="theme-toggle"
+                    class="w-10 h-10 bg-neutral-200 dark:bg-neutral-700 dark:text-white rounded-full flex justify-center items-center">
                     <span id="theme-toggle-dark-icon" class="hidden">
                         <i class="ri-sun-line"></i>
                     </span>
@@ -28,7 +29,7 @@
                 </button>
 
                 <!-- Language Dropdown Start  -->
-                <div class="hidden sm:inline-block">
+                {{-- <div class="hidden sm:inline-block">
                     <button data-dropdown-toggle="dropdownInformation" class="has-indicator w-10 h-10 bg-neutral-200 dark:bg-neutral-700 dark:text-white rounded-full flex justify-center items-center" type="button">
                         <img src="{{ asset('assets/images/lang-flag.png') }}" alt="image" class="w-6 h-6 object-cover rounded-full">
                     </button>
@@ -125,13 +126,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <!-- Language Dropdown End  -->
                 <!-- Message Dropdown Start  -->
-                <button data-dropdown-toggle="dropdownMessage" class="has-indicator w-10 h-10 bg-neutral-200 dark:bg-neutral-700 rounded-full flex justify-center items-center" type="button">
+                {{-- <button data-dropdown-toggle="dropdownMessage" class="has-indicator w-10 h-10 bg-neutral-200 dark:bg-neutral-700 rounded-full flex justify-center items-center" type="button">
                     <iconify-icon icon="mage:email" class="text-neutral-900 dark:text-white text-xl"></iconify-icon>
-                </button>
-                <div id="dropdownMessage" class="z-10 hidden bg-white dark:bg-neutral-700 rounded-2xl overflow-hidden shadow-lg max-w-[394px] w-full">
+                </button> --}}
+
+                {{-- <div id="dropdownMessage" class="z-10 hidden bg-white dark:bg-neutral-700 rounded-2xl overflow-hidden shadow-lg max-w-[394px] w-full">
                     <div class="py-3 px-4 rounded-lg bg-primary-50 dark:bg-primary-600/25 m-4 flex items-center justify-between gap-2">
                         <h6 class="text-lg text-neutral-900 font-semibold mb-0">Messaage</h6>
                         <span class="w-10 h-10 bg-white dark:bg-neutral-600 text-primary-600 dark:text-white font-bold flex justify-center items-center rounded-full">05</span>
@@ -224,37 +226,49 @@
                             <a href="javascript:void(0)" class="text-primary-600 dark:text-primary-600 font-semibold hover:underline text-center">See All Message </a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <!-- Message Dropdown End  -->
                 <!-- Notification Start  -->
-                <button data-dropdown-toggle="dropdownNotification" class="has-indicator w-10 h-10 bg-neutral-200 dark:bg-neutral-700 rounded-full flex justify-center items-center" type="button">
+                <button data-dropdown-toggle="dropdownNotification"
+                    class="has-indicator w-10 h-10 bg-neutral-200 dark:bg-neutral-700 rounded-full flex justify-center items-center"
+                    type="button">
                     <iconify-icon icon="iconoir:bell" class="text-neutral-900 dark:text-white text-xl"></iconify-icon>
                 </button>
-                <div id="dropdownNotification" class="z-10 hidden bg-white dark:bg-neutral-700 rounded-2xl overflow-hidden shadow-lg max-w-[394px] w-full">
-                    <div class="py-3 px-4 rounded-lg bg-primary-50 dark:bg-primary-600/25 m-4 flex items-center justify-between gap-2">
+                <div id="dropdownNotification"
+                    class="z-10 hidden bg-white dark:bg-neutral-700 rounded-2xl overflow-hidden shadow-lg max-w-[394px] w-full">
+                    <div
+                        class="py-3 px-4 rounded-lg bg-primary-50 dark:bg-primary-600/25 m-4 flex items-center justify-between gap-2">
                         <h6 class="text-lg text-neutral-900 font-semibold mb-0">Notification</h6>
-                        <span class="w-10 h-10 bg-white dark:bg-neutral-600 text-primary-600 dark:text-white font-bold flex justify-center items-center rounded-full">05</span>
+                        <span
+                            class="w-10 h-10 bg-white dark:bg-neutral-600 text-primary-600 dark:text-white font-bold flex justify-center items-center rounded-full">05</span>
                     </div>
                     <div class="scroll-sm !border-t-0">
                         <div class="max-h-[400px] overflow-y-auto">
-                            <a href="javascript:void(0)" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600 justify-between gap-1">
+                            <a href="javascript:void(0)"
+                                class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600 justify-between gap-1">
                                 <div class="flex items-center gap-3">
-                                    <div class="flex-shrink-0 relative w-11 h-11 bg-success-200 dark:bg-success-600/25 text-success-600 flex justify-center items-center rounded-full">
-                                        <iconify-icon icon="bitcoin-icons:verify-outline" class="text-2xl"></iconify-icon>
+                                    <div
+                                        class="flex-shrink-0 relative w-11 h-11 bg-success-200 dark:bg-success-600/25 text-success-600 flex justify-center items-center rounded-full">
+                                        <iconify-icon icon="bitcoin-icons:verify-outline"
+                                            class="text-2xl"></iconify-icon>
                                     </div>
                                     <div>
                                         <h6 class="text-sm fw-semibold mb-1">Congratulations</h6>
-                                        <p class="mb-0 text-sm line-clamp-1">Your profile has been Verified. Your profile has been Verified</p>
+                                        <p class="mb-0 text-sm line-clamp-1">Your profile has been Verified. Your
+                                            profile has been Verified</p>
                                     </div>
                                 </div>
                                 <div class="shrink-0">
                                     <span class="text-sm text-neutral-500">23 Mins ago</span>
                                 </div>
                             </a>
-                            <a href="javascript:void(0)" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600 justify-between gap-1">
+                            <a href="javascript:void(0)"
+                                class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600 justify-between gap-1">
                                 <div class="flex items-center gap-3">
                                     <div class="flex-shrink-0 relative">
-                                        <img class="rounded-full w-11 h-11" src="{{ asset('assets/images/notification/profile-4.png') }}" alt="Joseph image">
+                                        <img class="rounded-full w-11 h-11"
+                                            src="{{ asset('assets/images/notification/profile-4.png') }}"
+                                            alt="Joseph image">
                                     </div>
                                     <div>
                                         <h6 class="text-sm fw-semibold mb-1">Ronald Richards</h6>
@@ -265,9 +279,11 @@
                                     <span class="text-sm text-neutral-500">23 Mins ago</span>
                                 </div>
                             </a>
-                            <a href="javascript:void(0)" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600 justify-between gap-1">
+                            <a href="javascript:void(0)"
+                                class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600 justify-between gap-1">
                                 <div class="flex items-center gap-3">
-                                    <div class="flex-shrink-0 relative w-11 h-11 bg-primary-100 dark:bg-primary-600/25 text-primary-600 flex justify-center items-center rounded-full">
+                                    <div
+                                        class="flex-shrink-0 relative w-11 h-11 bg-primary-100 dark:bg-primary-600/25 text-primary-600 flex justify-center items-center rounded-full">
                                         AM
                                     </div>
                                     <div>
@@ -279,10 +295,13 @@
                                     <span class="text-sm text-neutral-500">23 Mins ago</span>
                                 </div>
                             </a>
-                            <a href="javascript:void(0)" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600 justify-between gap-1">
+                            <a href="javascript:void(0)"
+                                class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600 justify-between gap-1">
                                 <div class="flex items-center gap-3">
                                     <div class="flex-shrink-0 relative">
-                                        <img class="rounded-full w-11 h-11" src="{{ asset('assets/images/notification/profile-6.png') }}" alt="Joseph image">
+                                        <img class="rounded-full w-11 h-11"
+                                            src="{{ asset('assets/images/notification/profile-6.png') }}"
+                                            alt="Joseph image">
                                     </div>
                                     <div>
                                         <h6 class="text-sm fw-semibold mb-1">Annette Black</h6>
@@ -293,9 +312,11 @@
                                     <span class="text-sm text-neutral-500">23 Mins ago</span>
                                 </div>
                             </a>
-                            <a href="javascript:void(0)" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600 justify-between gap-1">
+                            <a href="javascript:void(0)"
+                                class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600 justify-between gap-1">
                                 <div class="flex items-center gap-3">
-                                    <div class="flex-shrink-0 relative w-11 h-11 bg-primary-100 dark:bg-primary-600/25 text-primary-600 flex justify-center items-center rounded-full">
+                                    <div
+                                        class="flex-shrink-0 relative w-11 h-11 bg-primary-100 dark:bg-primary-600/25 text-primary-600 flex justify-center items-center rounded-full">
                                         DR
                                     </div>
                                     <div>
@@ -310,21 +331,27 @@
                         </div>
 
                         <div class="text-center py-3 px-4">
-                            <a href="javascript:void(0)" class="text-primary-600 dark:text-primary-600 font-semibold hover:underline text-center">See All Notification </a>
+                            <a href="javascript:void(0)"
+                                class="text-primary-600 dark:text-primary-600 font-semibold hover:underline text-center">See
+                                All Notification </a>
                         </div>
                     </div>
                 </div>
                 <!-- Notification End  -->
 
 
-                <button data-dropdown-toggle="dropdownProfile" class="flex justify-center items-center rounded-full" type="button">
-                    <img src="{{ asset('assets/images/user.png') }}" alt="image" class="w-10 h-10 object-fit-cover rounded-full">
+                <button data-dropdown-toggle="dropdownProfile" class="flex justify-center items-center rounded-full"
+                    type="button">
+                    <img src="{{ asset('assets/images/user.png') }}" alt="image"
+                        class="w-10 h-10 object-fit-cover rounded-full">
                 </button>
-                <div id="dropdownProfile" class="z-10 hidden bg-white dark:bg-neutral-700 rounded-lg shadow-lg dropdown-menu-sm p-3">
-                    <div class="py-3 px-4 rounded-lg bg-primary-50 dark:bg-primary-600/25 mb-4 flex items-center justify-between gap-2">
+                <div id="dropdownProfile"
+                    class="z-10 hidden bg-white dark:bg-neutral-700 rounded-lg shadow-lg dropdown-menu-sm p-3">
+                    <div
+                        class="py-3 px-4 rounded-lg bg-primary-50 dark:bg-primary-600/25 mb-4 flex items-center justify-between gap-2">
                         <div>
-                            <h6 class="text-lg text-neutral-900 font-semibold mb-0">Shahidul Islam</h6>
-                            <span class="text-neutral-500">Admin</span>
+                            <h6 class="text-lg text-neutral-900 font-semibold mb-0">{{ auth()->user()->name }}</h6>
+                            <span class="text-neutral-500">{{ auth()->user()->role }}</span>
                         </div>
                         <button type="button" class="hover:text-danger-600">
                             <iconify-icon icon="radix-icons:cross-1" class="icon text-xl"></iconify-icon>
@@ -334,23 +361,28 @@
                     <div class="max-h-[400px] overflow-y-auto scroll-sm pe-2">
                         <ul class="flex flex-col">
                             <li>
-                                <a class="text-black px-0 py-2 hover:text-primary-600 flex items-center gap-4" href="{{ route('viewProfile') }}">
-                                    <iconify-icon icon="solar:user-linear" class="icon text-xl"></iconify-icon>  My Profile
+                                <a class="text-black px-0 py-2 hover:text-primary-600 flex items-center gap-4"
+                                    href="{{ route('viewProfile') }}">
+                                    <iconify-icon icon="solar:user-linear" class="icon text-xl"></iconify-icon> My
+                                    Profile
                                 </a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a class="text-black px-0 py-2 hover:text-primary-600 flex items-center gap-4" href="{{ route('email') }}">
                                     <iconify-icon icon="tabler:message-check" class="icon text-xl"></iconify-icon>  Inbox
                                 </a>
-                            </li>
+                            </li> --}}
                             <li>
-                                <a class="text-black px-0 py-2 hover:text-primary-600 flex items-center gap-4" href="{{ route('company') }}">
-                                    <iconify-icon icon="icon-park-outline:setting-two" class="icon text-xl"></iconify-icon>  Setting
+                                <a class="text-black px-0 py-2 hover:text-primary-600 flex items-center gap-4"
+                                    href="{{ route('company') }}">
+                                    <iconify-icon icon="icon-park-outline:setting-two"
+                                        class="icon text-xl"></iconify-icon> Setting
                                 </a>
                             </li>
                             <li>
-                                <a class="text-black px-0 py-2 hover:text-danger-600 flex items-center gap-4" href="javascript:void(0)">
-                                    <iconify-icon icon="lucide:power" class="icon text-xl"></iconify-icon>  Log Out
+                                <a class="text-black px-0 py-2 hover:text-danger-600 flex items-center gap-4"
+                                    href="javascript:void(0)">
+                                    <iconify-icon icon="lucide:power" class="icon text-xl"></iconify-icon> Log Out
                                 </a>
                             </li>
                         </ul>

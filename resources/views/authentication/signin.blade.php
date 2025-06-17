@@ -15,7 +15,7 @@
         <div class=" py-8 px-6 flex flex-col justify-center">
             <div class=" mx-auto w-full">
                 <div>
-                    <a href="{{ route('index') }}" class="mb-2.5 max-w-[290px]">
+                    <a href="{{ route('admin.index') }}" class="mb-2.5 max-w-[290px]">
                         <img src="{{ asset('assets/images/logo.png') }}" alt="">
                     </a>
                     <h4 class="mb-3">Sign In to your Account</h4>

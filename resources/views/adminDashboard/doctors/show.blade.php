@@ -8,7 +8,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Doctor Information</h4>
+            <h6 class="card-title">Doctor Information</h6>
         </div>
         <div class="card-body">
             <div class="row">
@@ -69,7 +69,7 @@
 
             {{-- Documents Gallery Section --}}
             <div class="mt-5">
-                <h4 class="mb-4">Doctor's Documents</h4>
+                <h6 class="mb-4">Doctor's Documents</h6>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     {{-- Identity Documents --}}
                     @forelse ($doctor->getMedia('identity_document') as $document)

@@ -3,7 +3,7 @@
         <iconify-icon icon="radix-icons:cross-2"></iconify-icon>
     </button>
     <div>
-        <a href="{{ route('index') }}" class="sidebar-logo">
+        <a href="{{ route('admin.index') }}" class="sidebar-logo">
             <img src="{{ asset('assets/images/logo.png') }}" alt="site logo" class="light-logo">
             <img src="{{ asset('assets/images/logo-light.png') }}" alt="site logo" class="dark-logo">
             <img src="{{ asset('assets/images/logo-icon.png') }}" alt="site logo" class="logo-icon">
@@ -11,16 +11,41 @@
     </div>
     <div class="sidebar-menu-area">
         <ul class="sidebar-menu" id="sidebar-menu">
+            <li class="sidebar-menu-group-title">Dashboard</li>
             <li>
-                <a href="{{ route('index') }}">
+                <a href="{{ route('admin.index') }}">
                     <iconify-icon icon="solar:home-smile-angle-outline" class="menu-icon"></iconify-icon>
                     <span>Dashboard</span>
                 </a>
             </li>
+            <li class="sidebar-menu-group-title">Doctors</li>
+
             <li>
                 <a href="{{ route('admin.doctors.index') }}">
                     <iconify-icon icon="healthicons:doctor" class="menu-icon"></iconify-icon>
                     <span>Doctors</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('admin.doctors.doctorApprovals') }}">
+                    <iconify-icon icon="solar:checklist-linear" class="menu-icon"></iconify-icon>
+                    <span>Pending Doctors</span>
+                </a>
+            </li>
+
+            <li class="sidebar-menu-group-title">Payments</li>
+            <li>
+                <a href="{{ route('admin.payments.index') }}">
+                    <iconify-icon icon="solar:card-linear" class="menu-icon"></iconify-icon>
+                    <span>Payments</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('admin.payments.pending') }}">
+                    <iconify-icon icon="solar:clock-circle-linear" class="menu-icon"></iconify-icon>
+                    <span>Pending Payments</span>
                 </a>
             </li>
             {{-- <li class="dropdown">
@@ -30,7 +55,7 @@
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                        <a href="{{ route('index') }}"><i
+                        <a href="{{ route('admin.index') }}"><i
                                 class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> AI</a>
                     </li>
                     <li>

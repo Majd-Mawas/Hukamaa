@@ -76,12 +76,12 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="{{ route('admin.doctors.show', $doctor->id) }}"
+                                    <a href="{{ route('admin.doctors.show', ['doctor' => $doctor->id]) }}"
                                         class="text-primary-600 hover:text-primary-900 mr-3">View</a>
-                                    {{-- <a href="{{ route('admin.doctors.edit', $doctor->id) }}"
+                                    {{-- <a href="{{ route('admin.doctors.edit', ['doctor'=>$doctor->id]) }}"
                                         class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a> --}}
-                                    <form action="{{ route('admin.doctors.destroy', $doctor->id) }}" method="POST"
-                                        class="inline">
+                                    <form action="{{ route('admin.doctors.destroy', ['doctor' => $doctor->id]) }}"
+                                        method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-red-600 hover:text-red-900"

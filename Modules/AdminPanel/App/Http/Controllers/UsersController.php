@@ -4,6 +4,8 @@ namespace Modules\AdminPanel\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Modules\DoctorManagement\App\Models\DoctorProfile;
+use Modules\DoctorManagement\App\Enums\DoctorStatus;
 
 class UsersController extends Controller
 {

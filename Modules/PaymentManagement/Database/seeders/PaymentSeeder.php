@@ -39,11 +39,17 @@ class PaymentSeeder extends Seeder
                 $numPayments = $faker->numberBetween(2, 3);
                 for ($i = 0; $i < $numPayments; $i++) {
                     $doctor = $doctors->random();
-                    $paymentStatus = $faker->randomElement(['pending', 'approved', 'rejected']);
+                    // Get a random appointment for this patient and doctor
+                    $appointment = DB::table('appointments')
+                        ->all()
+                        ->inRandomOrder()
+                        ->first();
 
+                    $paymentStatus = $faker->randomElement(['pending', 'approved', 'rejected']);
                     DB::table('payments')->insert([
                         'patient_id' => $patient->id,
                         'doctor_id' => $doctor->id,
+                        'appointment_id' => $appointment->id,
                         'amount' => $faker->randomFloat(2, 50, 500),
                         'status' => $paymentStatus,
                         'approved_by' => $paymentStatus === 'approved' ? $admins->random()->id : null,

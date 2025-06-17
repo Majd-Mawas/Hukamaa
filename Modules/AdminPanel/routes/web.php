@@ -14,16 +14,32 @@ use Modules\AdminPanel\App\Http\Controllers\TableController;
 use Modules\AdminPanel\App\Http\Controllers\UsersController;
 use Modules\AdminPanel\App\Http\Controllers\CryptocurrencyController;
 use Modules\AdminPanel\App\Http\Controllers\DoctorController;
+use Modules\AdminPanel\App\Http\Controllers\PaymentController;
 
 Route::middleware(['auth'])->group(function () {
-    Route::controller(DashboardController::class)
-        ->prefix('/dashboard')
+    Route::prefix('/dashboard')
         ->group(function () {
-            Route::get('/', 'index')->name('index');
 
             Route::prefix('admin')->name('admin.')->group(function () {
+                Route::controller(DashboardController::class)->group(function () {
+                    Route::get('/', 'index')->name('index');
+                });
 
-                Route::resource('doctors', DoctorController::class);
+                Route::prefix('doctors')->name('doctors.')->group(function () {
+                    Route::controller(DoctorController::class)->group(function () {
+                        Route::get('/approvals', 'doctorApprovals')->name('doctorApprovals');
+                        Route::post('/{doctorProfile}/approve', 'approveDoctor')->name('approve');
+                        Route::post('/{doctorProfile}/reject', 'rejectDoctor')->name('reject');
+                    });
+                    Route::resource('/', DoctorController::class)->parameters(['' => 'doctor']);
+                });
+
+                Route::prefix('payments')->name('payments.')->group(function () {
+                    Route::get('/', [PaymentController::class, 'index'])->name('index');
+                    Route::get('/pending', [PaymentController::class, 'pending'])->name('pending');
+                    Route::post('/{payment}/approve', [PaymentController::class, 'approve'])->name('approve');
+                    Route::post('/{payment}/reject', [PaymentController::class, 'reject'])->name('reject');
+                });
             });
         });
 

@@ -4,6 +4,7 @@ namespace Modules\PaymentManagement\App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\AppointmentManagement\App\Models\Appointment;
 use Modules\UserManagement\App\Models\User;
 
 class Payment extends Model
@@ -39,5 +40,10 @@ class Payment extends Model
     public function approver()
     {
         return $this->belongsTo(User::class, 'approved_by');
+    }
+
+    public function appointment()
+    {
+        return $this->belongsTo(Appointment::class, 'appointment_id');
     }
 }

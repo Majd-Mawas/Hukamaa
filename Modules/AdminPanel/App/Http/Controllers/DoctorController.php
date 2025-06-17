@@ -10,6 +10,8 @@ use Modules\AdminPanel\App\Http\Requests\StoreDoctorRequest;
 use Modules\AdminPanel\App\Http\Requests\UpdateDoctorRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Request;
+use Modules\DoctorManagement\App\Enums\DoctorStatus;
 
 class DoctorController extends Controller
 {
@@ -61,7 +63,7 @@ class DoctorController extends Controller
 
             DB::commit();
 
-            return redirect()->route('doctors.index')
+            return redirect()->route('admin.doctors.index')
                 ->with('success', 'Doctor created successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -78,7 +80,6 @@ class DoctorController extends Controller
             'availabilities',
             'appointments' => fn($query) => $query->latest()->take(5)
         ]);
-
         return view('adminDashboard.doctors.show', compact('doctor'));
     }
 
@@ -119,7 +120,7 @@ class DoctorController extends Controller
 
             DB::commit();
 
-            return redirect()->route('doctors.index')
+            return redirect()->route('admin.doctors.index')
                 ->with('success', 'Doctor updated successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -144,7 +145,7 @@ class DoctorController extends Controller
 
             DB::commit();
 
-            return redirect()->route('doctors.index')
+            return redirect()->route('admin.doctors.index')
                 ->with('success', 'Doctor deleted successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -166,5 +167,28 @@ class DoctorController extends Controller
                     ->toMediaCollection('medical_certificates');
             }
         }
+    }
+
+    public function doctorApprovals()
+    {
+        $pendingDoctors = DoctorProfile::with('user')
+            ->whereIn('status', [DoctorStatus::PENDING->value, DoctorStatus::REJECTED->value])
+            ->get();
+
+        return view('adminDashboard.doctors.doctorApprovals', compact('pendingDoctors'));
+    }
+
+    public function approveDoctor(Request $request, DoctorProfile $doctorProfile)
+    {
+        $doctorProfile->update(['status' => DoctorStatus::APPROVED->value]);
+
+        return redirect()->route('admin.doctors.doctorApprovals')->with('success', 'Doctor approved successfully.');
+    }
+
+    public function rejectDoctor(Request $request, DoctorProfile $doctorProfile)
+    {
+        $doctorProfile->update(['status' => DoctorStatus::REJECTED->value]);
+
+        return redirect()->route('admin.doctors.doctorApprovals')->with('success', 'Doctor rejected successfully.');
     }
 }
