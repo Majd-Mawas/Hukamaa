@@ -7,7 +7,10 @@ use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Modules\DoctorManagement\App\Http\Requests\DoctorProfileRequest;
+use Modules\DoctorManagement\App\Http\Requests\UpdateDoctorAvailabilitiesRequest;
+use Modules\DoctorManagement\App\Http\Requests\UpdateDoctorProfileRequest;
 use Modules\DoctorManagement\App\Http\Resources\CoverageAreaResource;
 use Modules\DoctorManagement\App\Http\Resources\DoctorProfileResource;
 use Modules\DoctorManagement\App\Models\CoverageArea;
@@ -106,6 +109,62 @@ class DoctorProfileController extends Controller
     {
         return $this->successResponse(
             CoverageAreaResource::collection(CoverageArea::all())
+        );
+    }
+
+    public function updateProfile(UpdateDoctorProfileRequest $request): JsonResponse
+    {
+        $user = $request->user();
+        $data = $request->validated();
+
+        // Update user's name
+        $user->update([
+            'name' => $data['name']
+        ]);
+
+        // Update doctor profile
+        $profile = $user->doctorProfile;
+        $profile->update([
+            'birth_date' => $data['birth_date'],
+            'gender' => $data['gender'],
+            'phone_number' => $data['phone_number'],
+            'address' => $data['address']
+        ]);
+
+        // Update coverage areas
+        $profile->coverageAreas()->sync($data['coverage_areas']);
+
+        return $this->successResponse(
+            new DoctorProfileResource($profile->load(['user', 'availabilities', 'coverageAreas'])),
+            'Profile updated successfully'
+        );
+    }
+
+    public function updateAvailabilities(UpdateDoctorAvailabilitiesRequest $request): JsonResponse
+    {
+        $user = $request->user();
+        $data = $request->validated();
+        $profile = $user->doctorProfile;
+
+        DB::transaction(function () use ($profile, $data) {
+            $profile->availabilities()->delete();
+
+            $availabilities = collect($data['availabilities'])->map(function ($availability) {
+                return [
+                    'weekday' => $availability['weekday'],
+                    'start_time' => $availability['start_time'],
+                    'end_time' => $availability['end_time'],
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ];
+            })->all();
+
+            $profile->availabilities()->insert($availabilities);
+        });
+
+        return $this->successResponse(
+            new DoctorProfileResource($profile->load(['user', 'availabilities', 'coverageAreas'])),
+            'Availabilities updated successfully'
         );
     }
 }

@@ -16,6 +16,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{doctor}', [DoctorProfileController::class, 'show'])->name('show');
         // Route::put('/{doctor}', [DoctorProfileController::class, 'update'])->name('update');
         // Route::delete('/{doctor}', [DoctorProfileController::class, 'destroy'])->name('destroy');
+        Route::post('/profile', [DoctorProfileController::class, 'updateProfile'])->name('profile.update');
+        Route::post('/availabilities', [DoctorProfileController::class, 'updateAvailabilities'])->name('availabilities.update');
 
         // Doctor onboarding routes
         Route::prefix('/onboarding')
