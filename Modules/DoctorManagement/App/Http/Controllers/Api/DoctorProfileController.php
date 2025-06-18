@@ -132,6 +132,11 @@ class DoctorProfileController extends Controller
             'services' => $data['services'],
         ]);
 
+        if (isset($data['profile_picture'])) {
+            $profile->addMedia($data['profile_picture'])
+                ->toMediaCollection('profile_picture');
+        }
+
         // Update coverage areas
         $profile->coverageAreas()->sync($data['coverage_areas']);
 

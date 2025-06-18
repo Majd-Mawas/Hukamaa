@@ -21,6 +21,7 @@ class UpdateDoctorProfileRequest extends BaseRequest
             'gender' => ['required', 'string', Rule::in(['male', 'female'])],
             'phone_number' => ['required', 'string', 'max:20'],
             'address' => ['required', 'string', 'max:500'],
+            'profile_picture' => ['required', 'file', 'image', 'max:5120'],
 
             // Coverage Areas
             'coverage_areas' => ['required', 'array', 'min:1'],
