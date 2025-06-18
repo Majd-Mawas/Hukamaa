@@ -128,7 +128,8 @@ class DoctorProfileController extends Controller
             'birth_date' => $data['birth_date'],
             'gender' => $data['gender'],
             'phone_number' => $data['phone_number'],
-            'address' => $data['address']
+            'address' => $data['address'],
+            'services' => $data['services'],
         ]);
 
         // Update coverage areas
@@ -149,17 +150,14 @@ class DoctorProfileController extends Controller
         DB::transaction(function () use ($profile, $data) {
             $profile->availabilities()->delete();
 
-            $availabilities = collect($data['availabilities'])->map(function ($availability) {
-                return [
+            foreach ($data['availabilities'] as $availability) {
+                $profile->availabilities()->create([
                     'weekday' => $availability['weekday'],
                     'start_time' => $availability['start_time'],
                     'end_time' => $availability['end_time'],
-                    'created_at' => now(),
-                    'updated_at' => now()
-                ];
-            })->all();
-
-            $profile->availabilities()->insert($availabilities);
+                    'doctor_id' => $profile->id
+                ]);
+            }
         });
 
         return $this->successResponse(

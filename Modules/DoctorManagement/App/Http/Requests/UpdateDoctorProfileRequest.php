@@ -24,7 +24,10 @@ class UpdateDoctorProfileRequest extends BaseRequest
 
             // Coverage Areas
             'coverage_areas' => ['required', 'array', 'min:1'],
-            'coverage_areas.*' => ['required', 'exists:coverage_areas,id']
+            'coverage_areas.*' => ['required', 'exists:coverage_areas,id'],
+
+            'services' => ['required', 'array'],
+            'services.*' => ['required', 'string', 'in:remote_video_consultation,home_visit'],
         ];
     }
 }

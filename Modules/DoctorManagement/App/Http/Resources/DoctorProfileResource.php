@@ -21,6 +21,8 @@ class DoctorProfileResource extends ApiResource
             'experience_description' => $this->experience_description,
             'status' => $this->status,
             'services' => $this->services,
+            'phone_number' => $this->phone_number,
+            'address' => $this->address,
             'files' => $this->whenLoaded('media', function () {
                 return [
                     'practice_license' => $this->getMedia('practice_license')->map(function ($media) {
