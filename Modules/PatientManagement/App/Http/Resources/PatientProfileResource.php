@@ -12,8 +12,8 @@ class PatientProfileResource extends ApiResource
         return [
             ...parent::toArray($request),
             'user_id' => $this->user_id,
-            'gender' => $this->gender,
-            'birth_date' => $this->birth_date?->format('Y-m-d'),
+            // 'gender' => $this->gender,
+            // 'birth_date' => $this->birth_date?->format('Y-m-d'),
             'medical_history' => $this->medical_history,
             'chronic_conditions' => $this->chronic_conditions,
             'allergies' => $this->allergies,
