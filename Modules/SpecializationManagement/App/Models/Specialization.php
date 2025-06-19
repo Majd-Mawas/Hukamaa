@@ -13,6 +13,7 @@ class Specialization extends Model
     protected $fillable = [
         'department_name',
         'specialization_name',
+        'description'
     ];
 
     public function doctorProfiles()

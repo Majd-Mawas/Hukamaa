@@ -24,6 +24,9 @@
                                 ID</th>
                             <th
                                 class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                Appointment</th>
+                            <th
+                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                 Patient</th>
                             <th
                                 class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
@@ -52,6 +55,16 @@
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                     #{{ $payment->id }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                                    @if($payment->appointment)
+                                        <a href="{{ route('admin.appointments.show', $payment->appointment) }}" 
+                                           class="text-blue-600 hover:text-blue-900">
+                                            #{{ $payment->appointment->id }}
+                                        </a>
+                                    @else
+                                        <span class="text-gray-500">No Appointment</span>
+                                    @endif
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                     {{ $payment->patient->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
@@ -98,7 +111,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8"
+                                <td colspan="9"
                                     class="px-6 py-4 whitespace-nowrap text-center text-gray-500 dark:text-gray-400">
                                     No payments found
                                 </td>

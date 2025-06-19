@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\AdminPanel\App\Http\Controllers\HomeController;
 use Modules\AdminPanel\App\Http\Controllers\AiapplicationController;
+use Modules\AdminPanel\App\Http\Controllers\AppointmentController;
 use Modules\AdminPanel\App\Http\Controllers\AuthenticationController;
 use Modules\AdminPanel\App\Http\Controllers\ChartController;
 use Modules\AdminPanel\App\Http\Controllers\ComponentspageController;
@@ -15,6 +16,8 @@ use Modules\AdminPanel\App\Http\Controllers\UsersController;
 use Modules\AdminPanel\App\Http\Controllers\CryptocurrencyController;
 use Modules\AdminPanel\App\Http\Controllers\DoctorController;
 use Modules\AdminPanel\App\Http\Controllers\PaymentController;
+use Modules\AdminPanel\App\Http\Controllers\SpecializationController;
+use Modules\AdminPanel\App\Http\Controllers\CoverageAreaController;
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('/dashboard')
@@ -39,6 +42,28 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/pending', [PaymentController::class, 'pending'])->name('pending');
                     Route::post('/{payment}/approve', [PaymentController::class, 'approve'])->name('approve');
                     Route::post('/{payment}/reject', [PaymentController::class, 'reject'])->name('reject');
+                });
+
+                Route::prefix('appointments')->name('appointments.')->controller(AppointmentController::class)->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/pending', 'pending')->name('pending');
+                    Route::get('/completed', 'completed')->name('completed');
+                    Route::get('/{appointment}', 'show')->name('show');
+                    Route::post('/{appointment}/status', 'updateStatus')->name('update-status');
+                });
+
+                Route::prefix('specializations')->name('specializations.')->controller(SpecializationController::class)->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::post('/', 'store')->name('store');
+                    Route::put('/{id}', 'update')->name('update');
+                    Route::delete('/{id}', 'destroy')->name('destroy');
+                });
+
+                Route::prefix('coverage-areas')->name('coverageAreas.')->group(function () {
+                    Route::get('/', [CoverageAreaController::class, 'index'])->name('index');
+                    Route::post('/', [CoverageAreaController::class, 'store'])->name('store');
+                    Route::put('/{id}', [CoverageAreaController::class, 'update'])->name('update');
+                    Route::delete('/{id}', [CoverageAreaController::class, 'destroy'])->name('destroy');
                 });
             });
         });

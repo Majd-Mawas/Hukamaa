@@ -48,6 +48,41 @@
                     <span>Pending Payments</span>
                 </a>
             </li>
+
+            <li class="sidebar-menu-group-title">Appointments</li>
+            <li>
+                <a href="{{ route('admin.appointments.index') }}">
+                    <iconify-icon icon="solar:calendar-mark-linear" class="menu-icon"></iconify-icon>
+                    <span>All Appointments</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.appointments.pending') }}">
+                    <iconify-icon icon="solar:clock-circle-linear" class="menu-icon"></iconify-icon>
+                    <span>Pending Appointments</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.appointments.completed') }}">
+                    <iconify-icon icon="solar:check-circle-linear" class="menu-icon"></iconify-icon>
+                    <span>Completed Appointments</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-group-title">Specializations</li>
+            <li>
+                <a href="{{ route('admin.specializations.index') }}">
+                    <iconify-icon icon="solar:stethoscope-linear" class="menu-icon"></iconify-icon>
+                    <span>Manage Specializations</span>
+                </a>
+            </li>
+
+            <li class="sidebar-menu-group-title">Coverage Areas</li>
+            <li>
+                <a href="{{ route('admin.coverageAreas.index') }}">
+                    <iconify-icon icon="solar:map-point-linear" class="menu-icon"></iconify-icon>
+                    <span>Manage Coverage Areas</span>
+                </a>
+            </li>
             {{-- <li class="dropdown">
                 <a href="javascript:void(0)">
                     <iconify-icon icon="solar:home-smile-angle-outline" class="menu-icon"></iconify-icon>
