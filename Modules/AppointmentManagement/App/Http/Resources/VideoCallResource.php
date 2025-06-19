@@ -23,6 +23,7 @@ class VideoCallResource extends ApiResource
             'token' => $isDoctor ? $this->doctor_token : $this->patient_token,
             'user_id' => $isDoctor ? "doctor_{$user->id}" : "patient_{$user->id}",
             'app_id' => config('services.zegocloud.app_id'),
+            'app_sign' => config('services.zegocloud.app_sign'),
             'appointment' => $this->whenLoaded('appointment', function () {
                 return [
                     'id' => $this->appointment->id,
