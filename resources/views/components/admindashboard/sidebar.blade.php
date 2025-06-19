@@ -34,6 +34,8 @@
                 </a>
             </li>
 
+            {{-- <li class="sidebar-menu-group-title">Patients</li> --}}
+
             <li class="sidebar-menu-group-title">Payments</li>
             <li>
                 <a href="{{ route('admin.payments.index') }}">
@@ -68,19 +70,29 @@
                     <span>Completed Appointments</span>
                 </a>
             </li>
-            <li class="sidebar-menu-group-title">Specializations</li>
+            {{-- <li class="sidebar-menu-group-title">Specializations</li> --}}
+
+
+            {{-- <li class="sidebar-menu-group-title">Coverage Areas</li> --}}
+
+            <li class="sidebar-menu-group-title">Managment</li>
             <li>
-                <a href="{{ route('admin.specializations.index') }}">
-                    <iconify-icon icon="solar:stethoscope-linear" class="menu-icon"></iconify-icon>
-                    <span>Manage Specializations</span>
+                <a href="{{ route('admin.patients.index') }}">
+                    <iconify-icon icon="solar:user-rounded-linear" class="menu-icon"></iconify-icon>
+                    <span>Patients</span>
                 </a>
             </li>
-
-            <li class="sidebar-menu-group-title">Coverage Areas</li>
             <li>
                 <a href="{{ route('admin.coverageAreas.index') }}">
                     <iconify-icon icon="solar:map-point-linear" class="menu-icon"></iconify-icon>
-                    <span>Manage Coverage Areas</span>
+                    <span>Coverage Areas</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('admin.specializations.index') }}">
+                    <iconify-icon icon="solar:stethoscope-linear" class="menu-icon"></iconify-icon>
+                    <span>Specializations</span>
                 </a>
             </li>
             {{-- <li class="dropdown">

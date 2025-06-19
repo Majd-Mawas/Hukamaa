@@ -18,6 +18,7 @@ use Modules\AdminPanel\App\Http\Controllers\DoctorController;
 use Modules\AdminPanel\App\Http\Controllers\PaymentController;
 use Modules\AdminPanel\App\Http\Controllers\SpecializationController;
 use Modules\AdminPanel\App\Http\Controllers\CoverageAreaController;
+use Modules\AdminPanel\App\Http\Controllers\PatientController;
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('/dashboard')
@@ -64,6 +65,11 @@ Route::middleware(['auth'])->group(function () {
                     Route::post('/', [CoverageAreaController::class, 'store'])->name('store');
                     Route::put('/{id}', [CoverageAreaController::class, 'update'])->name('update');
                     Route::delete('/{id}', [CoverageAreaController::class, 'destroy'])->name('destroy');
+                });
+
+                Route::prefix('patients')->name('patients.')->controller(PatientController::class)->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/{patient}', 'show')->name('show');
                 });
             });
         });
