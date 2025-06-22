@@ -3,6 +3,7 @@
 namespace Modules\AppointmentManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +62,7 @@ class VideoCallController extends Controller
         if (!in_array($user->id, [$appointment->doctor_id, $appointment->patient_id])) {
             abort(403);
         }
+        $patient = User::findOrFail($appointment->patient_id);
 
         // Create or reuse VideoCall
         $videoCall = VideoCall::firstOrCreate(
@@ -82,7 +84,7 @@ class VideoCallController extends Controller
         $factory = (new Factory)->withServiceAccount(config('services.firebase.credentials_file'));
         $messaging = $factory->createMessaging();
         $messaging->send([
-            'token' => $user->fcm_token, // device token saved from mobile app
+            'token' => $patient->fcm_token, // device token saved from mobile app
             'notification' => [
                 'title' => 'Your Video Consultation is Starting Now',
                 'body' => 'Please join your virtual appointment session. Your healthcare provider is waiting.',

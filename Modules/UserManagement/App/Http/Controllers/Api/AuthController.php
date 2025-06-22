@@ -110,8 +110,9 @@ class AuthController extends Controller
         }
 
         return $this->successResponse(
-            new UserResource($user),
-            'Token is valid'
+            [
+                'user' => new UserResource($user->load('patientProfile', 'doctorProfile')),
+            ],
         );
     }
 }
