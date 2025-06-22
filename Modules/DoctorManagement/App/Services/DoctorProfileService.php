@@ -45,7 +45,7 @@ class DoctorProfileService
         ?string $gender = null,
         ?int $specializationId = null
     ) {
-        return DoctorProfile::with(['user', 'specialization', 'availabilities'])
+        return DoctorProfile::with(['user', 'specialization', 'availabilities', 'media'])
             ->where('status', 'approved')
             ->when($query, function ($q) use ($query) {
                 $q->whereHas('user', function ($q) use ($query) {
