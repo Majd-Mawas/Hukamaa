@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Kreait\Firebase\Factory;
 use Modules\AppointmentManagement\App\Http\Requests\VideoCallRequest;
 use Modules\AppointmentManagement\App\Http\Resources\VideoCallResource;
 use Modules\AppointmentManagement\App\Models\Appointment;
@@ -78,6 +79,15 @@ class VideoCallController extends Controller
             $videoCall->patient_token = $this->zego->generateToken("patient_{$user->id}");
         }
 
+        $factory = (new Factory)->withServiceAccount(config('services.firebase.credentials_file'));
+        $messaging = $factory->createMessaging();
+        $messaging->send([
+            'token' => $user->fcm_token, // device token saved from mobile app
+            'notification' => [
+                'title' => 'Your Video Consultation is Starting Now',
+                'body' => 'Please join your virtual appointment session. Your healthcare provider is waiting.',
+            ],
+        ]);
         $videoCall->save();
 
         return $this->successResponse(new VideoCallResource($videoCall));

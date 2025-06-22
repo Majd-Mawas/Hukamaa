@@ -67,6 +67,12 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        if (isset(request()->fcm_token)) {
+            $user->update([
+                'fcm_token' => request()->fcm_token
+            ]);
+        }
+
         return $this->successResponse(
             [
                 'user' => new UserResource($user->load('patientProfile', 'doctorProfile')),
@@ -95,6 +101,12 @@ class AuthController extends Controller
                 'Invalid or expired token',
                 401
             );
+        }
+
+        if (isset(request()->fcm_token)) {
+            $user->update([
+                'fcm_token' => request()->fcm_token
+            ]);
         }
 
         return $this->successResponse(

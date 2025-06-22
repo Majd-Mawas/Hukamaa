@@ -40,5 +40,7 @@ return [
         'app_sign' => env('ZEGO_APP_SIGN'),
 
     ],
-
+    'firebase' => [
+        'credentials_file' => storage_path('app/firebase/firebase_credentials.json'),
+    ],
 ];
