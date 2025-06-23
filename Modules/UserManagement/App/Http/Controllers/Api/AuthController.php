@@ -73,6 +73,12 @@ class AuthController extends Controller
             ]);
         }
 
+        if ($request->header('fcm-token')) {
+            $user->update([
+                'fcm_token' => $request->header('fcm-token')
+            ]);
+        }
+
         return $this->successResponse(
             [
                 'user' => new UserResource($user->load('patientProfile', 'doctorProfile')),
@@ -106,6 +112,12 @@ class AuthController extends Controller
         if (isset(request()->fcm_token)) {
             $user->update([
                 'fcm_token' => request()->fcm_token
+            ]);
+        }
+
+        if (request()->header('fcm-token')) {
+            $user->update([
+                'fcm_token' => request()->header('fcm-token')
             ]);
         }
 
