@@ -11,6 +11,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/statistics', [DoctorProfileController::class, 'statistics'])->name('statistics');
         Route::get('/featured', [DoctorProfileController::class, 'featured'])->name('featured');
         Route::get('/coverage-areas', [DoctorProfileController::class, 'getCoverageAreas'])->name('coverage-areas');
+        Route::get('/verify-status', [DoctorProfileController::class, 'verifyStatus'])->name('verify-status');
+
         // Route::get('/', [DoctorProfileController::class, 'index'])->name('index');
         // Route::post('/', [DoctorProfileController::class, 'store'])->name('store');
         Route::get('/{doctor}', [DoctorProfileController::class, 'show'])->name('show');
@@ -27,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
                 Route::post('/medical', [DoctorOnboardingController::class, 'updateMedicalInfo']);
                 Route::post('/documents', [DoctorOnboardingController::class, 'uploadDocuments']);
             });
+        Route::get('/verify-status', [DoctorProfileController::class, 'verifyStatus'])->name('verify-status');
     });
 
     // Doctor availability routes

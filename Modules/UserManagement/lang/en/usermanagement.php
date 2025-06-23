@@ -24,5 +24,7 @@ return [
         'user_not_found' => 'User not found',
         'password_reset_token_expired' => 'Password reset token has expired',
         'invalid_reset_token' => 'Invalid reset token',
+
+        'code_verified' => 'Code Verified'
     ],
 ];

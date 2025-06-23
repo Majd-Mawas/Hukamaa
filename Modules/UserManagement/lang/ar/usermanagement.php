@@ -24,5 +24,7 @@ return [
         'user_not_found' => 'المستخدم غير موجود',
         'password_reset_token_expired' => 'انتهت صلاحية رمز إعادة تعيين كلمة المرور',
         'invalid_reset_token' => 'رمز إعادة التعيين غير صالح',
+
+        'code_verified' => 'تم التحقق من الرمز'
     ],
 ];

@@ -170,4 +170,18 @@ class DoctorProfileController extends Controller
             'Availabilities updated successfully'
         );
     }
+
+    public function verifyStatus(): JsonResponse
+    {
+        $doctorProfile = DoctorProfile::where('user_id', Auth::id())->first();
+
+        if (!$doctorProfile) {
+            return $this->errorResponse('Doctor profile not found', 404);
+        }
+
+        return $this->successResponse([
+            'status' => $doctorProfile->status,
+            'is_approved' => $doctorProfile->status === 'approved'
+        ], 'Doctor status retrieved successfully');
+    }
 }

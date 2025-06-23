@@ -10,11 +10,11 @@ class ResetPasswordNotification extends Notification
 {
     use Queueable;
 
-    private string $token;
+    private string $code;
 
-    public function __construct(string $token)
+    public function __construct(string $code)
     {
-        $this->token = $token;
+        $this->code = $code;
     }
 
     public function via($notifiable): array
@@ -25,10 +25,10 @@ class ResetPasswordNotification extends Notification
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Reset Password Notification')
+            ->subject('Reset Password Verification Code')
             ->line('You are receiving this email because we received a password reset request for your account.')
-            ->line('Your password reset token is: ' . $this->token)
-            ->line('This password reset token will expire in 24 hours.')
+            ->line('Your verification code is: ' . $this->code)
+            ->line('This verification code will expire in 24 hours.')
             ->line('If you did not request a password reset, no further action is required.');
     }
 }
