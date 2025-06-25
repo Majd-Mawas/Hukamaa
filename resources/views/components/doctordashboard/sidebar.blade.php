@@ -3,7 +3,7 @@
         <iconify-icon icon="radix-icons:cross-2"></iconify-icon>
     </button>
     <div>
-        <a href="{{ route('index') }}" class="sidebar-logo">
+        <a href="{{ route('doctor.index') }}" class="sidebar-logo">
             <img src="{{ asset('assets/images/logo.png') }}" alt="site logo" class="light-logo">
             <img src="{{ asset('assets/images/logo-light.png') }}" alt="site logo" class="dark-logo">
             <img src="{{ asset('assets/images/logo-icon.png') }}" alt="site logo" class="logo-icon">
@@ -11,17 +11,88 @@
     </div>
     <div class="sidebar-menu-area">
         <ul class="sidebar-menu" id="sidebar-menu">
+            <li class="sidebar-menu-group-title">Dashboard</li>
             <li>
-                <a href="{{ route('index') }}">
+                <a href="{{ route('doctor.index') }}">
                     <iconify-icon icon="solar:home-smile-angle-outline" class="menu-icon"></iconify-icon>
                     <span>Dashboard</span>
                 </a>
             </li>
+            <li class="sidebar-menu-group-title">Doctors</li>
+
             <li>
-                <a href="{{ route('index') }}">
-                    {{-- <iconify-icon icon="solar:home-smile-angle-outline" class="menu-icon"></iconify-icon> --}}
-                    <i class="ri-nurse-fill circle-icon text-primary-600 w-auto"></i>
+                <a href="{{ route('doctor.doctors.index') }}">
+                    <iconify-icon icon="healthicons:doctor" class="menu-icon"></iconify-icon>
                     <span>Doctors</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('doctor.doctors.doctorApprovals') }}">
+                    <iconify-icon icon="solar:checklist-linear" class="menu-icon"></iconify-icon>
+                    <span>Pending Doctors</span>
+                </a>
+            </li>
+
+            {{-- <li class="sidebar-menu-group-title">Patients</li> --}}
+
+            <li class="sidebar-menu-group-title">Payments</li>
+            <li>
+                <a href="{{ route('doctor.payments.index') }}">
+                    <iconify-icon icon="solar:card-linear" class="menu-icon"></iconify-icon>
+                    <span>Payments</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('doctor.payments.pending') }}">
+                    <iconify-icon icon="solar:clock-circle-linear" class="menu-icon"></iconify-icon>
+                    <span>Pending Payments</span>
+                </a>
+            </li>
+
+            <li class="sidebar-menu-group-title">Appointments</li>
+            <li>
+                <a href="{{ route('doctor.appointments.index') }}">
+                    <iconify-icon icon="solar:calendar-mark-linear" class="menu-icon"></iconify-icon>
+                    <span>All Appointments</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('doctor.appointments.pending') }}">
+                    <iconify-icon icon="solar:clock-circle-linear" class="menu-icon"></iconify-icon>
+                    <span>Pending Appointments</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('doctor.appointments.completed') }}">
+                    <iconify-icon icon="solar:check-circle-linear" class="menu-icon"></iconify-icon>
+                    <span>Completed Appointments</span>
+                </a>
+            </li>
+            {{-- <li class="sidebar-menu-group-title">Specializations</li> --}}
+
+
+            {{-- <li class="sidebar-menu-group-title">Coverage Areas</li> --}}
+
+            <li class="sidebar-menu-group-title">Managment</li>
+            <li>
+                <a href="{{ route('doctor.patients.index') }}">
+                    <iconify-icon icon="solar:user-rounded-linear" class="menu-icon"></iconify-icon>
+                    <span>Patients</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('doctor.coverageAreas.index') }}">
+                    <iconify-icon icon="solar:map-point-linear" class="menu-icon"></iconify-icon>
+                    <span>Coverage Areas</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('doctor.specializations.index') }}">
+                    <iconify-icon icon="solar:stethoscope-linear" class="menu-icon"></iconify-icon>
+                    <span>Specializations</span>
                 </a>
             </li>
             {{-- <li class="dropdown">
@@ -31,7 +102,7 @@
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                        <a href="{{ route('index') }}"><i
+                        <a href="{{ route('doctor.index') }}"><i
                                 class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> AI</a>
                     </li>
                     <li>

@@ -1,7 +1,7 @@
-@extends('layout.layout')
+@extends('doctorDashboard.layout.layout')
 {{-- @dd($stats->monthlyPayments) --}}
 @php
-    $title = 'Dashboard';
+    $title = 'Doctor Dashboard';
     $subTitle = 'Hukamaa';
     $script = '<script>
         // ===================== Average Enrollment Rate Start ===============================
@@ -408,7 +408,7 @@
                                             <div class="flex-grow-1">
                                                 <h6 class="text-base mb-0">{{ $doctor->user->name }}</h6>
                                                 <span
-                                                    class="text-sm text-gray-600 font-medium">{{ $doctor?->specialization?->specialization_name ?? 'Not specified' }}</span>
+                                                    class="text-sm text-gray-600 font-medium">{{ $doctor?->specialization?->specialization_name }}</span>
                                             </div>
                                         </div>
                                         <span

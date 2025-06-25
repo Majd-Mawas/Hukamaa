@@ -4,7 +4,7 @@
         <li class="font-medium">
             <a href="{{ route('index') }}" class="flex items-center gap-2 hover:text-primary-600 dark:text-white">
                 <iconify-icon icon="solar:home-smile-angle-outline" class="icon text-lg"></iconify-icon>
-                Dashboard
+                Doctor Dashboard
             </a>
         </li>
         <li class="dark:text-white">-</li>

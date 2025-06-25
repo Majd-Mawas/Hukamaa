@@ -5,6 +5,7 @@ namespace Modules\PaymentManagement\Database\seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
+use Modules\AppointmentManagement\App\Models\Appointment;
 use Modules\PaymentManagement\App\Enums\PaymentStatus;
 
 class PaymentSeeder extends Seeder
@@ -40,10 +41,7 @@ class PaymentSeeder extends Seeder
                 for ($i = 0; $i < $numPayments; $i++) {
                     $doctor = $doctors->random();
                     // Get a random appointment for this patient and doctor
-                    $appointment = DB::table('appointments')
-                        ->all()
-                        ->inRandomOrder()
-                        ->first();
+                    $appointment = Appointment::all()->random()->first();
 
                     $paymentStatus = $faker->randomElement(['pending', 'approved', 'rejected']);
                     DB::table('payments')->insert([
