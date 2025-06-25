@@ -4,6 +4,8 @@ namespace Modules\AdminPanel\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Modules\AppointmentManagement\App\Enums\AppointmentStatus;
 use Modules\PaymentManagement\App\Models\Payment;
 use Modules\PaymentManagement\App\Enums\PaymentStatus;
 
@@ -23,8 +25,12 @@ class PaymentController extends Controller
     {
         $payment->update([
             'status' => PaymentStatus::APPROVED,
-            'approved_by' => auth()->id(),
+            'approved_by' => Auth::id(),
             'approved_at' => now()
+        ]);
+
+        $payment->appointment->update([
+            'status' => AppointmentStatus::SCHEDULED
         ]);
 
         return back()->with('success', 'Payment approved successfully.');
