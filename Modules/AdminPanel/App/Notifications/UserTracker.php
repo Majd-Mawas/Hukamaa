@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\AdminPanel\Notifications;
+namespace Modules\AdminPanel\App\Notifications;
 
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
-class UserDidSomething extends Notification
+class UserTracker extends Notification
 {
     use Queueable;
 

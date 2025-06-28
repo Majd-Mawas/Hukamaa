@@ -1,14 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\AdminPanel\App\Http\Controllers\AuthenticationController;
 use Modules\DoctorManagement\App\Http\Controllers\Web\AppointmentController;
-use Modules\DoctorManagement\App\Http\Controllers\Web\CoverageAreaController;
 use Modules\DoctorManagement\App\Http\Controllers\Web\DashboardController;
-use Modules\DoctorManagement\App\Http\Controllers\Web\DoctorController;
 use Modules\DoctorManagement\App\Http\Controllers\Web\PatientController;
 use Modules\DoctorManagement\App\Http\Controllers\Web\PaymentController;
-use Modules\DoctorManagement\App\Http\Controllers\Web\SpecializationController;
 
 /*
 |--------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DoctorManagement\Database\Seeders;
+namespace Modules\DoctorManagement\Database\seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;

@@ -29,6 +29,8 @@ Route::middleware(['auth'])->group(function () {
             Route::prefix('admin')->name('admin.')->group(function () {
                 Route::controller(DashboardController::class)->group(function () {
                     Route::get('/', 'index')->name('index');
+                    Route::get('/profile', 'viewProfile')->name('profile');
+                    Route::post('/profile', 'updateProfile')->name('profile.update');
                 });
 
                 Route::prefix('doctors')->name('doctors.')->group(function () {

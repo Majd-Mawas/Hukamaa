@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DoctorManagement\App\Http\Controllers\web;
+namespace Modules\DoctorManagement\App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateAvailabilityRequest;
