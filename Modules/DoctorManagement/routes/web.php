@@ -28,6 +28,13 @@ Route::middleware(['auth'])->group(function () {
             Route::prefix('doctor')->name('doctor.')->group(function () {
                 Route::controller(DashboardController::class)->group(function () {
                     Route::get('/', 'index')->name('index');
+                    Route::get('/profile', 'viewProfile')->name('profile');
+                    Route::post('/profile', 'updateProfile')->name('profile.update');
+                    Route::get('availabilities', [DashboardController::class, 'getAvailabilities']);
+                    Route::get('availability/{id}', [DashboardController::class, 'getAvailability']);
+                    Route::post('availability', [DashboardController::class, 'storeAvailability']);
+                    Route::put('availability/{id}', [DashboardController::class, 'updateAvailability']);
+                    Route::delete('availability/{id}', [DashboardController::class, 'deleteAvailability']);
                 });
 
                 Route::prefix('doctors')->name('doctors.')->group(function () {

@@ -2,6 +2,10 @@
 
 namespace Modules\DoctorManagement\App\Services;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Modules\DoctorManagement\App\Http\Requests\web\UpdateDoctorProfileRequest;
 use Modules\DoctorManagement\App\Models\DoctorProfile;
 
 class DoctorProfileService
@@ -30,15 +34,6 @@ class DoctorProfileService
         return $doctorProfile->delete();
     }
 
-    /**
-     * Get featured doctors for the home page with search capabilities
-     *
-     * @param int $limit Number of doctors to return
-     * @param string|null $query Search query for doctor name or email
-     * @param string|null $gender Filter by gender
-     * @param int|null $specializationId Filter by specialization
-     * @return \Illuminate\Pagination\LengthAwarePaginator
-     */
     public function getFeaturedDoctors(
         int $limit = 10,
         ?string $query = null,
@@ -72,5 +67,39 @@ class DoctorProfileService
             ->orderBy('experience_years', 'desc')
             ->latest()
             ->paginate($limit);
+    }
+
+    public function updateProfile(UpdateDoctorProfileRequest $request)
+    {
+        return DB::transaction(function () use ($request) {
+            $user = Auth::User();
+            $doctor = $user->doctorProfile;
+
+            // Update user details
+            $user->update([
+                'name' => $request->name,
+                // 'email' => $request->email,
+            ]);
+
+            if ($request->hasFile('profile_picture')) {
+                // Clear existing media collection before adding new one
+                $doctor->clearMediaCollection('profile_picture');
+
+                // Add new profile_picture to the media collection
+                $doctor->addMediaFromRequest('profile_picture')
+                    ->toMediaCollection('profile_picture');
+            }
+
+            // Update doctor details
+            $doctor->update([
+                'specialization_id' => $request->specialization,
+                'experience_description' => $request->experience,
+                'experience_years' => $request->experience_years,
+                'consultation_fee' => $request->consultation_fee,
+                'phone_number' => $request->phone
+            ]);
+
+            return $doctor->fresh(['user', 'specialization']);
+        });
     }
 }

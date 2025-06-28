@@ -1,4 +1,4 @@
-@extends('adminDashboard.layout.layout')
+@extends('doctorDashboard.layout.layout')
 
 @php
     $title = 'Payment Management';
@@ -57,7 +57,7 @@
                                     #{{ $payment->id }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                     @if($payment->appointment)
-                                        <a href="{{ route('admin.appointments.show', $payment->appointment) }}" 
+                                        <a href="{{ route('admin.appointments.show', $payment->appointment) }}"
                                            class="text-blue-600 hover:text-blue-900">
                                             #{{ $payment->appointment->id }}
                                         </a>

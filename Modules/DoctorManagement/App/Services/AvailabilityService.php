@@ -2,6 +2,7 @@
 
 namespace Modules\DoctorManagement\App\Services;
 
+use Auth;
 use Modules\DoctorManagement\App\Models\Availability;
 
 class AvailabilityService
@@ -16,6 +17,7 @@ class AvailabilityService
 
     public function createAvailability(array $data): Availability
     {
+        $data['doctor_id'] = Auth::user()->doctorProfile->id;
         return Availability::create($data);
     }
 
@@ -28,5 +30,10 @@ class AvailabilityService
     public function deleteAvailability(Availability $availability): bool
     {
         return $availability->delete();
+    }
+
+    public function getAvailability($id)
+    {
+        return Availability::findOrFail($id);
     }
 }

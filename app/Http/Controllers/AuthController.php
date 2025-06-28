@@ -41,7 +41,7 @@ class AuthController extends Controller
             // 'admin' => redirect()->route('admin.dashboard'),
             'admin' => redirect()->route('admin.index'),
             'doctor' => redirect()->route('doctor.index'),
-            default => redirect()->route('doctor.index'),
+            default => redirect()->route('comingSoon'),
         };
     }
 
