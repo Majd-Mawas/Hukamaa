@@ -19,4 +19,15 @@ class ChronicCondition extends Model
     {
         return ChronicConditionFactory::new();
     }
+
+    public function patients()
+    {
+        return $this->belongsToMany(
+            PatientProfile::class,
+            'chronic_conditions_patient',
+            'chronic_conditions_id',
+            'patient_profile_id'
+        )
+            ->withTimestamps();
+    }
 }

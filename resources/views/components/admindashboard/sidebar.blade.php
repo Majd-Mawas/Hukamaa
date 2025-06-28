@@ -88,11 +88,22 @@
                     <span>Coverage Areas</span>
                 </a>
             </li>
-
             <li>
                 <a href="{{ route('admin.specializations.index') }}">
                     <iconify-icon icon="solar:stethoscope-linear" class="menu-icon"></iconify-icon>
                     <span>Specializations</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.allergies.index') }}">
+                    <iconify-icon icon="mdi:allergy" class="menu-icon"></iconify-icon>
+                    <span>Allergies</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.chronicConditions.index') }}">
+                    <iconify-icon icon="healthicons:health-data-sync" class="menu-icon"></iconify-icon>
+                    <span>Chronic Conditions</span>
                 </a>
             </li>
             {{-- <li class="dropdown">

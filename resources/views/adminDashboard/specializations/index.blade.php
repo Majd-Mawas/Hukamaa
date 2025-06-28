@@ -7,7 +7,7 @@
 @endphp
 
 @section('content')
-    <div class="container mx-auto px-4 py-6">
+    <div>
         @if (session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
                 <span class="block sm:inline">{{ session('success') }}</span>
@@ -20,48 +20,63 @@
             </div>
         @endif
 
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Specializations</h2>
-            <button data-modal-target="createSpecializationModal" data-modal-toggle="createSpecializationModal"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg">
-                Add New Specialization
-            </button>
-        </div>
-
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="w-full table-auto divide-y divide-gray-200 dark:divide-gray-700">
-                    <thead class="bg-gray-50 dark:bg-gray-700">
-                        <tr>
-                            <th
-                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                ID</th>
-                            <th
-                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                Specialization</th>
-                            <th
-                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                Doctors Count</th>
-                            <th
-                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                        @forelse ($specializations as $specialization)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                                    #{{ $specialization->id }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                                    {{ $specialization->specialization_name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                                    {{ $specialization->doctorProfiles->count() }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <button data-modal-target="editSpecializationModal{{ $specialization->id }}"
-                                        data-modal-toggle="editSpecializationModal{{ $specialization->id }}"
-                                        class="text-blue-600 hover:text-blue-900 mr-4">Edit</button>
 
 
+        <div class="grid grid-cols-12">
+            <div class="col-span-12">
+                <div class="card border-0 overflow-hidden">
+                    <div class="card-header">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Specializations</h2>
+                            <button data-modal-target="createSpecializationModal"
+                                data-modal-toggle="createSpecializationModal"
+                                class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg">
+                                Add New Specialization
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="selection-table"
+                            class="border border-neutral-200 dark:border-neutral-600 rounded-lg border-separate">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        ID</th>
+                                    <th
+                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        Specialization</th>
+                                    <th
+                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        Doctors Count</th>
+                                    <th
+                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                @forelse ($specializations as $specialization)
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                                            #{{ $specialization->id }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                                            {{ $specialization->specialization_name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                                            {{ $specialization->doctorProfiles->count() }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <button data-modal-target="editSpecializationModal{{ $specialization->id }}"
+                                                data-modal-toggle="editSpecializationModal{{ $specialization->id }}"
+                                                class="text-blue-600 hover:text-blue-900 mr-4">Edit</button>
+                                            <form action="{{ route('admin.specializations.destroy', $specialization->id) }}"
+                                                method="POST" class="inline"
+                                                onsubmit="return confirm('Are you sure you want to delete this specialization?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="text-red-600 hover:text-red-900">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                     <div id="editSpecializationModal{{ $specialization->id }}" tabindex="-1"
                                         aria-hidden="true"
                                         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -90,11 +105,12 @@
                                                 <!-- Modal body -->
                                                 <form
                                                     action="{{ route('admin.specializations.update', $specialization->id) }}"
-                                                    method="POST" class="p-4 md:p-5">
+                                                    method="POST" class="">
                                                     @csrf
                                                     @method('PUT')
 
-                                                    <div class="grid gap-4 mb-4 grid-cols-2">
+                                                    <div class="grid gap-4 mb-4 grid-cols-2 p-4 md:p-5"
+                                                        style="padding-bottom: 0">
                                                         <div class="col-span-2">
                                                             <label for="specialization_name"
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Specialization
@@ -113,37 +129,31 @@
                                                                 placeholder="Write specialization description here...">{{ $specialization->description }}</textarea>
                                                         </div>
                                                     </div>
-                                                    <button type="submit"
-                                                        class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                        Update Specialization
-                                                    </button>
-
+                                                    <div class="p-4 md:p-5">
+                                                        <button type="submit"
+                                                            class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                            Update Specialization
+                                                        </button>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
-                                    <form action="{{ route('admin.specializations.destroy', $specialization->id) }}"
-                                        method="POST" class="inline"
-                                        onsubmit="return confirm('Are you sure you want to delete this specialization?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5"
-                                    class="px-6 py-4 whitespace-nowrap text-center text-gray-500 dark:text-gray-400">
-                                    No specializations found
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-            <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700">
-                {{ $specializations->links() }}
+                                @empty
+                                    <tr>
+                                        <td colspan="5"
+                                            class="px-6 py-4 whitespace-nowrap text-center text-gray-500 dark:text-gray-400">
+                                            No specializations found
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+                        {{ $specializations->links() }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

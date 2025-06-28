@@ -21,7 +21,7 @@
                     </div>
                     <div class="card-body">
                         <table id="selection-table"
-                            class="border border-neutral-200 dark:border-neutral-600 rounded-lg border-separate	">
+                            class="border border-neutral-200 dark:border-neutral-600 rounded-lg border-separate">
                             <thead class="bg-gray-50 dark:bg-gray-700">
                                 <tr>
                                     <th

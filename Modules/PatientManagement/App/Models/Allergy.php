@@ -19,4 +19,15 @@ class Allergy extends Model
     {
         return AllergyFactory::new();
     }
+
+    public function patients()
+    {
+        return $this->belongsToMany(
+            PatientProfile::class,
+            'allergy_patient',
+            'allergy_id',
+            'patient_profile_id'
+        )
+            ->withTimestamps();
+    }
 }

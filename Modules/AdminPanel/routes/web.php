@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use Modules\AdminPanel\App\Http\Controllers\HomeController;
 use Modules\AdminPanel\App\Http\Controllers\AiapplicationController;
+use Modules\AdminPanel\App\Http\Controllers\AllergyController;
 use Modules\AdminPanel\App\Http\Controllers\AppointmentController;
 use Modules\AdminPanel\App\Http\Controllers\AuthenticationController;
 use Modules\AdminPanel\App\Http\Controllers\ChartController;
+use Modules\AdminPanel\App\Http\Controllers\ChronicConditionController;
 use Modules\AdminPanel\App\Http\Controllers\ComponentspageController;
 use Modules\AdminPanel\App\Http\Controllers\DashboardController;
 use Modules\AdminPanel\App\Http\Controllers\FormsController;
@@ -67,14 +69,26 @@ Route::middleware(['auth'])->group(function () {
                     Route::delete('/{id}', [CoverageAreaController::class, 'destroy'])->name('destroy');
                 });
 
+                Route::prefix('allergies')->name('allergies.')->group(function () {
+                    Route::get('/', [AllergyController::class, 'index'])->name('index');
+                    Route::post('/', [AllergyController::class, 'store'])->name('store');
+                    Route::put('/{id}', [AllergyController::class, 'update'])->name('update');
+                    Route::delete('/{id}', [AllergyController::class, 'destroy'])->name('destroy');
+                });
+
+                Route::prefix('chronic-condition')->name('chronicConditions.')->group(function () {
+                    Route::get('/', [ChronicConditionController::class, 'index'])->name('index');
+                    Route::post('/', [ChronicConditionController::class, 'store'])->name('store');
+                    Route::put('/{id}', [ChronicConditionController::class, 'update'])->name('update');
+                    Route::delete('/{id}', [ChronicConditionController::class, 'destroy'])->name('destroy');
+                });
+
                 Route::prefix('patients')->name('patients.')->controller(PatientController::class)->group(function () {
                     Route::get('/', 'index')->name('index');
                     Route::get('/{patient}', 'show')->name('show');
                 });
             });
         });
-
-    Route::post('/logout', [AuthenticationController::class, 'logout'])->name('logout');
 });
 Route::controller(HomeController::class)->group(function () {
     Route::get('calendar-Main', 'calendarMain')->name('calendarMain');
