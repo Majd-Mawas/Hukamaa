@@ -46,7 +46,7 @@ class DashboardController extends Controller
         $specialties = Specialization::orderBy('specialization_name')->get();
         $availabilities = Auth::user()->doctorProfile->availabilities;
 
-        return view('doctorDashboard.viewProfile', compact('doctor', 'specialties', 'availabilities'));
+        return view('doctorDashboard.profile.viewProfile', compact('doctor', 'specialties', 'availabilities'));
     }
 
     public function updateProfile(UpdateDoctorProfileRequest $request)

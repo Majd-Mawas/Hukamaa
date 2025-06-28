@@ -353,16 +353,13 @@
                             <h6 class="text-lg text-neutral-900 font-semibold mb-0">{{ auth()->user()->name }}</h6>
                             <span class="text-neutral-500">{{ auth()->user()->role }}</span>
                         </div>
-                        <button type="button" class="hover:text-danger-600">
-                            <iconify-icon icon="radix-icons:cross-1" class="icon text-xl"></iconify-icon>
-                        </button>
                     </div>
 
                     <div class="max-h-[400px] overflow-y-auto scroll-sm pe-2">
                         <ul class="flex flex-col">
                             <li>
                                 <a class="text-black px-0 py-2 hover:text-primary-600 flex items-center gap-4"
-                                    href="{{ route('viewProfile') }}">
+                                    href="{{ route('admin.profile') }}">
                                     <iconify-icon icon="solar:user-linear" class="icon text-xl"></iconify-icon> My
                                     Profile
                                 </a>
@@ -372,13 +369,13 @@
                                     <iconify-icon icon="tabler:message-check" class="icon text-xl"></iconify-icon>  Inbox
                                 </a>
                             </li> --}}
-                            <li>
+                            {{-- <li>
                                 <a class="text-black px-0 py-2 hover:text-primary-600 flex items-center gap-4"
                                     href="{{ route('company') }}">
                                     <iconify-icon icon="icon-park-outline:setting-two"
                                         class="icon text-xl"></iconify-icon> Setting
                                 </a>
-                            </li>
+                            </li> --}}
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf

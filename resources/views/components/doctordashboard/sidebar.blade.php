@@ -18,25 +18,8 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            <li class="sidebar-menu-group-title">Doctors</li>
 
-            <li>
-                <a href="{{ route('doctor.doctors.index') }}">
-                    <iconify-icon icon="healthicons:doctor" class="menu-icon"></iconify-icon>
-                    <span>Doctors</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="{{ route('doctor.doctors.doctorApprovals') }}">
-                    <iconify-icon icon="solar:checklist-linear" class="menu-icon"></iconify-icon>
-                    <span>Pending Doctors</span>
-                </a>
-            </li>
-
-            {{-- <li class="sidebar-menu-group-title">Patients</li> --}}
-
-            <li class="sidebar-menu-group-title">Payments</li>
+            {{-- <li class="sidebar-menu-group-title">Payments</li>
             <li>
                 <a href="{{ route('doctor.payments.index') }}">
                     <iconify-icon icon="solar:card-linear" class="menu-icon"></iconify-icon>
@@ -49,7 +32,7 @@
                     <iconify-icon icon="solar:clock-circle-linear" class="menu-icon"></iconify-icon>
                     <span>Pending Payments</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="sidebar-menu-group-title">Appointments</li>
             <li>
@@ -59,21 +42,17 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('doctor.appointments.pending') }}">
+                <a href="{{ route('doctor.appointments.new') }}">
                     <iconify-icon icon="solar:clock-circle-linear" class="menu-icon"></iconify-icon>
-                    <span>Pending Appointments</span>
+                    <span>New Appointments</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('doctor.appointments.completed') }}">
+                <a href="{{ route('doctor.appointments.upcoming') }}">
                     <iconify-icon icon="solar:check-circle-linear" class="menu-icon"></iconify-icon>
-                    <span>Completed Appointments</span>
+                    <span>Upcoming Appointments</span>
                 </a>
             </li>
-            {{-- <li class="sidebar-menu-group-title">Specializations</li> --}}
-
-
-            {{-- <li class="sidebar-menu-group-title">Coverage Areas</li> --}}
 
             <li class="sidebar-menu-group-title">Managment</li>
             <li>
@@ -82,63 +61,7 @@
                     <span>Patients</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ route('doctor.coverageAreas.index') }}">
-                    <iconify-icon icon="solar:map-point-linear" class="menu-icon"></iconify-icon>
-                    <span>Coverage Areas</span>
-                </a>
-            </li>
 
-            <li>
-                <a href="{{ route('doctor.specializations.index') }}">
-                    <iconify-icon icon="solar:stethoscope-linear" class="menu-icon"></iconify-icon>
-                    <span>Specializations</span>
-                </a>
-            </li>
-            {{-- <li class="dropdown">
-                <a href="javascript:void(0)">
-                    <iconify-icon icon="solar:home-smile-angle-outline" class="menu-icon"></iconify-icon>
-                    <span>Dashboard</span>
-                </a>
-                <ul class="sidebar-submenu">
-                    <li>
-                        <a href="{{ route('doctor.index') }}"><i
-                                class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> AI</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('index2') }}"><i
-                                class="ri-circle-fill circle-icon text-warning-600 w-auto"></i> CRM</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('index3') }}"><i class="ri-circle-fill circle-icon text-info-600 w-auto"></i>
-                            eCommerce</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('index4') }}"><i
-                                class="ri-circle-fill circle-icon text-danger-600 w-auto"></i> Cryptocurrency</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('index5') }}"><i
-                                class="ri-circle-fill circle-icon text-success-600 w-auto"></i> Investment</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('index6') }}"><i
-                                class="ri-circle-fill circle-icon text-purple-600 w-auto"></i> LMS / Learning System</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('index7') }}"><i class="ri-circle-fill circle-icon text-info-600 w-auto"></i>
-                            NFT & Gaming</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('index8') }}"><i
-                                class="ri-circle-fill circle-icon text-danger-600 w-auto"></i> Medical</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('index9') }}"><i
-                                class="ri-circle-fill circle-icon text-purple-600 w-auto"></i> Analytics</a>
-                    </li>
-                </ul>
-            </li> --}}
             @if (env('APP_DASHBOARD'))
                 <li class="sidebar-menu-group-title">Application</li>
                 <li>

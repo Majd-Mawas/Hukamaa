@@ -3,6 +3,7 @@
 namespace Modules\DoctorManagement\App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use Auth;
 use Illuminate\Http\Request;
 use Modules\AppointmentManagement\App\Models\Appointment;
 use Modules\AppointmentManagement\App\Enums\AppointmentStatus;
@@ -11,16 +12,16 @@ class AppointmentController extends Controller
 {
     public function index()
     {
-        $appointments = Appointment::with(['patient:id,name', 'doctor:id,name'])
+        $appointments = Appointment::where('doctor_id', Auth::id())->with(['patient:id,name', 'doctor:id,name'])
             ->latest()
             ->paginate(10);
 
         return view('doctorDashboard.appointments.index', compact('appointments'));
     }
 
-    public function pending()
+    public function new()
     {
-        $appointments = Appointment::where('status', AppointmentStatus::PENDING)
+        $appointments = Appointment::where('doctor_id', Auth::id())->where('status', AppointmentStatus::PENDING)
             ->with(['patient:id,name', 'doctor:id,name'])
             ->latest()
             ->paginate(10);
@@ -29,9 +30,9 @@ class AppointmentController extends Controller
         return view('doctorDashboard.appointments.index', compact('appointments', 'status'));
     }
 
-    public function completed()
+    public function upcoming()
     {
-        $appointments = Appointment::where('status', AppointmentStatus::COMPLETED)
+        $appointments = Appointment::where('doctor_id', Auth::id())->where('status', AppointmentStatus::SCHEDULED)
             ->with(['patient:id,name', 'doctor:id,name'])
             ->latest()
             ->paginate(10);
@@ -55,6 +56,24 @@ class AppointmentController extends Controller
 
         $appointment->update([
             'status' => $validated['status'],
+        ]);
+
+        return back()->with('success', 'Appointment status updated successfully.');
+    }
+
+    public function accept(Appointment $appointment)
+    {
+        $appointment->update([
+            'status' => AppointmentStatus::PENDING_PAYMENT->value
+        ]);
+
+        return back()->with('success', 'Appointment status updated successfully.');
+    }
+
+    public function reject(Appointment $appointment)
+    {
+        $appointment->update([
+            'status' => AppointmentStatus::CANCELLED->value
         ]);
 
         return back()->with('success', 'Appointment status updated successfully.');

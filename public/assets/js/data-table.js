@@ -1,5 +1,7 @@
-if (document.getElementById("selection-table") && typeof simpleDatatables.DataTable !== 'undefined') {
-
+if (
+    document.getElementById("selection-table") &&
+    typeof simpleDatatables.DataTable !== "undefined"
+) {
     let multiSelect = true;
     let rowNavigation = false;
     let table = null;
@@ -10,9 +12,9 @@ if (document.getElementById("selection-table") && typeof simpleDatatables.DataTa
         }
 
         const options = {
-            columns: [
-                { select: [0, 6], sortable: false } // Disable sorting on the first column (index 0 and 6)
-            ],
+            // columns: [
+            //     { select: [0, 6], sortable: false }, // Disable sorting on the first column (index 0 and 6)
+            // ],
             rowRender: (row, tr, _index) => {
                 if (!tr.attributes) {
                     tr.attributes = {};
@@ -23,10 +25,13 @@ if (document.getElementById("selection-table") && typeof simpleDatatables.DataTa
                 if (row.selected) {
                     tr.attributes.class += " selected";
                 } else {
-                    tr.attributes.class = tr.attributes.class.replace(" selected", "");
+                    tr.attributes.class = tr.attributes.class.replace(
+                        " selected",
+                        ""
+                    );
                 }
                 return tr;
-            }
+            },
         };
         if (rowNavigation) {
             options.rowNavigation = true;
@@ -36,7 +41,7 @@ if (document.getElementById("selection-table") && typeof simpleDatatables.DataTa
         table = new simpleDatatables.DataTable("#selection-table", options);
 
         // Mark all rows as unselected
-        table.data.data.forEach(data => {
+        table.data.data.forEach((data) => {
             data.selected = false;
         });
 
@@ -47,7 +52,7 @@ if (document.getElementById("selection-table") && typeof simpleDatatables.DataTa
                 row.selected = false;
             } else {
                 if (!multiSelect) {
-                    table.data.data.forEach(data => {
+                    table.data.data.forEach((data) => {
                         data.selected = false;
                     });
                 }

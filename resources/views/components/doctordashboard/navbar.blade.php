@@ -353,9 +353,6 @@
                             <h6 class="text-lg text-neutral-900 font-semibold mb-0">{{ auth()->user()->name }}</h6>
                             <span class="text-neutral-500">{{ auth()->user()->role }}</span>
                         </div>
-                        <button type="button" class="hover:text-danger-600">
-                            <iconify-icon icon="radix-icons:cross-1" class="icon text-xl"></iconify-icon>
-                        </button>
                     </div>
 
                     <div class="max-h-[400px] overflow-y-auto scroll-sm pe-2">

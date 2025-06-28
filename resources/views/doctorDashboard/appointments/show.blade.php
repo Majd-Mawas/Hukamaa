@@ -73,9 +73,10 @@
                             <p class="font-medium dark:text-white">{{ $appointment->patient->email }}</p>
                         </div>
                         <div>
-                            <p class="text-gray-600 dark:text-gray-400 mb-2">Phone</p>
+                            <p class="text-gray-600 dark:text-gray-400 mb-2">Birthdate</p>
                             <p class="font-medium dark:text-white">
-                                {{ $appointment->patient->patientProfile->phone_number ?? 'N/A' }}</p>
+                                {{ $appointment->patient->patientProfile->birth_date ? $appointment->patient->patientProfile->birth_date->format('M d, Y') : 'N/A' }}
+                            </p>
                         </div>
                     </div>
                 </div>
