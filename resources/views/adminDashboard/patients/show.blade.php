@@ -35,21 +35,54 @@
                             </div>
                             <div>
                                 <span class="text-gray-500 dark:text-gray-400">Birth Date:</span>
-                                <span class="ml-2 text-gray-900 dark:text-white">{{ $patient->birth_date ? $patient->birth_date->format('Y-m-d') : 'Not set' }}</span>
+                                <span
+                                    class="ml-2 text-gray-900 dark:text-white">{{ $patient->birth_date ? $patient->birth_date->format('Y-m-d') : 'Not set' }}</span>
                             </div>
                             <div>
                                 <span class="text-gray-500 dark:text-gray-400">Profile Status:</span>
                                 <span class="ml-2">
-                                    @if($patient->is_profile_complete)
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    @if ($patient->is_profile_complete)
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                             Complete
                                         </span>
                                     @else
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
                                             Incomplete
                                         </span>
                                     @endif
                                 </span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500 dark:text-gray-400">Allergies:</span>
+                                <div class="mt-1 text-gray-900 dark:text-white">
+                                    @if (!empty($patient->allergies))
+                                        <ul class="list-disc list-inside">
+                                            @foreach ($patient->allergies as $allergy)
+                                                <li>{{ $allergy->name }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <span class="text-gray-400">No allergies reported</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="mt-1 text-gray-900 dark:text-white">
+                                <span class="text-gray-500 dark:text-gray-400">Current Medications:</span>
+                                @if (!empty($patient->current_medications))
+                                    @if (is_array($patient->current_medications))
+                                        <ul class="list-disc list-inside">
+                                            @foreach ($patient->current_medications as $item)
+                                                <li>{{ $item }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        {{ $patient->current_medications }}
+                                    @endif
+                                @else
+                                    <span class="text-gray-400">No current medications reported</span>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -60,12 +93,16 @@
                             <div>
                                 <span class="text-gray-500 dark:text-gray-400">Medical History:</span>
                                 <div class="mt-1 text-gray-900 dark:text-white">
-                                    @if(!empty($patient->medical_history))
-                                        <ul class="list-disc list-inside">
-                                            @foreach($patient->medical_history as $item)
-                                                <li>{{ $item }}</li>
-                                            @endforeach
-                                        </ul>
+                                    @if (!empty($patient->medical_history))
+                                        @if (is_array($patient->medical_history))
+                                            <ul class="list-disc list-inside">
+                                                @foreach ($patient->medical_history as $item)
+                                                    <li>{{ $item }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @else
+                                            {{ $patient->medical_history }}
+                                        @endif
                                     @else
                                         <span class="text-gray-400">No medical history provided</span>
                                     @endif
@@ -74,42 +111,14 @@
                             <div>
                                 <span class="text-gray-500 dark:text-gray-400">Chronic Conditions:</span>
                                 <div class="mt-1 text-gray-900 dark:text-white">
-                                    @if(!empty($patient->chronicConditions))
+                                    @if (!empty($patient->chronicConditions))
                                         <ul class="list-disc list-inside">
-                                            @foreach($patient->chronicConditions as $condition)
-                                                <li>{{ $condition }}</li>
+                                            @foreach ($patient->chronicConditions as $condition)
+                                                <li>{{ $condition->name }}</li>
                                             @endforeach
                                         </ul>
                                     @else
                                         <span class="text-gray-400">No chronic conditions reported</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div>
-                                <span class="text-gray-500 dark:text-gray-400">Allergies:</span>
-                                <div class="mt-1 text-gray-900 dark:text-white">
-                                    @if(!empty($patient->allergies))
-                                        <ul class="list-disc list-inside">
-                                            @foreach($patient->allergies as $allergy)
-                                                <li>{{ $allergy }}</li>
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        <span class="text-gray-400">No allergies reported</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div>
-                                <span class="text-gray-500 dark:text-gray-400">Current Medications:</span>
-                                <div class="mt-1 text-gray-900 dark:text-white">
-                                    @if(!empty($patient->current_medications))
-                                        <ul class="list-disc list-inside">
-                                            @foreach($patient->current_medications as $medication)
-                                                <li>{{ $medication }}</li>
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        <span class="text-gray-400">No current medications reported</span>
                                     @endif
                                 </div>
                             </div>
@@ -124,22 +133,26 @@
             <div class="p-6">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Patient Files</h2>
 
-                @if($files->count() > 0)
+                @if ($files->count() > 0)
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @foreach($files as $file)
+                        @foreach ($files as $file)
                             <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 shadow-sm">
                                 <div class="flex items-center justify-between mb-3">
                                     <div class="flex items-center">
-                                        @if(in_array($file->mime_type, ['image/jpeg', 'image/png', 'image/gif']))
-                                            <iconify-icon icon="solar:gallery-linear" class="text-blue-500 text-xl mr-2"></iconify-icon>
+                                        @if (in_array($file->mime_type, ['image/jpeg', 'image/png', 'image/gif']))
+                                            <iconify-icon icon="solar:gallery-linear"
+                                                class="text-blue-500 text-xl mr-2"></iconify-icon>
                                         @elseif($file->mime_type === 'application/pdf')
-                                            <iconify-icon icon="solar:file-pdf-linear" class="text-red-500 text-xl mr-2"></iconify-icon>
+                                            <iconify-icon icon="solar:file-pdf-linear"
+                                                class="text-red-500 text-xl mr-2"></iconify-icon>
                                         @else
-                                            <iconify-icon icon="solar:file-linear" class="text-gray-500 text-xl mr-2"></iconify-icon>
+                                            <iconify-icon icon="solar:file-linear"
+                                                class="text-gray-500 text-xl mr-2"></iconify-icon>
                                         @endif
-                                        <span class="text-gray-900 dark:text-white font-medium truncate max-w-[200px]" title="{{ $file->file_name }}">
+                                        {{-- <span class="text-gray-900 dark:text-white font-medium truncate max-w-[200px]"
+                                            title="{{ $file->file_name }}">
                                             {{ $file->file_name }}
-                                        </span>
+                                        </span> --}}
                                     </div>
                                 </div>
 
@@ -149,19 +162,22 @@
                                 </div>
 
                                 <div class="flex space-x-2">
-                                    <a href="{{ $file->getUrl() }}" target="_blank" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                    <a href="{{ $file->getUrl() }}" target="_blank"
+                                        class="text-blue-600 hover:text-blue-800 text-sm font-medium">
                                         View
                                     </a>
-                                    <a href="{{ $file->getUrl() }}" download class="text-green-600 hover:text-green-800 text-sm font-medium">
+                                    <a href="{{ $file->getUrl() }}" download
+                                        class="text-green-600 hover:text-green-800 text-sm font-medium">
                                         Download
                                     </a>
                                 </div>
 
-                                @if(in_array($file->mime_type, ['image/jpeg', 'image/png', 'image/gif']))
+                                {{-- @if (in_array($file->mime_type, ['image/jpeg', 'image/png', 'image/gif']))
                                     <div class="mt-3">
-                                        <img src="{{ $file->getUrl() }}" alt="{{ $file->file_name }}" class="rounded-md w-full h-32 object-cover">
+                                        <img src="{{ $file->getUrl() }}" alt="{{ $file->file_name }}"
+                                            class="rounded-md w-full h-32 object-cover">
                                     </div>
-                                @endif
+                                @endif --}}
                             </div>
                         @endforeach
                     </div>

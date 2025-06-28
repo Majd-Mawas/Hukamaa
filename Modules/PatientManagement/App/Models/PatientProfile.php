@@ -39,7 +39,7 @@ class PatientProfile extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('patient_files')
-            ->useDisk('public')
+            ->useDisk('media')
             ->acceptsMimeTypes(['application/pdf', 'image/jpeg', 'image/png'])
             ->withResponsiveImages();
     }

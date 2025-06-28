@@ -23,6 +23,7 @@ class DoctorProfile extends Model implements HasMedia
         'profile_picture',
         'specialization_id',
         'consultation_fee',
+        'commission_percent',
         'title',
         'experience_years',
         'experience_description',

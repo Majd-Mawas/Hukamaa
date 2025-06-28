@@ -180,7 +180,11 @@ class DoctorController extends Controller
 
     public function approveDoctor(Request $request, DoctorProfile $doctorProfile)
     {
-        $doctorProfile->update(['status' => DoctorStatus::APPROVED->value]);
+        $doctorProfile->update([
+            'status' => DoctorStatus::APPROVED->value,
+            'consultation_fee' => request()->consultation_fee,
+            'commission_percent' => request()->commission_percent,
+        ]);
 
         return redirect()->route('admin.doctors.doctorApprovals')->with('success', 'Doctor approved successfully.');
     }
