@@ -74,9 +74,9 @@
                             <div>
                                 <span class="text-gray-500 dark:text-gray-400">Chronic Conditions:</span>
                                 <div class="mt-1 text-gray-900 dark:text-white">
-                                    @if(!empty($patient->chronic_conditions))
+                                    @if(!empty($patient->chronicConditions))
                                         <ul class="list-disc list-inside">
-                                            @foreach($patient->chronic_conditions as $condition)
+                                            @foreach($patient->chronicConditions as $condition)
                                                 <li>{{ $condition }}</li>
                                             @endforeach
                                         </ul>

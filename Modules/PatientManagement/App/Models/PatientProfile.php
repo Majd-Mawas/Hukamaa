@@ -20,8 +20,6 @@ class PatientProfile extends Model implements HasMedia
         'gender',
         'birth_date',
         'medical_history',
-        'chronic_conditions',
-        'allergies',
         'current_medications',
         'is_profile_complete'
     ];
@@ -30,8 +28,6 @@ class PatientProfile extends Model implements HasMedia
         'birth_date' => 'date',
         'is_profile_complete' => 'boolean',
         'medical_history' => 'array',
-        'chronic_conditions' => 'array',
-        'allergies' => 'array',
         'current_medications' => 'array',
     ];
 
@@ -61,5 +57,27 @@ class PatientProfile extends Model implements HasMedia
     public function chatMessages()
     {
         return $this->hasMany(ChatMessage::class, 'sender_id');
+    }
+
+    public function allergies()
+    {
+        return $this->belongsToMany(
+            Allergy::class,
+            'allergy_patient',
+            'patient_profile_id',
+            'allergy_id'
+        )
+            ->withTimestamps();
+    }
+
+    public function chronicConditions()
+    {
+        return $this->belongsToMany(
+            ChronicCondition::class,
+            'chronic_conditions_patient',
+            'patient_profile_id',
+            'chronic_conditions_id'
+        )
+            ->withTimestamps();
     }
 }

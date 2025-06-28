@@ -15,8 +15,6 @@ class PatientProfileResource extends ApiResource
             'gender' => $this->gender,
             'birth_date' => $this->birth_date?->format('Y-m-d'),
             'medical_history' => $this->medical_history,
-            'chronic_conditions' => $this->chronic_conditions,
-            'allergies' => $this->allergies,
             'current_medications' => $this->current_medications,
             'is_profile_complete' => $this->is_profile_complete,
             'files' => $this->whenLoaded('media', function () {
@@ -37,6 +35,8 @@ class PatientProfileResource extends ApiResource
                     'email' => $this->user->email,
                 ];
             }),
+            'allergies' => AllergyResource::collection($this->allergies),
+            'chronic_conditions' => ChronicConditionResource::collection($this->chronicConditions),
         ];
     }
 }

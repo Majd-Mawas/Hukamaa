@@ -10,5 +10,7 @@ Route::middleware(['auth:sanctum'])
             Route::post('/basic', [PatientOnboardingController::class, 'updateBasicInfo']);
             Route::post('/extra', [PatientOnboardingController::class, 'updateExtraInfo']);
         });
+        Route::get('/allergies', [PatientProfileController::class, 'getAllergies'])->name('allergies');
+        Route::get('/chronic-conditions', [PatientProfileController::class, 'getChronicConditions'])->name('chronic-conditions');
         Route::post('/update-profile', [PatientProfileController::class, 'update']);
     });

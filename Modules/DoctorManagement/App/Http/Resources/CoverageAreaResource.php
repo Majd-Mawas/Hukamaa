@@ -2,11 +2,12 @@
 
 namespace Modules\DoctorManagement\App\Http\Resources;
 
+use App\Http\Resources\ApiResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CoverageAreaResource extends JsonResource
+class CoverageAreaResource extends ApiResource
 {
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             ...parent::toArray($request),

@@ -12,12 +12,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/featured', [DoctorProfileController::class, 'featured'])->name('featured');
         Route::get('/coverage-areas', [DoctorProfileController::class, 'getCoverageAreas'])->name('coverage-areas');
         Route::get('/verify-status', [DoctorProfileController::class, 'verifyStatus'])->name('verify-status');
-
-        // Route::get('/', [DoctorProfileController::class, 'index'])->name('index');
-        // Route::post('/', [DoctorProfileController::class, 'store'])->name('store');
         Route::get('/{doctor}', [DoctorProfileController::class, 'show'])->name('show');
-        // Route::put('/{doctor}', [DoctorProfileController::class, 'update'])->name('update');
-        // Route::delete('/{doctor}', [DoctorProfileController::class, 'destroy'])->name('destroy');
         Route::post('/profile', [DoctorProfileController::class, 'updateProfile'])->name('profile.update');
         Route::post('/availabilities', [DoctorProfileController::class, 'updateAvailabilities'])->name('availabilities.update');
 
@@ -31,12 +26,4 @@ Route::middleware('auth:sanctum')->group(function () {
             });
         Route::get('/verify-status', [DoctorProfileController::class, 'verifyStatus'])->name('verify-status');
     });
-
-    // Doctor availability routes
-    // Route::prefix('availabilities')->name('availabilities.')->group(function () {
-    //     Route::get('/', [AvailabilityController::class, 'index'])->name('index');
-    //     Route::post('/', [AvailabilityController::class, 'store'])->name('store');
-    //     Route::put('/{availability}', [AvailabilityController::class, 'update'])->name('update');
-    //     Route::delete('/{availability}', [AvailabilityController::class, 'destroy'])->name('destroy');
-    // });
 });

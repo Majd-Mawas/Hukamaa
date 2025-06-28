@@ -14,9 +14,11 @@ class ExtraInfoRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'allergies' => ['nullable', 'string'],
+            // 'allergies' => ['nullable', 'string'],
             'current_medications' => ['nullable', 'string'],
-            'files.*' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'], // 10MB max
+            'files.*' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'], // 10MB max,
+            'allergies' => ['required', 'array'],
+            'allergies.*' => ['required', 'integer', 'exists:allergies,id']
         ];
     }
 }

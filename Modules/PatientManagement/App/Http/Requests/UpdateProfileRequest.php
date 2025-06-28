@@ -17,9 +17,11 @@ class UpdateProfileRequest extends FormRequest
             'name' => 'required|string|max:255',
             'birth_date' => 'required|date|before:today',
             'gender' => 'required|in:male,female',
-            'allergies' => 'nullable|string|max:1000',
+            // 'allergies' => 'nullable|string|max:1000',
             'files' => 'nullable|array',
             'files.*' => 'file|mimes:pdf,jpg,jpeg,png|max:10240',
+            'allergies' => ['required', 'array'],
+            'allergies.*' => ['required', 'integer', 'exists:allergies,id']
         ];
     }
 }

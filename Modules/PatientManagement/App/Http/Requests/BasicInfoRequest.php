@@ -17,7 +17,9 @@ class BasicInfoRequest extends BaseRequest
             'gender' => ['required', 'string', 'in:male,female'],
             'birth_date' => ['required', 'date', 'before:today'],
             'medical_history' => ['nullable', 'string'],
-            'chronic_conditions' => ['nullable', 'string'],
+            // 'chronic_conditions' => ['nullable', 'string'],
+            'chronic_conditions' => ['required', 'array'],
+            'chronic_conditions.*' => ['required', 'integer', 'exists:chronic_conditions,id']
         ];
     }
 }
