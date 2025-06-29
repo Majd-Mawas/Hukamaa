@@ -342,7 +342,7 @@
 
                 <button data-dropdown-toggle="dropdownProfile" class="flex justify-center items-center rounded-full"
                     type="button">
-                    <img src="{{ asset('assets/images/user.png') }}" alt="image"
+                    <img src="{{ asset('assets/images/user-grid/user-grid-img13.png') }}" alt="image"
                         class="w-10 h-10 object-fit-cover rounded-full">
                 </button>
                 <div id="dropdownProfile"

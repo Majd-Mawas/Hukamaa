@@ -15,9 +15,11 @@
         <div class=" py-8 px-6 flex flex-col justify-center">
             <div class=" mx-auto w-full">
                 <div>
-                    <a href="{{ route('admin.index') }}" class="mb-2.5 max-w-[290px]">
-                        <img src="{{ asset('assets/images/logo.png') }}" alt="">
-                    </a>
+                    <div class="text-center">
+                        <a href="{{ route('admin.index') }}" class="mb-2.5 max-w-[290px] mx-auto text-center">
+                            <img src="{{ asset('assets/comingSoon/img/hukamaa-logo.png') }}" alt="">
+                        </a>
+                    </div>
                     <h4 class="mb-3">Sign In to your Account</h4>
                     <p class="mb-8 text-secondary-light text-lg">Welcome back! please enter your detail</p>
                 </div>

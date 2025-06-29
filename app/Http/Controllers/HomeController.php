@@ -21,9 +21,9 @@ class HomeController extends Controller
 
     public function comingSoon(): View|RedirectResponse
     {
-        if (Auth::check()) {
-            return $this->redirectBasedOnRole();
-        }
+        // if (Auth::check()) {
+        //     return $this->redirectBasedOnRole();
+        // }
 
         return view('comingSoon');
     }

@@ -15,7 +15,7 @@
     <title>Hukamaa - Coming Soon</title>
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" href="assets/img/favicon.png">
+    <link rel="shortcut icon" href="{{ asset('assets/comingSoon/img/hukamaa.png') }}">
 
     <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&amp;subset=latin-ext" rel="stylesheet">

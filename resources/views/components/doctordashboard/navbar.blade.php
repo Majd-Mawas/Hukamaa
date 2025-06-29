@@ -342,7 +342,14 @@
 
                 <button data-dropdown-toggle="dropdownProfile" class="flex justify-center items-center rounded-full"
                     type="button">
-                    <img src="{{ asset('assets/images/user.png') }}" alt="image"
+                    @php
+                        $pp =
+                            null != auth()->user()->doctorProfile?->getFirstMediaUrl('profile_picture') ||
+                            '' != auth()->user()->doctorProfile?->getFirstMediaUrl('profile_picture')
+                                ? auth()->user()->doctorProfile?->getFirstMediaUrl('profile_picture')->getUrl()
+                                : asset('assets/images/user-grid/user-grid-img13.png');
+                    @endphp
+                    <img src="{{ $pp }}" alt="Profile Picture"
                         class="w-10 h-10 object-fit-cover rounded-full">
                 </button>
                 <div id="dropdownProfile"

@@ -46,9 +46,9 @@
                                     <th
                                         class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                         Date</th>
-                                    <th
+                                    {{-- <th
                                         class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                        Invoice</th>
+                                        Invoice</th> --}}
                                     @if (isset($status) && $status === \Modules\PaymentManagement\App\Enums\PaymentStatus::PENDING->value)
                                         <th
                                             class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
@@ -89,7 +89,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                             {{ $payment->created_at->format('M d, Y') }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                                        {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                             @if ($payment?->appointment?->getFirstMedia('payment_invoices'))
                                                 <a href="{{ $payment?->appointment?->getFirstMedia('payment_invoices')->getUrl() }}"
                                                     target="_blank" class="text-blue-600 hover:text-blue-900">
@@ -98,7 +98,7 @@
                                             @else
                                                 <span class="text-gray-500">No Invoice</span>
                                             @endif
-                                        </td>
+                                        </td> --}}
                                         @if (isset($status) && $status === \Modules\PaymentManagement\App\Enums\PaymentStatus::PENDING->value)
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                 <form action="{{ route('admin.payments.approve', $payment) }}"

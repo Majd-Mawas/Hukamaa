@@ -4,9 +4,9 @@
     </button>
     <div>
         <a href="{{ route('doctor.index') }}" class="sidebar-logo">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="site logo" class="light-logo">
-            <img src="{{ asset('assets/images/logo-light.png') }}" alt="site logo" class="dark-logo">
-            <img src="{{ asset('assets/images/logo-icon.png') }}" alt="site logo" class="logo-icon">
+            <img src="{{ asset('assets/comingSoon/img/hukamaa-logo.png') }}" alt="site logo" class="light-logo mx-auto">
+            <img src="{{ asset('assets/comingSoon/img/hukamaa-logo.png') }}" alt="site logo" class="dark-logo mx-auto">
+            <img src="{{ asset('assets/comingSoon/img/hukamaa-logo.png') }}" alt="site logo" class="logo-icon mx-auto">
         </a>
     </div>
     <div class="sidebar-menu-area">
@@ -19,14 +19,9 @@
                 </a>
             </li>
 
-            {{-- <li class="sidebar-menu-group-title">Payments</li>
-            <li>
-                <a href="{{ route('doctor.payments.index') }}">
-                    <iconify-icon icon="solar:card-linear" class="menu-icon"></iconify-icon>
-                    <span>Payments</span>
-                </a>
-            </li>
 
+            {{--
+            <li class="sidebar-menu-group-title">Payments</li>
             <li>
                 <a href="{{ route('doctor.payments.pending') }}">
                     <iconify-icon icon="solar:clock-circle-linear" class="menu-icon"></iconify-icon>
@@ -59,6 +54,12 @@
                 <a href="{{ route('doctor.patients.index') }}">
                     <iconify-icon icon="solar:user-rounded-linear" class="menu-icon"></iconify-icon>
                     <span>Patients</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('doctor.payments.index') }}">
+                    <iconify-icon icon="solar:card-linear" class="menu-icon"></iconify-icon>
+                    <span>Payments</span>
                 </a>
             </li>
 

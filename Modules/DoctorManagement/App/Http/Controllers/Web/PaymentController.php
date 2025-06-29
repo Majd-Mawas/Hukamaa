@@ -14,6 +14,7 @@ class PaymentController extends Controller
     {
         $payments = Payment::with(['patient:id,name', 'doctor:id,name'])
             ->whereNot('status', PaymentStatus::PENDING)
+            ->where('doctor_id', Auth::id())
             ->latest()
             ->paginate(10);
 

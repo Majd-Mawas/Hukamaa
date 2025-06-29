@@ -35,9 +35,9 @@ Route::middleware(['auth'])->group(function () {
 
                 Route::prefix('payments')->name('payments.')->group(function () {
                     Route::get('/', [PaymentController::class, 'index'])->name('index');
-                    Route::get('/pending', [PaymentController::class, 'pending'])->name('pending');
-                    Route::post('/{payment}/approve', [PaymentController::class, 'approve'])->name('approve');
-                    Route::post('/{payment}/reject', [PaymentController::class, 'reject'])->name('reject');
+                    // Route::get('/pending', [PaymentController::class, 'pending'])->name('pending');
+                    // Route::post('/{payment}/approve', [PaymentController::class, 'approve'])->name('approve');
+                    // Route::post('/{payment}/reject', [PaymentController::class, 'reject'])->name('reject');
                 });
 
                 Route::prefix('appointments')->name('appointments.')->controller(AppointmentController::class)->group(function () {
