@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <!-- PAGE TITLE -->
-    <title>Hukamaa - Coming Soon</title>
+    <title>Hukamaa - Landing Page</title>
 
     <!-- FAVICON -->
     <link rel="shortcut icon" href="{{ asset('assets/comingSoon/img/hukamaa.png') }}">
@@ -23,10 +23,32 @@
     <!-- STYLESHEETS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/comingSoon/css/plugins.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/comingSoon/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
 
 </head>
+<style>
+    @font-face {
+        font-family: 'Araboto';
+        src: url("{{ asset('assets/landingPage/fonts/Araboto-Bold.ttf') }}") format('truetype');
+    }
 
+    @font-face {
+        font-family: 'Araboto-normal';
+        src: url("{{ asset('assets/landingPage/fonts/Araboto-Normal.ttf') }}") format('truetype');
+    }
+
+    body {
+        background: url("{{ asset('assets/landingPage/imgs/Layer_1.png') }}");
+        background-repeat: no-repeat;
+        font-family: 'Araboto', sans-serif;
+    }
+
+    .logo {
+        width: 12rem;
+    }
+</style>
 
 <body>
 
@@ -47,141 +69,49 @@
     </div>
     <!-- /PRELOADER -->
 
-
-    <!-- HERO -->
-    <div class="hero">
-
-
-        <!-- FRONT CONTENT -->
-        <div class="front-content">
-
-
-            <!-- CONTAINER MID -->
-            <div class="container-mid">
-
-
-                <!-- ANIMATION CONTAINER -->
-                <div class="animation-container animation-fade-down" data-animation-delay="0">
-
-                    <img class="img-responsive logo" src="{{ asset('assets/comingSoon/img/hukamaa.png') }}"
-                        alt="image">
-
+    <div class="hero" dir="rtl">
+        <div class="py-12">
+            <img src="{{ asset('assets/landingPage/imgs/hukamaa.png') }}" class="logo mx-auto" alt="">
+        </div>
+        <div class="flex justify-around flex-wrap gap-20">
+            <div class="md:max-w-1/2">
+                <div class="text-[#005745] font-normal text-5xl text-right leading-[150%]">
+                    الاستشارات الطبية أصبحت <br> أقرب من أي وقت.
                 </div>
-                <!-- /ANIMATION CONTAINER -->
-
-
-                <!-- ANIMATION CONTAINER -->
-                <div class="animation-container animation-fade-right" data-animation-delay="300">
-
-                    <h1>We're Coming Soon..</h1>
-
+                <div
+                    class="text-[#000000] font-normal text-4xl text-right leading-[150%] font-['Araboto-normal'] my-12">
+                    حمل التطبيق وابدأ رحلتك الطبية من هاتفك. <br>
+                    احجز مواعيد، تواصل مع الأطباء، وتابع <br>
+                    استشاراتك بسهولة وأمان.
                 </div>
-                <!-- /ANIMATION CONTAINER -->
-
-
-                <!-- ANIMATION CONTAINER -->
-                <div class="animation-container animation-fade-left" data-animation-delay="600">
-
-                    <p class="subline">We're working on our new website.</p>
-
+                <div class="mt-12 flex gap-12">
+                    <div>
+                        <a href="#" target="_blank" rel="noopener noreferrer">
+                            <img src="{{ asset('assets/landingPage/imgs/appstore.png') }}" class="w-72"
+                                alt="">
+                        </a>
+                    </div>
+                    <div>
+                        <a href="#" target="_blank" rel="noopener noreferrer">
+                            <img src="{{ asset('assets/landingPage/imgs/googleplay.png') }}" class="w-72"
+                                alt="">
+                        </a>
+                    </div>
                 </div>
-                <!-- /ANIMATION CONTAINER -->
-
-
-                <!-- ANIMATION CONTAINER -->
-                {{-- <div class="animation-container animation-fade-up" data-animation-delay="900">
-
-                    <div class="open-popup">Notify Me</div>
-
-                </div> --}}
-                <!-- /ANIMATION CONTAINER -->
-
-
             </div>
-            <!-- /CONTAINER MID -->
-
-
-            <!-- FOOTER -->
-            <div class="footer">
-
-
-                <!-- ANIMATION CONTAINER -->
-                <div class="animation-container animation-fade-up" data-animation-delay="1200">
-
-                    <p>© {{ now()->format('Y') }} Hukamaa </p>
-
+            <div class="flex md:max-w-1/2 gap-12">
+                <div>
+                    <img src="{{ asset('assets/landingPage/imgs/Blue@2x.png') }}" class="w-80" alt="">
                 </div>
-                <!-- /ANIMATION CONTAINER -->
-
-
+                <div>
+                    <img src="{{ asset('assets/landingPage/imgs/Blue@1x.png') }}" class="w-96" alt="">
+                </div>
             </div>
-            <!-- /FOOTER -->
-
 
         </div>
-        <!-- /FRONT CONTENT -->
-
-
-        <!-- BACKGROUND CONTENT -->
-        <div class="background-content parallax-on">
-
-            <div class="background-overlay"></div>
-            <div class="background-img layer" data-depth="0.05"></div>
-
-        </div>
-        <!-- /BACKGROUND CONTENT -->
-
-
     </div>
+
     <!-- /HERO -->
-
-
-    <!-- POPUP ( SUBSCRIBE ) -->
-    <div class="popup">
-
-
-        <!-- CARD -->
-        <div class="card">
-
-
-            <!-- CARD CLOSE BUTTON -->
-            <div class="close-popup close-button"></div>
-
-            <i class="fa fa-envelope-o" aria-hidden="true"></i>
-            <h3>Sign Up</h3>
-            <p class="subline">Signing up to our newsletter gives you exclusive access to our Website Launch!</p>
-
-            <!-- FORM -->
-            <form action="assets/php/subscribe.php" method="post" class="subscribe-form">
-
-
-                <input type="text" name="email" placeholder="* Enter your Email" onfocus="this.placeholder = ''"
-                    onblur="this.placeholder = '* Enter your Email'" class="email form-control">
-
-                <!-- PHANTOM ELEMENT ( HONEYPOT CAPTCHA FOR SECURITY ) DO NOT REMOVE -->
-                <div class="fhp-input"><input type="text" name="phone"
-                        placeholder="* Enter your phone to Subscribe!" class="email form-control"></div>
-                <!-- /PHANTOM ELEMENT ( HONEYPOT CAPTCHA FOR SECURITY ) DO NOT REMOVE -->
-
-                <button type="submit" class="btn btn-primary form-control">Subscribe<i class="fa fa-long-arrow-right"
-                        aria-hidden="true"></i></button>
-
-                <!-- SUCCESS-ERROR MESSAGE -->
-                <div class="error-message">* Enter a valid Email Address!</div>
-                <div class="success-message">* Successfuly Subscribed!</div>
-                <!-- /SUCCESS-ERROR MESSAGE -->
-
-
-            </form>
-            <!-- /FORM -->
-
-
-        </div>
-        <!-- /CARD -->
-
-
-    </div>
-    <!-- /POPUP ( SUBSCRIBE ) -->
 
 
     <!-- JAVASCRIPTS -->
