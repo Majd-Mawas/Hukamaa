@@ -52,7 +52,9 @@ Route::middleware(['auth'])->group(function () {
 
                 Route::prefix('patients')->name('patients.')->controller(PatientController::class)->group(function () {
                     Route::get('/', 'index')->name('index');
+                    Route::get('/{patient}/edit', 'edit')->name('edit');
                     Route::get('/{patient}', 'show')->name('show');
+                    Route::put('/{patient}', 'update')->name('update');
                 });
             });
         });

@@ -27,14 +27,15 @@ class PatientProfile extends Model implements HasMedia
     protected $casts = [
         'birth_date' => 'date',
         'is_profile_complete' => 'boolean',
-        'medical_history' => 'array',
-        'current_medications' => 'array',
+        'medical_history' => 'string',
+        'current_medications' => 'string',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
+
 
     public function registerMediaCollections(): void
     {

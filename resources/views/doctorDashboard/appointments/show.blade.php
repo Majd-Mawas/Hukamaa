@@ -139,7 +139,7 @@
         @endif
 
         <!-- Update Status Form -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+        {{-- <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
             <div class="p-6">
                 <h2 class="text-xl font-semibold mb-4 dark:text-white">Update Appointment Status</h2>
                 <form action="{{ route('admin.appointments.update-status', $appointment) }}" method="POST">
@@ -165,6 +165,6 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection

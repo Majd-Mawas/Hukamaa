@@ -1,4 +1,5 @@
-@extends('layout.layout')
+@extends('doctorDashboard.layout.layout')
+
 @php
     $title = 'Edit Patient';
     $subTitle = 'Edit Patient';
@@ -29,70 +30,71 @@
                 <div class="col-span-12 lg:col-span-10 xl:col-span-8 2xl:col-span-6 2xl:col-start-4">
                     <div class="card border border-neutral-200 dark:border-neutral-600">
                         <div class="card-body">
-                            <h6 class="text-base text-neutral-600 dark:text-neutral-200 mb-4">Profile Image</h6>
-
-                            <!-- Upload Image Start -->
-                            <div class="mb-6 mt-4">
-                                <div class="avatar-upload">
-                                    <div class="avatar-edit absolute bottom-0 end-0 me-6 mt-4 z-[1] cursor-pointer ">
-                                        <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" hidden>
-                                        <label for="imageUpload"
-                                            class="w-8 h-8 flex justify-center items-center bg-primary-50 dark:bg-primary-600/25 text-primary-600 dark:text-primary-400 border border-primary-600 hover:bg-primary-100 text-lg rounded-full">
-                                            <iconify-icon icon="solar:camera-outline" class="icon"></iconify-icon>
-                                        </label>
-                                    </div>
-                                    <div class="avatar-preview">
-                                        <div id="imagePreview"> </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Upload Image End -->
-
-                            <form action="#">
+                            <form action="{{ route('doctor.patients.update', ['patient' => $patient]) }}" method="POST">
+                                @csrf
+                                @method('PUT')
                                 <div class="mb-5">
                                     <label for="name"
-                                        class="inline-block font-semibold text-neutral-600 dark:text-neutral-200 text-sm mb-2">Full
+                                        class="inline-block font-semibold text-neutral-600 dark:text-neutral-200 text-sm mb-2">
                                         Name <span class="text-danger-600">*</span></label>
                                     <input type="text" class="form-control rounded-lg" id="name"
-                                        placeholder="Enter Full Name">
+                                        value="{{ $patient->user->name }}" disabled>
                                 </div>
                                 <div class="mb-5">
                                     <label for="email"
-                                        class="inline-block font-semibold text-neutral-600 dark:text-neutral-200 text-sm mb-2">Email
-                                        <span class="text-danger-600">*</span></label>
-                                    <input type="email" class="form-control rounded-lg" id="email"
-                                        placeholder="Enter email address">
+                                        class="inline-block font-semibold text-neutral-600 dark:text-neutral-200 text-sm mb-2">
+                                        Email <span class="text-danger-600">*</span></label>
+                                    <input type="text" class="form-control rounded-lg" id="email"
+                                        value="{{ $patient->user->email }}" disabled>
                                 </div>
                                 <div class="mb-5">
-                                    <label for="number"
-                                        class="inline-block font-semibold text-neutral-600 dark:text-neutral-200 text-sm mb-2">Phone</label>
-                                    <input type="email" class="form-control rounded-lg" id="number"
-                                        placeholder="Enter phone number">
-                                </div>
-                                <div class="mb-5">
-                                    <label for="depart"
-                                        class="inline-block font-semibold text-neutral-600 dark:text-neutral-200 text-sm mb-2">Department
-                                        <span class="text-danger-600">*</span> </label>
-                                    <select class="form-control rounded-lg form-select" id="depart">
-                                        <option>Enter Event Title </option>
-                                        <option>Enter Event Title One </option>
-                                        <option>Enter Event Title Two</option>
+                                    <label for="allergies"
+                                        class="inline-block font-semibold text-neutral-600 dark:text-neutral-200 text-sm mb-2">
+                                        Allergies <span class="text-danger-600">*</span>
+                                    </label>
+                                    <select
+                                        class="form-control form-select mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                        id="allergies" name="allergies[]" multiple>
+                                        @foreach ($allergies as $allergy)
+                                            <option value="{{ $allergy->id }}"
+                                                {{ $patient->allergies->contains('id', $allergy->id) ? 'selected' : '' }}>
+                                                {{ $allergy->name }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
+
                                 <div class="mb-5">
-                                    <label for="desig"
-                                        class="inline-block font-semibold text-neutral-600 dark:text-neutral-200 text-sm mb-2">Designation
-                                        <span class="text-danger-600">*</span> </label>
-                                    <select class="form-control rounded-lg form-select" id="desig">
-                                        <option>Enter Designation Title </option>
-                                        <option>Enter Designation Title One </option>
-                                        <option>Enter Designation Title Two</option>
+                                    <label for="chronicConditions"
+                                        class="inline-block font-semibold text-neutral-600 dark:text-neutral-200 text-sm mb-2">
+                                        Chronic Conditions <span class="text-danger-600">*</span>
+                                    </label>
+                                    <select
+                                        class="form-control form-select mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                        id="chronicConditions" name="chronicConditions[]" multiple>
+                                        @foreach ($chronicConditions as $chronicCondition)
+                                            <option value="{{ $chronicCondition->id }}"
+                                                {{ $patient->chronicConditions->contains('id', $chronicCondition->id) ? 'selected' : '' }}>
+                                                {{ $chronicCondition->name }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
+
                                 <div class="mb-5">
                                     <label for="desc"
-                                        class="inline-block font-semibold text-neutral-600 dark:text-neutral-200 text-sm mb-2">Description</label>
-                                    <textarea name="#0" class="form-control rounded-lg" id="desc" placeholder="Write description..."></textarea>
+                                        class="inline-block font-semibold text-neutral-600 dark:text-neutral-200 text-sm mb-2">Current
+                                        Medications</label>
+                                    <textarea name="current_medications" name="current_medications" class="form-control rounded-lg" id="desc"
+                                        placeholder="Write description...">{{ is_array(json_decode($patient->current_medications)) ? '' : $patient->current_medications }}</textarea>
+                                </div>
+
+                                <div class="mb-5">
+                                    <label for="desc"
+                                        class="inline-block font-semibold text-neutral-600 dark:text-neutral-200 text-sm mb-2">Medical
+                                        History</label>
+                                    <textarea name="medical_history" name="medical_history" class="form-control rounded-lg" id="desc"
+                                        placeholder="Write description...">{{ is_array(json_decode($patient->medical_history)) ? '' : $patient->medical_history }}</textarea>
                                 </div>
                                 <div class="flex items-center justify-center gap-3">
                                     <button type="button"

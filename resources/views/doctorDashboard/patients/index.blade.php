@@ -77,8 +77,10 @@
                                             @endif
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="{{ route('admin.patients.show', $patient->id) }}"
-                                                class="text-blue-600 hover:text-blue-900">View Details</a>
+                                            <a href="{{ route('doctor.patients.show', $patient->id) }}"
+                                                class="text-blue-600 hover:text-blue-900">View</a>
+                                            <a href="{{ route('doctor.patients.edit', $patient->id) }}"
+                                                class="text-blue-600 hover:text-blue-900">Edit</a>
                                         </td>
                                     </tr>
                                 @empty
