@@ -61,7 +61,7 @@
                 <div class="profile-content px-6 pb-6 -mt-[60px] mt-2">
                     <div class="text-center border-b border-neutral-200 dark:border-neutral-600 pb-4">
                         <div class="relative inline-block">
-                            <img src="{{ auth()?->user()?->doctorProfile?->getFirstMediaUrl('profile_picture') ?: asset('assets/images/user-grid/user-grid-img1.png') }}"
+                            <img src="{{ auth()?->user()?->doctorProfile?->getFirstMediaUrl('profile_picture') ?: asset('assets/images/user-grid/user-grid-img13.png') }}"
                                 alt="{{ auth()->user()->name }}"
                                 class="w-[120px] h-[120px] rounded-full object-cover border-4 border-white dark:border-neutral-800 shadow-sm">
                         </div>

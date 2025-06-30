@@ -14,6 +14,7 @@ use Modules\DoctorManagement\App\Services\DashboardService;
 use Modules\SpecializationManagement\App\Models\Specialization;
 use Modules\DoctorManagement\App\Services\DoctorProfileService;
 use Modules\DoctorManagement\App\Services\AvailabilityService;
+use Modules\PatientManagement\App\Models\PatientProfile;
 
 class DashboardController extends Controller
 {
@@ -39,14 +40,16 @@ class DashboardController extends Controller
 
     public function viewProfile()
     {
-        $doctor = Auth::User()->doctorProfile()->with('specialization', 'appointments')->withCount(['appointments as patients_count' => function ($query) {
-            $query->select(DB::raw('COUNT(DISTINCT patient_id)'));
-        }])->first();
+        $doctor = Auth::User()->doctorProfile()->with('specialization', 'appointments')->first();
+
+        $totalPatients = PatientProfile::whereHas('appointments', function ($query) {
+            $query->where('doctor_id', auth()->id());
+        })->count();
 
         $specialties = Specialization::orderBy('specialization_name')->get();
         $availabilities = Auth::user()->doctorProfile->availabilities;
 
-        return view('doctorDashboard.profile.viewProfile', compact('doctor', 'specialties', 'availabilities'));
+        return view('doctorDashboard.profile.viewProfile', compact('doctor', 'specialties', 'availabilities', 'totalPatients'));
     }
 
     public function updateProfile(UpdateDoctorProfileRequest $request)
