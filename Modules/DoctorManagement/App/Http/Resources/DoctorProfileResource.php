@@ -3,6 +3,7 @@
 namespace Modules\DoctorManagement\App\Http\Resources;
 
 use App\Http\Resources\ApiResource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DoctorProfileResource extends ApiResource
@@ -82,8 +83,8 @@ class DoctorProfileResource extends ApiResource
                     return [
                         'id' => $availability->id,
                         'weekday' => $availability->weekday,
-                        'start_time' => $availability->start_time->format('H:i'),
-                        'end_time' => $availability->end_time->format('H:i'),
+                        'start_time' => Carbon::parse($availability->start_time)->format('H:i'),
+                        'end_time' => Carbon::parse($availability->end_time)->format('H:i'),
                     ];
                 });
             }),

@@ -47,10 +47,10 @@ class DoctorProfileController extends Controller
         );
     }
 
-    public function show(DoctorProfile $doctorProfile): JsonResponse
+    public function show(DoctorProfile $doctor): JsonResponse
     {
         return $this->successResponse(
-            new DoctorProfileResource($doctorProfile->load(['user', 'specialization', 'availabilities'])),
+            new DoctorProfileResource($doctor->load(['user', 'specialization', 'availabilities'])),
             'Doctor profile retrieved successfully'
         );
     }

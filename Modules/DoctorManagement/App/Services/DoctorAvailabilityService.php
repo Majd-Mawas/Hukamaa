@@ -47,10 +47,10 @@ class DoctorAvailabilityService
         $appointments = Appointment::where('doctor_id', $doctorProfile->user_id)
             ->whereDate('date', $date)
             ->get()
-            ->map(function ($appt) {
+            ->map(function ($appointment) {
                 return [
-                    'start' => Carbon::parse($appt->start_time),
-                    'end' => Carbon::parse($appt->end_time),
+                    'start' => Carbon::parse($appointment->start_time),
+                    'end' => Carbon::parse($appointment->end_time),
                 ];
             });
 

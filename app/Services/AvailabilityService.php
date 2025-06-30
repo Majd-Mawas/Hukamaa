@@ -48,10 +48,10 @@ class AvailabilityService
         $appointments = Appointment::where('doctor_id', $doctorProfile->user_id)
             ->whereDate('date', $date)
             ->get()
-            ->map(function ($appt) use ($timezone) {
+            ->map(function ($appointment) {
                 return [
-                    'start' => Carbon::parse($appt->start_time)->setTimezone($timezone),
-                    'end' => Carbon::parse($appt->end_time)->setTimezone($timezone),
+                    'start' => Carbon::parse($appointment->start_time),
+                    'end' => Carbon::parse($appointment->end_time),
                 ];
             });
 
@@ -59,8 +59,8 @@ class AvailabilityService
         $slots = [];
 
         foreach ($availabilities as $availability) {
-            $start = Carbon::parse($availability->start_time)->setTimezone($timezone);
-            $end = Carbon::parse($availability->end_time)->setTimezone($timezone);
+            $start = Carbon::parse($availability->start_time);
+            $end = Carbon::parse($availability->end_time);
 
             while ($start->copy()->addMinutes($this->slotDuration)->lte($end)) {
                 $slotStart = $start->copy();
