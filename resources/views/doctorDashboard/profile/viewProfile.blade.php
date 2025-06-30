@@ -84,7 +84,7 @@
                             </li>
                             <li class="flex items-center justify-between">
                                 <span class="text-neutral-600 dark:text-neutral-400">Patients</span>
-                                <span class="font-medium">{{ $doctor->patients_count ?? '0' }}</span>
+                                <span class="font-medium">{{ $totalPatients ?? '0' }}</span>
                             </li>
                         </ul>
                     </div>
