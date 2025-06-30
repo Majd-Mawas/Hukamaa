@@ -46,7 +46,6 @@ class DashboardService
             foreach (range(1, 12) as $month) {
                 $monthlyPaymentsFormatted[] = round($monthlyPayments[$month] ?? 0, 2);
             }
-            logger()->info('test');
 
             $upcomingAppointments = Appointment::where('doctor_id', $doctorId)
                 ->where('date', '>=', now())
