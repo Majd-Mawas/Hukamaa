@@ -165,8 +165,8 @@ class AppointmentController extends Controller
             );
 
             return $this->successResponse(
-                data: $report,
-                message: __('appointmentmanagement::appointments.messages.report_submitted')
+                new AppointmentResource($appointment->load('appointmentReport')),
+                'Report Submitted Successfully'
             );
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 500);

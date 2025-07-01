@@ -11,6 +11,7 @@ use Modules\PatientManagement\App\Models\Allergy;
 use Modules\PatientManagement\App\Services\PatientProfileService;
 use Modules\PatientManagement\App\Models\ChronicCondition;
 use Modules\PatientManagement\App\Http\Resources\ChronicConditionResource;
+use Modules\UserManagement\App\Http\Resources\UserResource;
 
 class PatientProfileController extends Controller
 {
@@ -28,7 +29,9 @@ class PatientProfileController extends Controller
         $profile = $this->patientProfileService->updateProfile($user->id, $data);
 
         return $this->successResponse(
-            $profile,
+            [
+                'user' => new UserResource($user->load('patientProfile')),
+            ],
             __('patientmanagement::messages.profile_updated')
         );
     }

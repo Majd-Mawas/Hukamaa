@@ -17,6 +17,7 @@ use Modules\DoctorManagement\App\Models\CoverageArea;
 use Modules\DoctorManagement\App\Models\DoctorProfile;
 use Modules\DoctorManagement\App\Services\DoctorProfileService;
 use Modules\DoctorManagement\App\Services\DoctorStatisticsService;
+use Modules\UserManagement\App\Http\Resources\UserResource;
 
 class DoctorProfileController extends Controller
 {
@@ -141,7 +142,9 @@ class DoctorProfileController extends Controller
         $profile->coverageAreas()->sync($data['coverage_areas']);
 
         return $this->successResponse(
-            new DoctorProfileResource($profile->load(['user', 'availabilities', 'coverageAreas'])),
+            [
+                'user' => new UserResource($user->load('doctorProfile')),
+            ],
             'Profile updated successfully'
         );
     }
