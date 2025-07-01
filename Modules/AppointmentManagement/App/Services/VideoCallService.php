@@ -19,7 +19,7 @@ class VideoCallService
         return $videoCall->fresh();
     }
 
-    public function endVideoCall(Appointment $appointment): Appointment
+    public function endVideoCall(Appointment $appointment): VideoCall
     {
         $videoCall = $appointment->videoCall;
         $videoCall->update([
