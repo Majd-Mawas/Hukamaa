@@ -85,16 +85,27 @@ class VideoCallController extends Controller
         $token = $patient->fcm_token;
 
         // if ($token) {
-            $factory = (new Factory)->withServiceAccount(config('services.firebase.credentials_file'));
+        $factory = (new Factory)->withServiceAccount(config('services.firebase.credentials_file'));
 
-            $messaging = $factory->createMessaging();
-            $messaging->send([
-                'token' => $patient->fcm_token, // device token saved from mobile app
-                'notification' => [
-                    'title' => 'Your Video Consultation is Starting Now',
-                    'body' => 'Please join your virtual appointment session. Your healthcare provider is waiting.',
-                ],
-            ]);
+        $messaging = $factory->createMessaging();
+        $messaging->send([
+            'token' => $patient->fcm_token,
+            'data' => [
+                'event' => 'call_invitation',
+                'room_id' => $videoCall->room_id,
+                'appointment_id' => (string)$appointment->id,
+                'app_id' => (string)config('services.zegocloud.app_id'),
+                'user_id' => "patient_{$patient->id}",
+                'token' => $videoCall->patient_token,
+                'caller_id' => (string)$user->id,
+                'caller_name' => $user->name,
+                'caller_type' => "doctor",
+            ],
+            'notification' => [
+                'title' => 'Incoming Video Call',
+                'body' => 'Your doctor is calling you for your appointment.',
+            ],
+        ]);
         // } else {
         //     // Optionally log this
         //     \Log::warning("No FCM token found for patient ID {$patient->id}");
@@ -103,16 +114,5 @@ class VideoCallController extends Controller
         $videoCall->save();
 
         return $this->successResponse(new VideoCallResource($videoCall));
-        // return $this->successResponse([
-        //     'id' => $videoCall->id,
-        //     'room_id' => $videoCall->room_id,
-        //     'token' => $user->id === $appointment->doctor_id
-        //         ? $videoCall->doctor_token
-        //         : $videoCall->patient_token,
-        //     'user_id' => $user->id === $appointment->doctor_id
-        //         ? "doctor_{$user->id}"
-        //         : "patient_{$user->id}",
-        //     'app_id' => config('services.zegocloud.app_id'),
-        // ]);
     }
 }
