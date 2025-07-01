@@ -84,9 +84,9 @@ class VideoCallController extends Controller
 
         $token = $patient->fcm_token;
 
-        if ($token) {
+        // if ($token) {
             $factory = (new Factory)->withServiceAccount(config('services.firebase.credentials_file'));
-            
+
             $messaging = $factory->createMessaging();
             $messaging->send([
                 'token' => $patient->fcm_token, // device token saved from mobile app
@@ -95,10 +95,10 @@ class VideoCallController extends Controller
                     'body' => 'Please join your virtual appointment session. Your healthcare provider is waiting.',
                 ],
             ]);
-        } else {
-            // Optionally log this
-            \Log::warning("No FCM token found for patient ID {$patient->id}");
-        }
+        // } else {
+        //     // Optionally log this
+        //     \Log::warning("No FCM token found for patient ID {$patient->id}");
+        // }
 
         $videoCall->save();
 
