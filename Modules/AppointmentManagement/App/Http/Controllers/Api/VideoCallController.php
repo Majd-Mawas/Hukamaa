@@ -46,9 +46,9 @@ class VideoCallController extends Controller
         );
     }
 
-    public function end(VideoCall $videoCall): JsonResponse
+    public function end(Appointment $appointment): JsonResponse
     {
-        $endedVideoCall = $this->videoCallService->endVideoCall($videoCall);
+        $endedVideoCall = $this->videoCallService->endVideoCall($appointment);
 
         return $this->successResponse(
             new VideoCallResource($endedVideoCall),

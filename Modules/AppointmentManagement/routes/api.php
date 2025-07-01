@@ -31,7 +31,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('video-calls')->group(function () {
         Route::post('/', [VideoCallController::class, 'store']);
         Route::get('/start/{appointment}', [VideoCallController::class, 'start']);
+        Route::post('/end/{appointment}', [VideoCallController::class, 'end']);
         Route::put('/{videoCall}', [VideoCallController::class, 'update']);
-        Route::post('/{videoCall}/end', [VideoCallController::class, 'end']);
     });
 });
