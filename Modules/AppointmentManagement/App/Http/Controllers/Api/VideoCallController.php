@@ -65,7 +65,6 @@ class VideoCallController extends Controller
         }
         $patient = User::findOrFail($appointment->patient_id);
 
-        // Create or reuse VideoCall
         $videoCall = VideoCall::firstOrCreate(
             ['appointment_id' => $appointment->id],
             [
@@ -86,31 +85,49 @@ class VideoCallController extends Controller
 
         $videoCall->save();
         $videoCall->refresh();
-        // if ($token) {
         $factory = (new Factory)->withServiceAccount(config('services.firebase.credentials_file'));
 
         $messaging = $factory->createMessaging();
+        $videoCallData = [
+            'started_at' => $videoCall->started_at?->toISOString(),
+            'ended_at' => $videoCall->ended_at?->toISOString(),
+            'call_duration' => $videoCall->call_duration,
+            'status' => $videoCall->status,
+            'room_id' => $videoCall->room_id,
+            'appointment_id' => $videoCall->appointment_id,
+            'token' => $videoCall->patient_token,
+            'user_id' => "patient_{$user->id}",
+            'app_id' => config('services.zegocloud.app_id'),
+            'app_sign' => config('services.zegocloud.app_sign'),
+        ];
+
         $messaging->send([
             'token' => $patient->fcm_token,
-            'data' => [
-                'event' => 'call_invitation',
-                'room_id' => $videoCall->room_id,
-                'appointment_id' => (string)$appointment->id,
-                'app_id' => (string)config('services.zegocloud.app_id'),
-                'user_id' => "patient_{$patient->id}",
-                'token' => $videoCall->patient_token,
-                'caller_id' => (string)$user->id,
-                'caller_name' => $user->name,
-                'caller_type' => "doctor",
-                'title' => 'Incoming Video Call',
-                'body' => 'Your doctor is calling you for your appointment.',
-            ],
+            'data' => collect(['event' => 'call_invitation'])
+                ->merge($this->stringifyArray($videoCallData))
+                ->all(),
         ]);
-        // } else {
-        //     // Optionally log this
-        //     \Log::warning("No FCM token found for patient ID {$patient->id}");
-        // }
+
 
         return $this->successResponse(new VideoCallResource($videoCall));
+    }
+
+    private function stringifyArray(array $array, string $prefix = '')
+    {
+        $result = [];
+
+        foreach ($array as $key => $value) {
+            $fullKey = $prefix ? "{$prefix}_{$key}" : $key;
+
+            if (is_array($value)) {
+                $result += $this->stringifyArray($value, $fullKey);
+            } elseif (is_object($value)) {
+                $result[$fullKey] = json_encode($value);
+            } else {
+                $result[$fullKey] = (string) $value;
+            }
+        }
+
+        return $result;
     }
 }
