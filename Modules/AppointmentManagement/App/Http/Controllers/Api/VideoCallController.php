@@ -85,6 +85,7 @@ class VideoCallController extends Controller
         $token = $patient->fcm_token;
 
         $videoCall->save();
+        $videoCall->refresh();
         // if ($token) {
         $factory = (new Factory)->withServiceAccount(config('services.firebase.credentials_file'));
 
