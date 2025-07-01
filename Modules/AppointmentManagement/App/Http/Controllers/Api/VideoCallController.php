@@ -84,6 +84,7 @@ class VideoCallController extends Controller
 
         $token = $patient->fcm_token;
 
+        $videoCall->save();
         // if ($token) {
         $factory = (new Factory)->withServiceAccount(config('services.firebase.credentials_file'));
 
@@ -110,8 +111,6 @@ class VideoCallController extends Controller
         //     // Optionally log this
         //     \Log::warning("No FCM token found for patient ID {$patient->id}");
         // }
-
-        $videoCall->save();
 
         return $this->successResponse(new VideoCallResource($videoCall));
     }
