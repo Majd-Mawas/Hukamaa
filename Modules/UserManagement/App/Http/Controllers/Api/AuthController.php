@@ -37,6 +37,12 @@ class AuthController extends Controller
         // Send verification email
         $user->notify(new \Modules\UserManagement\App\Notifications\VerifyEmailNotification($code));
 
+        if ($request->header('fcm-token')) {
+            $user->update([
+                'fcm_token' => $request->header('fcm-token')
+            ]);
+        }
+
         return $this->successResponse(
             [
                 'user' => new UserResource($user),
