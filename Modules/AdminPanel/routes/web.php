@@ -88,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::prefix('patients')->name('patients.')->controller(PatientController::class)->group(function () {
                     Route::get('/', 'index')->name('index');
                     Route::get('/{patient}', 'show')->name('show');
+                    Route::delete('/{patient}', 'destroy')->name('destroy');
                 });
             });
         });

@@ -15,6 +15,7 @@ abstract class BaseRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
+        logger()->info($validator->errors());
         throw new ValidationException($validator, response()->json([
             'success' => false,
             'message' => 'Validation failed',

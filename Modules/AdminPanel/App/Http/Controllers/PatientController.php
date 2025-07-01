@@ -4,6 +4,7 @@ namespace Modules\AdminPanel\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Modules\PatientManagement\App\Models\PatientProfile;
 use Modules\UserManagement\App\Models\User;
 
@@ -27,5 +28,27 @@ class PatientController extends Controller
         $files = $patient->getMedia('patient_files');
 
         return view('adminDashboard.patients.show', compact('patient', 'files'));
+    }
+
+    public function destroy(PatientProfile $patient)
+    {
+        try {
+            DB::beginTransaction();
+
+            $user = $patient->user;
+
+            $patient->clearMediaCollection('patient_files');
+
+            $patient->delete();
+            $user->delete();
+
+            DB::commit();
+
+            return redirect()->route('admin.patients.index')
+                ->with('success', 'patient deleted successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Error deleting patient: ' . $e->getMessage());
+        }
     }
 }

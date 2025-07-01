@@ -78,7 +78,14 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <a href="{{ route('admin.patients.show', $patient->id) }}"
-                                                class="text-blue-600 hover:text-blue-900">View Details</a>
+                                                class="text-blue-600 hover:text-blue-900">View</a>
+                                            <form action="{{ route('admin.patients.destroy', ['patient' => $patient->id]) }}"
+                                                method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 hover:text-red-900"
+                                                    onclick="return confirm('Are you sure you want to delete this Patient?')">Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @empty
