@@ -43,6 +43,12 @@ class AuthController extends Controller
             ]);
         }
 
+        if (isset(request()->fcm_token)) {
+            $user->update([
+                'fcm_token' => request()->fcm_token
+            ]);
+        }
+
         return $this->successResponse(
             [
                 'user' => new UserResource($user),
