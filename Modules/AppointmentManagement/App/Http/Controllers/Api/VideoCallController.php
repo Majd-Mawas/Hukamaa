@@ -102,8 +102,6 @@ class VideoCallController extends Controller
                 'caller_id' => (string)$user->id,
                 'caller_name' => $user->name,
                 'caller_type' => "doctor",
-            ],
-            'notification' => [
                 'title' => 'Incoming Video Call',
                 'body' => 'Your doctor is calling you for your appointment.',
             ],
