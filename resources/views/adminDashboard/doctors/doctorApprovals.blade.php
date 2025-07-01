@@ -130,8 +130,8 @@
                                                         class="text-primary-600 hover:text-primary-900 mr-3">
                                                         <iconify-icon icon="mdi:eye"></iconify-icon>
                                                     </a>
-                                                    <button data-modal-target="default-modal"
-                                                        data-modal-toggle="default-modal" type="button">
+                                                    <button data-modal-target="acceptDoctorModal{{ $doctor->id }}"
+                                                        data-modal-toggle="acceptDoctorModal{{ $doctor->id }}" type="button">
                                                         <iconify-icon icon="mdi:check"></iconify-icon>
                                                     </button>
                                                     {{-- <div>
@@ -207,7 +207,7 @@
                                             </div>
                                         </div>
 
-                                        <div id="default-modal" tabindex="-1" aria-hidden="true"
+                                        <div id="acceptDoctorModal{{ $doctor->id }}" tabindex="-1" aria-hidden="true"
                                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                             <div class="relative p-4 w-full max-w-2xl max-h-full">
                                                 <!-- Modal content -->
