@@ -108,7 +108,7 @@ class DoctorStatisticsService
 
         return [
             'labels' => $months,
-            'data' => array_values(array_reverse($monthlyDues)),
+            'data' => array_values($monthlyDues),
         ];
     }
 
