@@ -358,23 +358,33 @@
                         </div>
                         <div class="card-body p-1.5 flex items-center gap-4">
                             <div id="radialMultipleBar"></div>
-                            <ul class="flex flex-col gap-3">
-                                <li>
-                                    <span class="text-lg">{{ $stats->top_specialties['names'][0] }}: <span
-                                            class="text-primary-600 dark:text-primary-600 font-semibold">{{ $stats->top_specialties['percentages'][0] }}%</span>
-                                    </span>
-                                </li>
-                                <li>
-                                    <span class="text-lg">{{ $stats->top_specialties['names'][1] }}: <span
-                                            class="text-warning-600 dark:text-warning-600 font-semibold">{{ $stats->top_specialties['percentages'][1] }}%</span>
-                                    </span>
-                                </li>
-                                <li>
-                                    <span class="text-lg">{{ $stats->top_specialties['names'][2] }}: <span
-                                            class="text-success-600 dark:text-success-600 font-semibold">{{ $stats->top_specialties['percentages'][2] }}%</span>
-                                    </span>
-                                </li>
-                            </ul>
+                            <div class="flex flex-col gap-4">
+                                @foreach (range(0, 2) as $index)
+                                    @php
+                                        $colorClasses = [
+                                            0 => 'text-primary-600 dark:text-primary-600',
+                                            1 => 'text-warning-600 dark:text-warning-600',
+                                            2 => 'text-success-600 dark:text-success-600',
+                                        ];
+                                    @endphp
+                                    <div class="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+                                        <div class="flex-1">
+                                            <h4 class="text-lg font-medium">{{ $stats->top_specialties['names'][$index] }}
+                                            </h4>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-16 text-right">
+                                                <span class="text-lg font-bold {{ $colorClasses[$index] }}">
+                                                    {{ $stats->top_specialties['percentages'][$index] }}%
+                                                </span>
+                                            </div>
+                                            <div
+                                                class="w-2 h-2 rounded-full {{ str_replace('text', 'bg', $colorClasses[$index]) }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
