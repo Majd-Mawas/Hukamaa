@@ -67,7 +67,7 @@ class DoctorProfile extends Model implements HasMedia
 
     public function appointments()
     {
-        return $this->hasMany(Appointment::class, 'doctor_id');
+        return $this->hasMany(Appointment::class, 'doctor_id', 'user_id');
     }
 
     public function coverageAreas()

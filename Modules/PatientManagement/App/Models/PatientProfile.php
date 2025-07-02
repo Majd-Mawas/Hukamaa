@@ -52,7 +52,7 @@ class PatientProfile extends Model implements HasMedia
 
     public function appointments()
     {
-        return $this->hasMany(Appointment::class, 'patient_id');
+        return $this->hasMany(Appointment::class, 'patient_id', 'user_id');
     }
 
     public function chatMessages()
