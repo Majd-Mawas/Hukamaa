@@ -50,7 +50,7 @@
                                                             <img src="{{ $doctor->getFirstMediaUrl('profile_picture') }}"
                                                                 class="rounded-full h-full w-full object-cover me-2"
                                                                 alt="Profile Picture"
-                                                                style="max-width: 6rem; min-height: 6rem">
+                                                                style="min-width: 6rem; min-height: 6rem max-width: 6rem; max-height: 6rem">
                                                         @endif
                                                     </div>
                                                     <div>
@@ -131,7 +131,8 @@
                                                         <iconify-icon icon="mdi:eye"></iconify-icon>
                                                     </a>
                                                     <button data-modal-target="acceptDoctorModal{{ $doctor->id }}"
-                                                        data-modal-toggle="acceptDoctorModal{{ $doctor->id }}" type="button">
+                                                        data-modal-toggle="acceptDoctorModal{{ $doctor->id }}"
+                                                        type="button">
                                                         <iconify-icon icon="mdi:check"></iconify-icon>
                                                     </button>
                                                     {{-- <div>
@@ -245,8 +246,8 @@
                                                             <div class="col-span-12">
                                                                 <label class="form-label">Commission Percent - 100%</label>
                                                                 <input type="number" class="form-control" required
-                                                                    step="0.5" placeholder="10"
-                                                                    name="commission_percent">
+                                                                    step="0.5" placeholder="10" min="0"
+                                                                    max="100" name="commission_percent">
                                                             </div>
                                                         </div>
 

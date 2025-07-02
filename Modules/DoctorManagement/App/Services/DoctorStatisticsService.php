@@ -91,7 +91,11 @@ class DoctorStatisticsService
         $monthlyDues = array_fill(1, 6, 0);
 
         foreach ($dues as $due) {
-            $monthlyDues[(int)$due->month] = (float)$due->total;
+            $month = (int)$due->month;
+            // Only add data for months 1-6
+            if ($month >= 1 && $month <= 6) {
+                $monthlyDues[$month] = (float)$due->total;
+            }
         }
 
         return [
