@@ -29,9 +29,7 @@ class PatientProfileController extends Controller
         $profile = $this->patientProfileService->updateProfile($user->id, $data);
 
         return $this->successResponse(
-            [
-                'user' => new UserResource($user->load('patientProfile')),
-            ],
+            new UserResource($user->load('patientProfile')),
             __('patientmanagement::messages.profile_updated')
         );
     }
