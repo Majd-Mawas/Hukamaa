@@ -79,22 +79,30 @@ class DoctorStatisticsService
 
     private function getFinancialStatistics(int $doctorId): array
     {
+        $currentMonth = now()->month;
         $dues = Payment::where('doctor_id', $doctorId)
             ->selectRaw('MONTH(created_at) as month, SUM(amount) as total')
+            ->whereMonth('created_at', '>=', $currentMonth - 5)
+            ->whereMonth('created_at', '<=', $currentMonth)
             ->groupBy('month')
             ->orderBy('month')
             ->get();
 
-        $months = array_map(function($month) {
-            return trans('appointmentmanagement::appointments.months.' . strtolower(Carbon::create()->month($month)->format('F')));
+        $months = array_map(function($month) use ($currentMonth) {
+            $monthNumber = $currentMonth - 5 + $month - 1;
+            if ($monthNumber <= 0) {
+                $monthNumber += 12;
+            }
+            return trans('appointmentmanagement::appointments.months.' . strtolower(Carbon::create()->month($monthNumber)->format('F')));
         }, range(1, 6));
-        $monthlyDues = array_fill(1, 6, 0);
+
+        $monthlyDues = array_fill(0, 6, 0);
 
         foreach ($dues as $due) {
             $month = (int)$due->month;
-            // Only add data for months 1-6
-            if ($month >= 1 && $month <= 6) {
-                $monthlyDues[$month] = (float)$due->total;
+            $index = array_search($month, range($currentMonth - 5, $currentMonth));
+            if ($index !== false) {
+                $monthlyDues[$index] = (float)$due->total;
             }
         }
 
