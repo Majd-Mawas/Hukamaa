@@ -359,7 +359,11 @@
                         <div class="card-body p-1.5 flex items-center gap-4">
                             <div id="radialMultipleBar"></div>
                             <div class="flex flex-col gap-4">
-                                @foreach (range(0, 2) as $index)
+                                @php
+                                    $specialtyCount = count($stats->top_specialties['names'] ?? []);
+                                    $loopCount = min(3, $specialtyCount);
+                                @endphp
+                                @foreach (range(0, $loopCount - 1) as $index)
                                     @php
                                         $colorClasses = [
                                             0 => 'text-primary-600 dark:text-primary-600',
@@ -369,8 +373,7 @@
                                     @endphp
                                     <div class="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
                                         <div class="flex-1">
-                                            <h4 class="text-lg font-medium">{{ $stats->top_specialties['names'][$index] }}
-                                            </h4>
+                                            <h4 class="text-lg font-medium">{{ $stats->top_specialties['names'][$index] }}</h4>
                                         </div>
                                         <div class="flex items-center gap-2">
                                             <div class="w-16 text-right">
@@ -378,9 +381,7 @@
                                                     {{ $stats->top_specialties['percentages'][$index] }}%
                                                 </span>
                                             </div>
-                                            <div
-                                                class="w-2 h-2 rounded-full {{ str_replace('text', 'bg', $colorClasses[$index]) }}">
-                                            </div>
+                                            <div class="w-2 h-2 rounded-full {{ str_replace('text', 'bg', $colorClasses[$index]) }}"></div>
                                         </div>
                                     </div>
                                 @endforeach
