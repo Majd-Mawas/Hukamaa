@@ -85,11 +85,11 @@ class DoctorStatisticsService
             ->whereMonth('created_at', '>=', $currentMonth - 5)
             ->whereMonth('created_at', '<=', $currentMonth)
             ->groupBy('month')
-            ->orderBy('month')
+            ->orderBy('month', 'desc')
             ->get();
 
         $months = array_map(function($month) use ($currentMonth) {
-            $monthNumber = $currentMonth - 5 + $month - 1;
+            $monthNumber = $currentMonth - ($month - 1);
             if ($monthNumber <= 0) {
                 $monthNumber += 12;
             }
@@ -100,14 +100,14 @@ class DoctorStatisticsService
 
         foreach ($dues as $due) {
             $month = (int)$due->month;
-            $index = array_search($month, range($currentMonth - 5, $currentMonth));
+            $index = array_search($month, range($currentMonth, $currentMonth - 5, -1));
             if ($index !== false) {
                 $monthlyDues[$index] = (float)$due->total;
             }
         }
 
         return [
-            'labels' => $months,
+            'labels' => array_reverse($months),
             'data' => array_values($monthlyDues),
         ];
     }
