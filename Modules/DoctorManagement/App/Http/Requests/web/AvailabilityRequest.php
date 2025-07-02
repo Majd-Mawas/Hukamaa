@@ -11,7 +11,6 @@ class AvailabilityRequest extends BaseRequest
     {
         return true;
     }
-
     public function rules()
     {
         return [
@@ -21,5 +20,20 @@ class AvailabilityRequest extends BaseRequest
             'start_time' => 'required',
             'end_time' => 'required|after:start_time',
         ];
+    }
+
+    public function validated($key = null, $default = null)
+    {
+        $validated = parent::validated($key, $default);
+
+        if (isset($validated['start_time'])) {
+            $validated['start_time'] = date('H:i:s', strtotime($validated['start_time']));
+        }
+
+        if (isset($validated['end_time'])) {
+            $validated['end_time'] = date('H:i:s', strtotime($validated['end_time']));
+        }
+
+        return $validated;
     }
 }
