@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             "Available";
                     }
                     // Close the modal using jQuery
-                    $("#availabilityModal").modal("hide");
+                    $("#availability-modal").modal("hide");
                 })
                 .catch((error) => console.error("Error:", error));
         });
