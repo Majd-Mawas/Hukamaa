@@ -12,7 +12,7 @@ class SpecializationService
      */
     public function index(): LengthAwarePaginator
     {
-        return Specialization::latest()->paginate(10);
+        return Specialization::latest()->get();
     }
 
     /**
