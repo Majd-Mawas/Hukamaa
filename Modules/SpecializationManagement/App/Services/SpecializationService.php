@@ -10,9 +10,9 @@ class SpecializationService
     /**
      * Get all specializations with pagination.
      */
-    public function index(): LengthAwarePaginator
+    public function index()
     {
-        return Specialization::get();
+        return Specialization::all();
     }
 
     /**
