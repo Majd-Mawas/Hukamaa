@@ -18,8 +18,8 @@ class AvailabilityRequest extends BaseRequest
             'weekday' => ['nullable', Rule::in(
                 array_map(fn($case) => $case->value, \Modules\DoctorManagement\App\Enums\Weekday::cases())
             )],
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:start_time',
+            'start_time' => 'required',
+            'end_time' => 'required|after:start_time',
         ];
     }
 }
