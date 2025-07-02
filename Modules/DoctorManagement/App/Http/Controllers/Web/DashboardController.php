@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Modules\DoctorManagement\App\Http\Requests\web\AvailabilityRequest;
 use Modules\DoctorManagement\App\Http\Requests\web\UpdateDoctorProfileRequest;
+use Modules\DoctorManagement\App\Models\Availability;
 use Modules\DoctorManagement\App\Services\DashboardService;
 use Modules\SpecializationManagement\App\Models\Specialization;
 use Modules\DoctorManagement\App\Services\DoctorProfileService;
@@ -77,8 +78,10 @@ class DashboardController extends Controller
 
     public function updateAvailability(AvailabilityRequest $request, $id)
     {
+        $availability = Availability::findOrFail($id);
+
         $data = $request->validated();
-        return response()->json($this->availabilityService->updateAvailability($id, $data));
+        return response()->json($this->availabilityService->updateAvailability($availability, $data));
     }
 
     public function storeAvailability(AvailabilityRequest $request)
