@@ -6,6 +6,7 @@ use Modules\AppointmentManagement\App\Models\Appointment;
 use Modules\AppointmentManagement\App\Enums\AppointmentStatus;
 use Modules\PaymentManagement\App\Models\Payment;
 use Carbon\Carbon;
+use Modules\PaymentManagement\App\Enums\PaymentStatus;
 
 class DoctorStatisticsService
 {
@@ -82,13 +83,14 @@ class DoctorStatisticsService
         $currentMonth = now()->month;
         $dues = Payment::where('doctor_id', $doctorId)
             ->selectRaw('MONTH(created_at) as month, SUM(amount) as total')
+            ->whereStatus(PaymentStatus::APPROVED->value)
             ->whereMonth('created_at', '>=', $currentMonth - 5)
             ->whereMonth('created_at', '<=', $currentMonth)
             ->groupBy('month')
             ->orderBy('month', 'desc')
             ->get();
 
-        $months = array_map(function($month) use ($currentMonth) {
+        $months = array_map(function ($month) use ($currentMonth) {
             $monthNumber = $currentMonth - ($month - 1);
             if ($monthNumber <= 0) {
                 $monthNumber += 12;

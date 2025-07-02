@@ -39,7 +39,7 @@
             <li>
                 <a href="{{ route('doctor.appointments.new') }}">
                     <iconify-icon icon="solar:clock-circle-linear" class="menu-icon"></iconify-icon>
-                    <span>New Appointments</span>
+                    <span>Pending Appointments</span>
                 </a>
             </li>
             <li>
