@@ -197,7 +197,7 @@ class AppointmentController extends Controller
         $appointments = $this->appointmentService->getDoctorDoneAppointments(Auth::id());
 
         return $this->successResponse(
-            AppointmentResource::collection($appointments->load('patient')),
+            AppointmentResource::collection($appointments->load('patient', 'videoCall')),
             __('appointmentmanagement::appointments.messages.upcoming_appointments')
         );
     }

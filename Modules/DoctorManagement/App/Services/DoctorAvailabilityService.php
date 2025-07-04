@@ -21,12 +21,18 @@ class DoctorAvailabilityService
     {
         // Validate date format
         try {
-            $date = Carbon::parse($date)->format('Y-m-d');
+            $parsedDate = Carbon::parse($date);
+            $date = $parsedDate->format('Y-m-d');
         } catch (\Exception $e) {
             throw new InvalidArgumentException('Invalid date format provided');
         }
 
-        $dayOfWeek = strtolower(Carbon::parse($date)->format('l'));
+        // Check if date is more than two weeks from now
+        if (Carbon::now()->diffInDays($parsedDate) > 14) {
+            return [];
+        }
+
+        $dayOfWeek = strtolower($parsedDate->format('l'));
 
         // 1. Fetch doctor's weekly availability for that weekday
         $availabilities = Availability::where('doctor_id', $doctorProfileId)
