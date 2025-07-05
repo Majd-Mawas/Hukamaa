@@ -15,13 +15,17 @@
         <div class=" py-8 px-6 flex flex-col justify-center">
             <div class=" mx-auto w-full">
                 <div>
-                    <div class="text-center">
+                    {{-- <div class="text-center"> --}}
+                    {{-- <h3>Hukamaa</h3> --}}
+
+                    {{-- </div> --}}
+                    {{-- <div class="text-center">
                         <a href="{{ route('admin.index') }}" class="mb-2.5 max-w-[290px] mx-auto text-center">
                             <img src="{{ asset('assets/comingSoon/img/hukamaa-logo.png') }}" alt="">
                         </a>
-                    </div>
+                    </div> --}}
                     <h4 class="mb-3">Sign In to your Account</h4>
-                    <p class="mb-8 text-secondary-light text-lg">Welcome back! please enter your detail</p>
+                    {{-- <p class="mb-8 text-secondary-light text-lg">Welcome back! please enter your detail</p> --}}
                 </div>
 
                 @if ($errors->any())
@@ -59,9 +63,9 @@
                                 <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
                             @enderror
                         </div>
-                        <span
+                        {{-- <span
                             class="toggle-password ri-eye-line cursor-pointer absolute end-0 top-1/2 -translate-y-1/2 me-4 text-secondary-light"
-                            data-toggle="#your-password"></span>
+                            data-toggle="#your-password"></span> --}}
                     </div>
                     {{-- <div class="mt-7">
                         <div class="flex justify-between gap-2">
