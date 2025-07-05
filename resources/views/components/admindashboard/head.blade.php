@@ -34,4 +34,15 @@
     <link rel="stylesheet" href="{{ asset('assets/css/lib/audioplayer.css') }}">
     <!-- main css -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+    <style>
+        @font-face {
+            font-family: "Araboto-normal";
+            src: url("{{ asset('assets/landingPage/fonts/Araboto-Normal.ttf') }}") format("truetype");
+        }
+
+        .sidebar-logo {
+            font-family: "Araboto-normal", sans-serif;
+        }
+    </style>
 </head>

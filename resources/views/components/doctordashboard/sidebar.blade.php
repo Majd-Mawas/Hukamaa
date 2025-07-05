@@ -3,10 +3,13 @@
         <iconify-icon icon="radix-icons:cross-2"></iconify-icon>
     </button>
     <div>
-        <a href="{{ route('doctor.index') }}" class="sidebar-logo">
-            <img src="{{ asset('assets/comingSoon/img/hukamaa-logo.png') }}" alt="site logo" class="light-logo mx-auto">
+        <a href="{{ route('doctor.index') }}" class="sidebar-logo text-center">
+            {{-- <img src="{{ asset('assets/comingSoon/img/hukamaa-logo.png') }}" alt="site logo" class="light-logo mx-auto">
             <img src="{{ asset('assets/comingSoon/img/hukamaa-logo.png') }}" alt="site logo" class="dark-logo mx-auto">
-            <img src="{{ asset('assets/comingSoon/img/hukamaa-logo.png') }}" alt="site logo" class="logo-icon mx-auto">
+            <img src="{{ asset('assets/comingSoon/img/hukamaa-logo.png') }}" alt="site logo" class="logo-icon mx-auto"> --}}
+            <div class="mx-auto">
+                حكماء
+            </div>
         </a>
     </div>
     <div class="sidebar-menu-area">

@@ -35,4 +35,15 @@
     <!-- main css -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <style>
+        @font-face {
+            font-family: "Araboto-normal";
+            src: url("{{ asset('assets/landingPage/fonts/Araboto-Normal.ttf') }}") format("truetype");
+        }
+
+        .sidebar-logo {
+            font-family: "Araboto-normal", sans-serif;
+        }
+    </style>
 </head>
