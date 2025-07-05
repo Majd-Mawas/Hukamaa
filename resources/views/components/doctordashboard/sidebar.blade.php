@@ -62,7 +62,12 @@
                     <span>Payments</span>
                 </a>
             </li>
-
+            <li>
+                <a href="{{ route('doctor.availabilities.index') }}">
+                    <iconify-icon icon="solar:calendar-linear" class="menu-icon"></iconify-icon>
+                    <span>Availabilities</span>
+                </a>
+            </li>
             @if (env('APP_DASHBOARD'))
                 <li class="sidebar-menu-group-title">Application</li>
                 <li>

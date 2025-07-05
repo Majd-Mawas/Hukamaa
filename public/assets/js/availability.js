@@ -1,25 +1,110 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Handle modal opening for both edit and add
+    function fetchWithCsrf(url, options = {}) {
+         const csrfToken =
+            document
+                .querySelector('meta[name="csrf-token"]')
+                ?.getAttribute("content") || "";
+
+        const defaultHeaders = {
+            "X-CSRF-TOKEN": csrfToken,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        };
+
+        return fetch(url, {
+            ...options,
+            headers: {
+                ...defaultHeaders,
+                ...options.headers,
+            },
+        });
+    }
+
+    // Handle modal opening for editing existing time slots
     document.querySelectorAll(".edit-availability").forEach((button) => {
         button.addEventListener("click", function () {
             const id = this.getAttribute("data-id");
             document.getElementById("availabilityId").value = id;
+            document.getElementById("weekday").value = "";
+            document.getElementById("modal-title").textContent =
+                "Edit Time Slot";
 
-            // If editing existing availability, populate form
-            if (!isNaN(id)) {
-                // Check if it's an ID (edit) rather than weekday value (add)
-                fetch(`/dashboard/doctor/availability/${id}`)
+             fetch(`/dashboard/doctor/availabilities/${id}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    document.getElementById("startTime").value =
+                        data.start_time.substring(0, 5);
+                    document.getElementById("endTime").value =
+                        data.end_time.substring(0, 5);
+                });
+        });
+    });
+
+    // Handle modal opening for adding new time slots
+    document.querySelectorAll(".add-availability").forEach((button) => {
+        button.addEventListener("click", function () {
+            const weekday = this.getAttribute("data-weekday");
+            document.getElementById("availabilityId").value = "";
+            document.getElementById("weekday").value = weekday;
+            document.getElementById("modal-title").textContent =
+                "Add Time Slot";
+
+            // Set default values for new time slot
+            document.getElementById("startTime").value = "09:00";
+            document.getElementById("endTime").value = "17:00";
+        });
+    });
+
+    // Handle delete button clicks
+    document.querySelectorAll(".delete-availability").forEach((button) => {
+        button.addEventListener("click", function () {
+            if (confirm("Are you sure you want to delete this time slot?")) {
+                const id = this.getAttribute("data-id");
+
+                fetchWithCsrf(`/dashboard/doctor/availabilities/${id}`, {
+                    method: "DELETE",
+                })
                     .then((response) => response.json())
                     .then((data) => {
-                        document.getElementById("startTime").value =
-                            data.start_time;
-                        document.getElementById("endTime").value =
-                            data.end_time;
-                    });
-            } else {
-                // For new availability, set default values
-                document.getElementById("startTime").value = "09:00";
-                document.getElementById("endTime").value = "17:00";
+                        // Remove the time slot from the UI
+                        const timeSlotItem = this.closest(".time-slot-item");
+                        if (timeSlotItem) {
+                            timeSlotItem.remove();
+
+                            // Check if there are any remaining time slots
+                            const container =
+                                document.querySelector(".time-slots");
+                            if (!container) {
+                                console.error("Time slots container not found");
+                                return;
+                            }
+
+                            console.log(container);
+
+                            console.log(
+                                container.querySelectorAll(".time-slot-item")
+                            );
+                            console.log(
+                                container.querySelectorAll(".time-slot-item")
+                                    .length
+                            );
+                            if (
+                                container &&
+                                container.querySelectorAll(".time-slot-item")
+                                    .length === 0
+                            ) {
+                                console.log("terst");
+
+                                const noSlotsMessage =
+                                    document.createElement("span");
+                                noSlotsMessage.className = "text-neutral-500";
+                                noSlotsMessage.textContent =
+                                    "No time slots available";
+                                container.appendChild(noSlotsMessage);
+                            }
+                        }
+                    })
+                    .catch((error) => console.error("Error:", error));
             }
         });
     });
@@ -32,39 +117,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const formData = new FormData(this);
             const id = formData.get("id");
-            const url = isNaN(id)
-                ? "/dashboard/doctor/availability"
-                : `/dashboard/doctor/availability/${id}`;
-            const method = isNaN(id) ? "POST" : "PUT";
+            const weekday = formData.get("weekday");
 
-            fetch(url, {
+            let url, method;
+
+            if (id) {
+                // Editing existing time slot
+                url = `/dashboard/doctor/availabilities/${id}`;
+                method = "PUT";
+            } else {
+                // Adding new time slot
+                url = "/dashboard/doctor/availabilities";
+                method = "POST";
+            }
+
+            fetchWithCsrf(url, {
                 method: method,
-                headers: {
-                    "X-CSRF-TOKEN": formData.get("_token"),
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
                 body: JSON.stringify({
-                    weekday: isNaN(id) ? id : undefined,
+                    weekday: weekday || undefined,
                     start_time: formData.get("start_time"),
                     end_time: formData.get("end_time"),
                 }),
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    const row = document.querySelector(
-                        `tr[data-id="${data.id || id}"]`
-                    );
-                    if (row) {
-                        row.querySelector(".start-time").textContent =
-                            data.start_time;
-                        row.querySelector(".end-time").textContent =
-                            data.end_time;
-                        row.querySelector(".available").textContent =
-                            "Available";
-                    }
-                    // Close the modal using jQuery
-                    $("#availability-modal").modal("hide");
+                    // Close the modal using Flowbite
+                    const modalElement =
+                        document.getElementById("availability-modal");
+                    // const modal = flowbite.Modal.getInstance(modalElement);
+                    // modal.hide();
+
+                    // Refresh the page to show updated time slots
+                    window.location.reload();
                 })
                 .catch((error) => console.error("Error:", error));
         });

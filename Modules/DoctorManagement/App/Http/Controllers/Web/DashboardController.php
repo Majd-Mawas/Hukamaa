@@ -44,13 +44,12 @@ class DashboardController extends Controller
         $doctor = Auth::User()->doctorProfile()->with('specialization', 'appointments')->first();
 
         $totalPatients = PatientProfile::whereHas('appointments', function ($query) {
-            $query->where('doctor_id', auth()->id());
+            $query->where('doctor_id', Auth::id());
         })->count();
 
         $specialties = Specialization::orderBy('specialization_name')->get();
-        $availabilities = Auth::user()->doctorProfile->availabilities;
 
-        return view('doctorDashboard.profile.viewProfile', compact('doctor', 'specialties', 'availabilities', 'totalPatients'));
+        return view('doctorDashboard.profile.viewProfile', compact('doctor', 'specialties', 'totalPatients'));
     }
 
     public function updateProfile(UpdateDoctorProfileRequest $request)
@@ -69,24 +68,5 @@ class DashboardController extends Controller
                 ->withInput()
                 ->with('error', 'Failed to update profile. ' . $e->getMessage());
         }
-    }
-
-    public function getAvailability($id)
-    {
-        return response()->json($this->availabilityService->getAvailability($id));
-    }
-
-    public function updateAvailability(AvailabilityRequest $request, $id)
-    {
-        $availability = Availability::findOrFail($id);
-
-        $data = $request->validated();
-        return response()->json($this->availabilityService->updateAvailability($availability, $data));
-    }
-
-    public function storeAvailability(AvailabilityRequest $request)
-    {
-        $data = $request->validated();
-        return response()->json($this->availabilityService->createAvailability($data));
     }
 }

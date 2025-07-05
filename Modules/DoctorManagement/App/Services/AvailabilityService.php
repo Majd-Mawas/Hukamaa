@@ -15,6 +15,18 @@ class AvailabilityService
             ->get();
     }
 
+    public function getAvailabilitiesByWeekday(int $doctorId)
+    {
+        $availabilities = $this->getDoctorAvailabilities($doctorId);
+
+        $groupedAvailabilities = [];
+        foreach ($availabilities as $availability) {
+            $groupedAvailabilities[$availability->weekday][] = $availability;
+        }
+
+        return $groupedAvailabilities;
+    }
+
     public function createAvailability(array $data): Availability
     {
         $data['doctor_id'] = Auth::user()->doctorProfile->id;

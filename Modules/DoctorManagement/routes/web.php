@@ -5,6 +5,7 @@ use Modules\DoctorManagement\App\Http\Controllers\Web\AppointmentController;
 use Modules\DoctorManagement\App\Http\Controllers\Web\DashboardController;
 use Modules\DoctorManagement\App\Http\Controllers\Web\PatientController;
 use Modules\DoctorManagement\App\Http\Controllers\Web\PaymentController;
+use Modules\DoctorManagement\App\Http\Controllers\Web\AvailabilityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,11 +27,6 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/', 'index')->name('index');
                     Route::get('/profile', 'viewProfile')->name('profile');
                     Route::post('/profile', 'updateProfile')->name('profile.update');
-                    Route::get('availabilities', [DashboardController::class, 'getAvailabilities']);
-                    Route::get('availability/{id}', [DashboardController::class, 'getAvailability']);
-                    Route::post('availability', [DashboardController::class, 'storeAvailability']);
-                    Route::put('availability/{id}', [DashboardController::class, 'updateAvailability']);
-                    Route::delete('availability/{id}', [DashboardController::class, 'deleteAvailability']);
                 });
 
                 Route::prefix('payments')->name('payments.')->group(function () {
@@ -55,6 +51,14 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/{patient}/edit', 'edit')->name('edit');
                     Route::get('/{patient}', 'show')->name('show');
                     Route::put('/{patient}', 'update')->name('update');
+                });
+
+                Route::prefix('availabilities')->name('availabilities.')->controller(AvailabilityController::class)->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/{id}', 'show')->name('show');
+                    Route::post('/', 'store')->name('store');
+                    Route::put('/{id}', 'update')->name('update');
+                    Route::delete('/{id}', 'destroy')->name('destroy');
                 });
             });
         });
