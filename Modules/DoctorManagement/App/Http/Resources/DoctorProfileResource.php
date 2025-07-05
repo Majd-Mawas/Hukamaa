@@ -105,6 +105,11 @@ class DoctorProfileResource extends ApiResource
                     'value' => $this->whenCounted('patients'),
                     'icon' => asset('assets/images/icons/Patients.png')
                 ],
+                [
+                    'title' => "نوع الخدمة",
+                    'value' => $this->services,
+                    'icon' => asset('assets/images/icons/Services.png')
+                ],
             ],
         ];
     }
