@@ -40,7 +40,11 @@ class DoctorProfileService
         ?string $gender = null,
         ?int $specializationId = null
     ) {
-        return DoctorProfile::with(['user', 'specialization', 'availabilities', 'media'])
+        return DoctorProfile::withCount([
+            'appointments as patients_count' => function ($query) {
+                $query->select(DB::raw('COUNT(DISTINCT patient_id)'));
+            }
+        ])->with(['user', 'specialization', 'availabilities', 'media'])
             ->where('status', 'approved')
             ->when($query, function ($q) use ($query) {
                 $q->whereHas('user', function ($q) use ($query) {

@@ -24,7 +24,7 @@ class UserResource extends ApiResource
                 });
             }, function () {
                 return $this->whenLoaded('doctorProfile', function () {
-                    return new DoctorProfileResource($this->doctorProfile->load('media', 'specialization'));
+                    return new DoctorProfileResource($this->doctorProfile->load('media', 'specialization', 'availabilities'));
                 });
             }),
         ];

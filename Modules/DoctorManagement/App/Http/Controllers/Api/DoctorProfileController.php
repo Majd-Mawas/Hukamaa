@@ -142,7 +142,7 @@ class DoctorProfileController extends Controller
         $profile->coverageAreas()->sync($data['coverage_areas']);
 
         return $this->successResponse(
-            new UserResource($user->load('doctorProfile')),
+            new DoctorProfileResource($profile->load('media', 'user', 'specialization', 'availabilities')),
             'Profile updated successfully'
         );
     }

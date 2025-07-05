@@ -88,7 +88,24 @@ class DoctorProfileResource extends ApiResource
                     ];
                 });
             }),
-            'coverage_areas' => CoverageAreaResource::collection($this->coverageAreas)
+            'coverage_areas' => CoverageAreaResource::collection($this->coverageAreas),
+            'stats' => [
+                [
+                    'title' => "عدد سنوات الخبرة",
+                    'value' => $this->experience_years,
+                    'icon' => asset('assets/images/icons/Experience.png')
+                ],
+                [
+                    'title' => "كلفة الاستشارة",
+                    'value' => $this->consultation_fee,
+                    'icon' => asset('assets/images/icons/Fee.png')
+                ],
+                [
+                    'title' => "عدد المرضى",
+                    'value' => $this->whenCounted('patients'),
+                    'icon' => asset('assets/images/icons/Patients.png')
+                ],
+            ],
         ];
     }
 }
