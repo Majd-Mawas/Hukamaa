@@ -9,6 +9,7 @@ use Modules\UserManagement\App\Models\User;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Modules\AppointmentManagement\App\Enums\AppointmentStatus;
+use Modules\PatientManagement\App\Models\ChatMessage;
 
 class Appointment extends Model implements HasMedia
 {
@@ -66,5 +67,9 @@ class Appointment extends Model implements HasMedia
     public function appointmentReport()
     {
         return $this->hasOne(AppointmentReport::class);
+    }
+    public function chatMessages()
+    {
+        return $this->hasMany(ChatMessage::class);
     }
 }

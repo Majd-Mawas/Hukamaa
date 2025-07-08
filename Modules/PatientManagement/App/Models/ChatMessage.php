@@ -4,21 +4,18 @@ namespace Modules\PatientManagement\App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\UserManagement\App\Models\User;
 
 class ChatMessage extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'sender_id',
-        'receiver_id',
-        'message',
-        'sent_at',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'sent_at' => 'datetime',
+        'read_at' => 'datetime',
     ];
 
     public function sender()
