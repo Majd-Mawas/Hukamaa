@@ -38,7 +38,8 @@ class DoctorProfileService
         int $limit = 10,
         ?string $query = null,
         ?string $gender = null,
-        ?int $specializationId = null
+        ?int $specializationId = null,
+        ?array $services = null
     ) {
         return DoctorProfile::withCount([
             'appointments as patients_count' => function ($query) {
@@ -59,6 +60,9 @@ class DoctorProfileService
             })
             ->when($specializationId, function ($q) use ($specializationId) {
                 $q->where('specialization_id', $specializationId);
+            })
+            ->when($services, function ($q) use ($services) {
+                $q->whereJsonContains('services', $services);
             })
             ->whereHas('availabilities', function ($query) {
                 $query->where(function ($q) {

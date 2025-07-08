@@ -82,12 +82,14 @@ class DoctorProfileController extends Controller
         $query = $request->get('query');
         $gender = $request->get('gender');
         $specializationId = $request->get('specialization_id');
+        $services = $request->get('services');
 
         $doctors = $this->doctorProfileService->getFeaturedDoctors(
             $limit,
             $query,
             $gender,
-            $specializationId
+            $specializationId,
+            $services
         );
 
         return $this->successResponse(

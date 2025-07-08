@@ -53,7 +53,9 @@ class DashboardController extends Controller
                     'password' => $request->password,
                 ]);
             }
-            updateSetting('Account_Number', $request->account_number);
+            updateSetting('account_number', $request->account_number);
+            updateSetting('account_holder_name', $request->account_holder_name);
+            updateSetting('bank_name', $request->bank_name);
 
             return redirect()
                 ->back()

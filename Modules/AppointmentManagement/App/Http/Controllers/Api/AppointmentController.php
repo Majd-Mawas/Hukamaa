@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Modules\AppointmentManagement\App\Enums\AppointmentStatus;
 use Modules\AppointmentManagement\App\Http\Requests\AppointmentRequest;
 use Modules\AppointmentManagement\App\Http\Requests\ConfirmAppointmentRequest;
 use Modules\AppointmentManagement\App\Http\Requests\ConfirmPaymentRequest;
@@ -163,6 +164,10 @@ class AppointmentController extends Controller
                 ['appointment_id' => $appointment->id],
                 $request->validated()
             );
+
+            $appointment->update([
+                'status' => AppointmentStatus::COMPLETED->value
+            ]);
 
             return $this->successResponse(
                 new AppointmentResource($appointment->load('appointmentReport')),

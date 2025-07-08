@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\UserManagement\App\Http\Controllers\Api\AuthController;
+use Modules\UserManagement\App\Http\Controllers\Api\NotificationController;
 use Modules\UserManagement\App\Http\Controllers\Api\VerificationController;
 use Modules\UserManagement\App\Http\Controllers\Api\PasswordResetController;
 
@@ -20,4 +21,8 @@ Route::prefix('auth')->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
         Route::get('verify-token', [AuthController::class, 'verifyToken']);
     });
+});
+
+Route::middleware('auth:sanctum')->prefix('user')->group(function () {
+    Route::get('notifications', [NotificationController::class, 'index']);
 });

@@ -4,6 +4,7 @@ namespace Modules\AppointmentManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\SystemNotification;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -99,6 +100,8 @@ class VideoCallController extends Controller
             'user_id' => "patient_{$user->id}",
             'app_id' => config('services.zegocloud.app_id'),
             'app_sign' => config('services.zegocloud.app_sign'),
+            "title" => 'مكالمة فيديو واردة',
+            "message" => 'طبيبك يتصل بك لموعدك.',
         ];
 
         $messaging->send([
@@ -108,6 +111,13 @@ class VideoCallController extends Controller
                 ->all(),
         ]);
 
+        $patient->notify(new SystemNotification(
+            title: 'مكالمة فيديو واردة',
+            message: 'طبيبك يتصل بك لموعدك.',
+            data: collect(['event' => 'call_invitation'])
+                ->merge($this->stringifyArray($videoCallData))
+                ->all()
+        ));
 
         return $this->successResponse(new VideoCallResource($videoCall));
     }

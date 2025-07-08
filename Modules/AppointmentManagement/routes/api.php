@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\AppointmentManagement\App\Http\Controllers\Api\AppointmentController;
+use Modules\AppointmentManagement\App\Http\Controllers\Api\HomeVisitController;
 use Modules\AppointmentManagement\App\Http\Controllers\Api\VideoCallController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -33,5 +34,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/start/{appointment}', [VideoCallController::class, 'start']);
         Route::post('/end/{appointment}', [VideoCallController::class, 'end']);
         Route::put('/{videoCall}', [VideoCallController::class, 'update']);
+    });
+
+    Route::prefix('home-visit')->group(function () {
+        Route::get('/start/{appointment}', [HomeVisitController::class, 'start']);
+        Route::post('/end/{appointment}', [HomeVisitController::class, 'end']);
     });
 });

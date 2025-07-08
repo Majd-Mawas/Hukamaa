@@ -162,7 +162,7 @@
                                             Number</label>
                                         <input type="text" id="account_number" name="account_number"
                                             class="form-input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 "
-                                            value="{{ old('account_number', getSetting('Account_Number')) }}" required>
+                                            value="{{ old('account_number', getSetting('account_number')) }}" required>
                                     </div>
                                     <div>
                                         <label for="email" class="block text-sm font-medium mb-2">Email</label>
@@ -174,6 +174,20 @@
                                         <label for="password" class="block text-sm font-medium mb-2">Password</label>
                                         <input type="password" id="password" name="password"
                                             class="form-input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 ">
+                                    </div>
+                                    <div>
+                                        <label for="account_holder_name" class="block text-sm font-medium mb-2">Account
+                                            Holder Name</label>
+                                        <input type="text" id="account_holder_name" name="account_holder_name"
+                                            class="form-input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 "
+                                            value="{{ old('account_holder_name', getSetting('account_holder_name')) }}"
+                                            required>
+                                    </div>
+                                    <div>
+                                        <label for="bank_name" class="block text-sm font-medium mb-2">Bank Name</label>
+                                        <input type="text" id="bank_name" name="bank_name"
+                                            class="form-input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 "
+                                            value="{{ old('bank_name', getSetting('bank_name')) }}" required>
                                     </div>
 
                                     {{-- <div>

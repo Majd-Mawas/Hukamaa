@@ -9,6 +9,8 @@ Route::get('/user', function (Request $request) {
 
 Route::get('account-number', function () {
     return response()->json([
-        'Account_Number' => getSetting('Account_Number')
+        'Account_Number' => getSetting('account_number'),
+        'Account_Holder_Name' => getSetting('account_holder_name'),
+        'Bank_Name' => getSetting('bank_name')
     ]);
 });
