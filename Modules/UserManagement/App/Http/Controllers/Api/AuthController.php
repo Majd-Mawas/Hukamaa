@@ -39,21 +39,6 @@ class AuthController extends Controller
         // Send verification email
         $user->notify(new \Modules\UserManagement\App\Notifications\VerifyEmailNotification($code));
 
-        $doctor = $user->refresh();
-
-        $data = [
-            'title' => 'طبيب جديد سجل في النظام',
-            'message' => "مرحباً، تم تسجيل طبيب جديد ({$doctor->name}) على المنصة ويحتاج إلى مراجعة طلبه. يرجى الدخول إلى لوحة الإدارة لمراجعة التفاصيل والموافقة على الحساب أو رفضه.",
-            'data' => ['doctor_id' => $doctor->id]
-        ];
-
-        $doctor->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
-        if ($request->header('fcm-token')) {
-            $user->update([
-                'fcm_token' => $request->header('fcm-token')
-            ]);
-        }
-
         if (isset(request()->fcm_token)) {
             $user->update([
                 'fcm_token' => request()->fcm_token
