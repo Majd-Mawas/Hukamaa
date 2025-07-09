@@ -11,16 +11,16 @@ class SendMessageRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'receiver_id' => [
-                'required',
-                'integer',
-                Rule::exists(User::class, 'id'),
-                function ($attribute, $value, $fail) {
-                    if ($value == $this->user()->id) {
-                        $fail('You cannot send a message to yourself.');
-                    }
-                },
-            ],
+            // 'receiver_id' => [
+            //     'required',
+            //     'integer',
+            //     Rule::exists(User::class, 'id'),
+            //     function ($attribute, $value, $fail) {
+            //         if ($value == $this->user()->id) {
+            //             $fail('You cannot send a message to yourself.');
+            //         }
+            //     },
+            // ],
             'message' => ['required', 'string', 'max:1000'],
         ];
     }

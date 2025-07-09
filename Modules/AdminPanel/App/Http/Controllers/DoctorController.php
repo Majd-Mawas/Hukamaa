@@ -3,6 +3,7 @@
 namespace Modules\AdminPanel\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\SystemNotification;
 use Modules\DoctorManagement\App\Models\DoctorProfile;
 use Modules\UserManagement\App\Models\User;
 use Modules\SpecializationManagement\App\Models\Specialization;
@@ -186,12 +187,38 @@ class DoctorController extends Controller
             'commission_percent' => request()->commission_percent,
         ]);
 
+        $user = $doctorProfile->user;
+
+        $data = [
+            'title' => 'تمت الموافقة على حسابك في حكماء',
+            'message' => "تهانينا دكتور/دكتورة،
+                    تمت الموافقة على طلب انضمامك إلى منصة حكماء، يمكنك الآن تسجيل الدخول والبدء بتقديم خدماتك الطبية.",
+            'data' => ['doctor_id' => $user->id]
+        ];
+
+        $user->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
+
+        sendDataMessage($user->fcm_token, $data);
+
         return redirect()->route('admin.doctors.doctorApprovals')->with('success', 'Doctor approved successfully.');
     }
 
     public function rejectDoctor(Request $request, DoctorProfile $doctorProfile)
     {
         $doctorProfile->update(['status' => DoctorStatus::REJECTED->value]);
+
+        $user = $doctorProfile->user;
+
+        $data = [
+            'title' => 'نأسف، لم يتم قبول طلبك حالياً',
+            'message' => "نعتذر منك،
+                    لم يتم قبول طلب انضمامك إلى منصة حكماء حالياً. إذا كان لديك أي استفسار يرجى التواصل مع الدعم الفني.",
+            'data' => ['doctor_id' => $user->id]
+        ];
+
+        $user->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
+
+        sendDataMessage($user->fcm_token, $data);
 
         return redirect()->route('admin.doctors.doctorApprovals')->with('success', 'Doctor rejected successfully.');
     }

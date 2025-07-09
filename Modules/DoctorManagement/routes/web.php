@@ -6,6 +6,7 @@ use Modules\DoctorManagement\App\Http\Controllers\Web\DashboardController;
 use Modules\DoctorManagement\App\Http\Controllers\Web\PatientController;
 use Modules\DoctorManagement\App\Http\Controllers\Web\PaymentController;
 use Modules\DoctorManagement\App\Http\Controllers\Web\AvailabilityController;
+use Modules\DoctorManagement\App\Http\Controllers\Web\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,12 @@ Route::middleware(['auth'])->group(function () {
                     Route::post('/', 'store')->name('store');
                     Route::put('/{id}', 'update')->name('update');
                     Route::delete('/{id}', 'destroy')->name('destroy');
+                });
+
+                Route::prefix('notifications')->name('notifications.')->controller(NotificationController::class)->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::post('/{id}/mark-as-read', 'markAsRead')->name('mark-as-read');
+                    Route::post('/mark-all-as-read', 'markAllAsRead')->name('mark-all-as-read');
                 });
             });
         });

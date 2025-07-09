@@ -20,6 +20,7 @@ use Modules\AdminPanel\App\Http\Controllers\DoctorController;
 use Modules\AdminPanel\App\Http\Controllers\PaymentController;
 use Modules\AdminPanel\App\Http\Controllers\SpecializationController;
 use Modules\AdminPanel\App\Http\Controllers\CoverageAreaController;
+use Modules\AdminPanel\App\Http\Controllers\NotificationController;
 use Modules\AdminPanel\App\Http\Controllers\PatientController;
 
 Route::middleware(['auth'])->group(function () {
@@ -89,6 +90,12 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/', 'index')->name('index');
                     Route::get('/{patient}', 'show')->name('show');
                     Route::delete('/{patient}', 'destroy')->name('destroy');
+                });
+
+                Route::prefix('notifications')->name('notifications.')->controller(NotificationController::class)->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::post('/{id}/mark-as-read', 'markAsRead')->name('mark-as-read');
+                    Route::post('/mark-all-as-read', 'markAllAsRead')->name('mark-all-as-read');
                 });
             });
         });

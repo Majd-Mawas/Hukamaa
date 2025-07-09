@@ -2,6 +2,7 @@
 
 namespace Modules\AppointmentManagement\App\Services;
 
+use App\Notifications\SystemNotification;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,7 @@ use Modules\AppointmentManagement\App\Models\Appointment;
 use Modules\DoctorManagement\App\Models\DoctorProfile;
 use Modules\DoctorManagement\App\Services\DoctorAvailabilityService;
 use Modules\PaymentManagement\App\Models\Payment;
+use Modules\UserManagement\App\Models\User;
 
 class AppointmentService
 {
@@ -43,9 +45,24 @@ class AppointmentService
                 'confirmed_by_patient' => true,
             ]);
 
+            $appointment->refresh();
+
             // if (isset($data['schedule'])) {
             //     $this->scheduleAppointment($appointment, $data['schedule'], $data['doctor_id']);
             // }
+
+            $user = $doctorProfile->user;
+
+            $data = [
+                'title' => 'لديك حالة جديدة من مريض.',
+                'message' => "لديك حالة جديدة من أحد المرضى بحاجة إلى المراجعة.
+                    يرجى الدخول إلى المنصة للاطلاع على تفاصيل الحالة واتخاذ الإجراءات اللازمة.",
+                'data' => ['appointment_id' => $appointment->id]
+            ];
+
+            $user->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
+
+            sendDataMessage($user->fcm_token, $data);
 
             if (isset($data['files'])) {
                 foreach ($data['files'] as $file) {
@@ -115,6 +132,15 @@ class AppointmentService
                 ->toMediaCollection('payment_invoices');
         }
 
+        $data = [
+            'title' => 'تأكيد دفع موعد جديد',
+            'message' => "
+                قام مريض {$appointment->patient->name} بحجز موعد جديد ويحتاج إلى التحقق من الدفع. يرجى مراجعة الحجز في لوحة الإدارة.",
+            'data' => ['appointment_id' => $appointment->id]
+        ];
+
+        getAdminUser()->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
+
         return $appointment->fresh();
     }
 
@@ -149,6 +175,27 @@ class AppointmentService
             'status' => $data['action'] === 'accept' ? AppointmentStatus::PENDING_PAYMENT : AppointmentStatus::CANCELLED,
             'confirmed_by_doctor' => $data['action'] === 'accept' ? true : false,
         ]);
+
+        $user = User::findOrFail($appointment->patient_id);
+
+        if ($data['action'] === 'accept') {
+            $data = [
+                'title' => 'تم قبول حالتك من الطبيب - الرجاء اكمال عملية الدفع.',
+                'message' => "تم قبول حالتك الطبية من قبل الطبيب - الرجاء اكمال عملية الدفع - سيتم التواصل معك قريباً لمتابعة الاستشارة",
+                'data' => ['appointment_id' => $appointment->id]
+            ];
+        } else {
+            $data = [
+                'title' => 'نعتذر، لم يتم قبول حالتك.',
+                'message' => "نعتذر، لم يتم قبول حالتك الطبية من قبل الطبيب حالياً. يمكنك التواصل مع الدعم الفني",
+                'data' => ['appointment_id' => $appointment->id]
+            ];
+        }
+
+        $user->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
+
+        sendDataMessage($user->fcm_token, $data);
+
         return $appointment->fresh();
     }
 

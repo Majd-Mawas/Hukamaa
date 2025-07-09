@@ -81,10 +81,19 @@ class ChatController extends Controller
     public function sendMessage(SendMessageRequest $request, Appointment $appointment): JsonResponse
     {
         $user = Auth::user();
-        $receiverId = $request->validated('receiver_id');
-        $message = $request->validated('message');
 
-        $chatMessage = $this->chatService->sendMessage($appointment->id, $user->id, $receiverId, $message);
+        $receiverId = $user->id === $appointment->doctor_id
+            ? $appointment->patient_id
+            : $appointment->doctor_id;
+
+        $messageText = $request->validated('message');
+
+        $chatMessage = $this->chatService->sendMessage($appointment->id, $user->id, $receiverId, $messageText);
+
+        $receiver = User::find($receiverId);
+        if ($receiver) {
+            $receiver->notify(new \App\Notifications\NewChatMessageNotification($chatMessage, $appointment));
+        }
 
         return $this->successResponse(
             new ChatMessageResource($chatMessage),

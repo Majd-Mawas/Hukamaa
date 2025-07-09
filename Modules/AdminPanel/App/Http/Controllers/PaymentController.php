@@ -3,6 +3,7 @@
 namespace Modules\AdminPanel\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\SystemNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\AppointmentManagement\App\Enums\AppointmentStatus;
@@ -32,6 +33,19 @@ class PaymentController extends Controller
         $payment->appointment->update([
             'status' => AppointmentStatus::SCHEDULED
         ]);
+
+        $appointment = $payment->appointment;
+        $user = $appointment->patient;
+
+        $data = [
+            'title' => 'تم تأكيد موعدك مع الطبيب.',
+            'message' => "تم تأكيد موعدك بنجاح. شكراً لاستخدامك منصة حكماء. سوف يصلك تذكير بالموعد.",
+            'data' => ['appointment_id' => $appointment->id]
+        ];
+
+        $user->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
+
+        sendDataMessage($user->fcm_token, $data);
 
         return back()->with('success', 'Payment approved successfully.');
     }

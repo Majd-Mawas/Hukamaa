@@ -3,10 +3,12 @@
 namespace Modules\UserManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\SystemNotification;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Modules\UserManagement\App\Http\Requests\LoginRequest;
 use Modules\UserManagement\App\Http\Requests\RegisterRequest;
 use Modules\UserManagement\App\Http\Resources\UserResource;
@@ -37,6 +39,15 @@ class AuthController extends Controller
         // Send verification email
         $user->notify(new \Modules\UserManagement\App\Notifications\VerifyEmailNotification($code));
 
+        $doctor = $user->refresh();
+
+        $data = [
+            'title' => 'طبيب جديد سجل في النظام',
+            'message' => "مرحباً، تم تسجيل طبيب جديد ({$doctor->name}) على المنصة ويحتاج إلى مراجعة طلبه. يرجى الدخول إلى لوحة الإدارة لمراجعة التفاصيل والموافقة على الحساب أو رفضه.",
+            'data' => ['doctor_id' => $doctor->id]
+        ];
+
+        $doctor->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
         if ($request->header('fcm-token')) {
             $user->update([
                 'fcm_token' => $request->header('fcm-token')

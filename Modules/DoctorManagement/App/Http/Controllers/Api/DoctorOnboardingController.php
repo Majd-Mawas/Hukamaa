@@ -3,8 +3,11 @@
 namespace Modules\DoctorManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Notifications\SystemNotification;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Notification;
 use Modules\DoctorManagement\App\Http\Requests\BasicInfoRequest;
 use Modules\DoctorManagement\App\Http\Requests\MedicalInfoRequest;
 use Modules\DoctorManagement\App\Http\Requests\DocumentsRequest;
@@ -41,7 +44,7 @@ class DoctorOnboardingController extends Controller
         );
 
         return $this->successResponse(
-            new DoctorProfileResource($result->load('user', 'specialization','media')),
+            new DoctorProfileResource($result->load('user', 'specialization', 'media')),
             'Medical information updated successfully',
             201
         );
@@ -53,6 +56,15 @@ class DoctorOnboardingController extends Controller
             $request->user()->id,
             $request->validated()
         );
+        $doctor = $request->user();
+
+        $data = [
+            'title' => 'طبيب جديد سجل في النظام',
+            'message' => "مرحباً، تم تسجيل طبيب جديد ({$doctor->name}) على المنصة ويحتاج إلى مراجعة طلبه. يرجى الدخول إلى لوحة الإدارة لمراجعة التفاصيل والموافقة على الحساب أو رفضه.",
+            'data' => ['doctor_id' => $doctor->id]
+        ];
+
+        getAdminUser()->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
 
         return $this->successResponse(
             new DoctorProfileResource($result->load('media', 'user', 'specialization')),
