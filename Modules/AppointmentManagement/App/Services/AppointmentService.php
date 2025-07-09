@@ -89,20 +89,24 @@ class AppointmentService
 
     public function confirmPayment(Appointment $appointment, array $data): Appointment
     {
-        // Get the doctor's profile to get the consultation fee
-        $doctorProfile = $appointment->doctor->doctorProfile ?? throw new ModelNotFoundException('Doctor profile not found');
-
-        // Generate a unique payment reference
+        $doctorProfile = $appointment->doctor->doctorProfile;
         $paymentReference = 'PAY-' . strtoupper(Str::random(8));
 
-        // Create payment record
+        $fee = $doctorProfile->consultation_fee;
+        $commissionRate = $doctorProfile->commission_percent / 100;
+
+        $adminCommission = round($fee * $commissionRate, 2);
+        $doctorEarning = round($fee - $adminCommission, 2);
+
         Payment::create([
             'patient_id' => $appointment->patient_id,
             'doctor_id' => $appointment->doctor_id,
             'appointment_id' => $appointment->id,
-            'amount' => $doctorProfile->consultation_fee,
+            'amount' => $fee,
+            'admin_commission' => $adminCommission,
+            'doctor_earning' => $doctorEarning,
             'payment_reference' => $paymentReference,
-            'status' => 'pending'
+            'status' => 'pending',
         ]);
 
         // Add the invoice file to the payment_invoices collection

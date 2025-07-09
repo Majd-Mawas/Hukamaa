@@ -20,6 +20,8 @@ class Payment extends Model
         'approved_at',
         'appointment_id',
         'payment_reference',
+        'doctor_earning',
+        'admin_commission'
     ];
 
     protected $casts = [

@@ -42,6 +42,9 @@
                                         Amount</th>
                                     <th
                                         class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        Doctor Earning</th>
+                                    <th
+                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                         Status</th>
                                     <th
                                         class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
@@ -77,6 +80,8 @@
                                             {{ $payment->doctor->name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                             ${{ number_format($payment->amount, 2) }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                                            ${{ number_format($payment->doctor_earning, 2) }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span
                                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $payment->status === \Modules\PaymentManagement\App\Enums\PaymentStatus::APPROVED->value

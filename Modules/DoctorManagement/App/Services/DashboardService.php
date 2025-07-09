@@ -37,7 +37,7 @@ class DashboardService
                 ->count();
 
             $monthlyPayments = Payment::where('doctor_id', $doctorId)
-                ->selectRaw('MONTH(created_at) as month, SUM(amount) as total')
+                ->selectRaw('MONTH(created_at) as month, SUM(doctor_earning) as total')
                 ->groupBy('month')
                 ->pluck('total', 'month')
                 ->toArray();
@@ -55,10 +55,10 @@ class DashboardService
                 ->limit(4)
                 ->get();
 
-            $totalEarnings = Payment::where('doctor_id', $doctorId)->sum('amount');
+            $totalEarnings = Payment::where('doctor_id', $doctorId)->sum('doctor_earning');
             $monthlyEarnings = Payment::where('doctor_id', $doctorId)
                 ->whereMonth('created_at', now()->month)
-                ->sum('amount');
+                ->sum('doctor_earning');
             return [
                 'patients' => [
                     'total' => $totalPatients,

@@ -76,7 +76,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                             {{ $payment->doctor->name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                                            ${{ number_format($payment->amount, 2) }}</td>
+                                            ${{ number_format($payment->doctor_earning, 2) }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span
                                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $payment->status === \Modules\PaymentManagement\App\Enums\PaymentStatus::APPROVED->value
