@@ -24,12 +24,17 @@ function getAdminUser()
 
 function sendDataMessage(string $fcmToken, array $data): void
 {
+    // Convert any nested arrays in data to JSON strings to prevent Array to string conversion errors
+    $sanitizedData = array_map(function($value) {
+        return is_array($value) ? json_encode($value) : $value;
+    }, $data);
+
     $factory = (new Factory)->withServiceAccount(config('services.firebase.credentials_file'));
 
     $messaging = $factory->createMessaging();
 
     $messaging->send([
         'token' => $fcmToken,
-        'data' => $data,
+        'data' => $sanitizedData,
     ]);
 }
