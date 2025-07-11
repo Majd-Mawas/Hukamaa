@@ -99,16 +99,15 @@
 
                                         <div class="mb-4">
                                             <label class="block text-sm font-medium mb-1">Start Time</label>
-                                            <input type="time" id="startTime" name="start_time"
+                                            <input type="time" id="startTime" name="start_time" value="09:00"
                                                 class="form-input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                required>
+                                                required step="360000">
                                         </div>
-
                                         <div class="mb-4">
                                             <label class="block text-sm font-medium mb-1">End Time</label>
-                                            <input type="time" id="endTime" name="end_time"
+                                            <input type="time" id="endTime" name="end_time" value="17:00"
                                                 class="form-input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                required>
+                                                required step="3600">
                                         </div>
 
                                         <div class="flex justify-end gap-2">

@@ -78,23 +78,11 @@ document.addEventListener("DOMContentLoaded", function () {
                                 console.error("Time slots container not found");
                                 return;
                             }
-
-                            console.log(container);
-
-                            console.log(
-                                container.querySelectorAll(".time-slot-item")
-                            );
-                            console.log(
-                                container.querySelectorAll(".time-slot-item")
-                                    .length
-                            );
                             if (
                                 container &&
                                 container.querySelectorAll(".time-slot-item")
                                     .length === 0
                             ) {
-                                console.log("terst");
-
                                 const noSlotsMessage =
                                     document.createElement("span");
                                 noSlotsMessage.className = "text-neutral-500";
