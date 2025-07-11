@@ -3,8 +3,9 @@
 @php
     $title = 'Availabilities Management';
     $subTitle = 'A list of all Availabilities in the system';
+    $version = '1.0.3';
     $script = '<script src="' . asset('assets/js/data-table.js') . '"></script>
-    <script src="' . asset('assets/js/availability.js') . '"></script>';
+    <script src="' . asset(" assets/js/availability.js") . '?v=' . $version . '"></script>';
 @endphp
 
 @section('content')

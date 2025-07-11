@@ -10,7 +10,7 @@ use InvalidArgumentException;
 
 class DoctorAvailabilityService
 {
-    private int $defaultSlotDuration = 60; // in minutes
+    private int $defaultSlotDuration = 30; // in minutes
 
     public function __construct(private ?int $slotDuration = null)
     {

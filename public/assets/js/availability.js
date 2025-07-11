@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     function fetchWithCsrf(url, options = {}) {
-         const csrfToken =
+        const csrfToken =
             document
                 .querySelector('meta[name="csrf-token"]')
                 ?.getAttribute("content") || "";
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("modal-title").textContent =
                 "Edit Time Slot";
 
-             fetch(`/dashboard/doctor/availabilities/${id}`)
+            fetch(`/dashboard/doctor/availabilities/${id}`)
                 .then((response) => response.json())
                 .then((data) => {
                     document.getElementById("startTime").value =
@@ -152,4 +152,33 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .catch((error) => console.error("Error:", error));
         });
+});
+
+function validateHoursOnly(event) {
+    const timeInputs = document.querySelectorAll('input[type="time"]');
+    for (const input of timeInputs) {
+        const [hour, minute] = input.value.split(":");
+        if (minute !== "00") {
+            alert(
+                `Please select a full hour only in ${input.name.replace(
+                    "_",
+                    " "
+                )}.`
+            );
+            input.focus();
+            event.preventDefault();
+            return false;
+        }
+    }
+    return true;
+}
+
+// Optional: Automatically correct the value if user selects non-zero minutes
+document.querySelectorAll('input[type="time"]').forEach((input) => {
+    input.addEventListener("change", () => {
+        const [hour, minute] = input.value.split(":");
+        if (minute !== "00") {
+            input.value = `${hour}:00`;
+        }
+    });
 });

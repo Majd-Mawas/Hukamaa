@@ -12,6 +12,7 @@ Route::prefix('auth')->group(function () {
     Route::post('forgot-password', [PasswordResetController::class, 'forgotPassword']);
     Route::post('verify-code', [PasswordResetController::class, 'verifyCode']);
     Route::post('reset-password', [PasswordResetController::class, 'setNewPassword']);
+    Route::delete('user/{user}', [AuthController::class, 'destroy']);
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('verify-email', [VerificationController::class, 'verify'])

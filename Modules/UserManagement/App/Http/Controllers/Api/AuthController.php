@@ -135,4 +135,15 @@ class AuthController extends Controller
             ],
         );
     }
+
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return $this->successResponse(
+            null,
+            'User Deleted Successfully'
+        );
+    }
 }
