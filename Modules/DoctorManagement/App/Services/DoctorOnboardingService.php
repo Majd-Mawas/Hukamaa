@@ -65,10 +65,10 @@ class DoctorOnboardingService
             ]
         );
 
-        if (isset($data['practice_licenses'])) {
-            $profile->addMedia($data['practice_licenses'])
-                ->toMediaCollection('practice_licenses');
-        }
+        // if (isset($data['practice_licenses'])) {
+        //     $profile->addMedia($data['practice_licenses'])
+        //         ->toMediaCollection('practice_licenses');
+        // }
 
         if (isset($data['practice_licenses'])) {
             foreach ($data['practice_licenses'] as $certificate) {

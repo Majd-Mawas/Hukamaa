@@ -4,6 +4,7 @@ namespace Modules\AdminPanel\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Notifications\SystemNotification;
+use App\Services\NotificationTemplateBuilder;
 use Modules\DoctorManagement\App\Models\DoctorProfile;
 use Modules\UserManagement\App\Models\User;
 use Modules\SpecializationManagement\App\Models\Specialization;
@@ -16,6 +17,9 @@ use Modules\DoctorManagement\App\Enums\DoctorStatus;
 
 class DoctorController extends Controller
 {
+
+    public function __construct(public NotificationTemplateBuilder $notification_template_builder) {}
+
     public function index()
     {
         $doctors = DoctorProfile::with(['user', 'specialization', 'coverageAreas'])

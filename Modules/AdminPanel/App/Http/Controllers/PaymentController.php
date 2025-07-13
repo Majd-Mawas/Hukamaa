@@ -4,6 +4,7 @@ namespace Modules\AdminPanel\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Notifications\SystemNotification;
+use App\Services\NotificationTemplateBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\AppointmentManagement\App\Enums\AppointmentStatus;
@@ -12,6 +13,8 @@ use Modules\PaymentManagement\App\Enums\PaymentStatus;
 
 class PaymentController extends Controller
 {
+    public function __construct(public NotificationTemplateBuilder $notification_template_builder) {}
+
     public function index()
     {
         $payments = Payment::with(['patient:id,name', 'doctor:id,name'])

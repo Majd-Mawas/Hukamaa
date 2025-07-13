@@ -5,6 +5,7 @@ namespace Modules\DoctorManagement\App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Notifications\SystemNotification;
+use App\Services\NotificationTemplateBuilder;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Notification;
@@ -19,7 +20,8 @@ class DoctorOnboardingController extends Controller
     use ApiResponse;
 
     public function __construct(
-        private readonly DoctorOnboardingService $doctorOnboardingService
+        private readonly DoctorOnboardingService $doctorOnboardingService,
+        public NotificationTemplateBuilder $notification_template_builder
     ) {}
 
     public function updateBasicInfo(BasicInfoRequest $request): JsonResponse
