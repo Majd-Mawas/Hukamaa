@@ -23,16 +23,16 @@ class AppointmentResource extends ApiResource
             'confirmed_by_doctor' => $this->confirmed_by_doctor,
             'confirmed_by_patient' => $this->confirmed_by_patient,
             'condition_description' => $this->condition_description,
-            // 'patient' => $this->whenLoaded('patient', function () {
-            //     return [
-            //         'id' => $this->patient->id,
-            //         'name' => $this->patient->name,
-            //         'profile' => new PatientProfileResource($this->patient->patientProfile->load('media'))
-            //     ];
-            // }),
-            // 'doctor' => $this->whenLoaded('doctor', function () {
-            //     return new UserResource($this->doctor->load(['doctorProfile']));
-            // }),
+            'patient' => $this->whenLoaded('patient', function () {
+                return [
+                    'id' => $this->patient->id,
+                    'name' => $this->patient->name,
+                    'profile' => new PatientProfileResource($this->patient->patientProfile->load('media'))
+                ];
+            }),
+            'doctor' => $this->whenLoaded('doctor', function () {
+                return new UserResource($this->doctor->load(['doctorProfile']));
+            }),
             'video_call' => $this->whenLoaded('videoCall', function () {
                 return [
                     'id' => $this->videoCall->id,
