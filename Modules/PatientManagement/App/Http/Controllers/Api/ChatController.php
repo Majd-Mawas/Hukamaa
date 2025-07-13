@@ -90,10 +90,10 @@ class ChatController extends Controller
 
         $chatMessage = $this->chatService->sendMessage($appointment->id, $user->id, $receiverId, $messageText);
 
-        $receiver = User::find($receiverId);
-        if ($receiver) {
-            $receiver->notify(new \App\Notifications\NewChatMessageNotification($chatMessage, $appointment));
-        }
+        // $receiver = User::find($receiverId);
+        // if ($receiver) {
+        //     $receiver->notify(new \App\Notifications\NewChatMessageNotification($chatMessage, $appointment));
+        // }
 
         return $this->successResponse(
             new ChatMessageResource($chatMessage),
