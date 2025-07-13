@@ -13,19 +13,10 @@ class NewChatMessageNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['database', 'fcm'];
+        return ['database'];
     }
 
     public function toDatabase($notifiable): array
-    {
-        return [
-            'title' => 'رسالة جديدة',
-            'body' => $this->message->message,
-            'appointment_id' => $this->message->appointment_id,
-        ];
-    }
-
-    public function toFcm($notifiable)
     {
         if ($notifiable->fcm_token) {
             sendDataMessage($notifiable->fcm_token, [
@@ -34,5 +25,22 @@ class NewChatMessageNotification extends Notification
                 'appointment_id' => $this->message->appointment_id,
             ]);
         }
+
+        return [
+            'title' => 'رسالة جديدة',
+            'body' => $this->message->message,
+            'appointment_id' => $this->message->appointment_id,
+        ];
     }
+
+    // public function toFcm($notifiable)
+    // {
+    //     if ($notifiable->fcm_token) {
+    //         sendDataMessage($notifiable->fcm_token, [
+    //             'title' => 'رسالة جديدة',
+    //             'body' => $this->message->message,
+    //             'appointment_id' => $this->message->appointment_id,
+    //         ]);
+    //     }
+    // }
 }
