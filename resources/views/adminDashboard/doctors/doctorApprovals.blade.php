@@ -89,16 +89,14 @@
                                                     <div class="d-flex align-items-center gap-2">
                                                         <i class="mdi mdi-license text-muted font-size-18"></i>
                                                         <div class="flex-grow-1">
-                                                            @if ($doctor->getFirstMediaUrl('practice_license'))
-                                                                <a href="{{ $doctor->getFirstMediaUrl('practice_license') }}"
-                                                                    class="d-flex align-items-center text-reset text-decoration-none"
-                                                                    target="_blank">
-                                                                    <span class="text-body font-size-13">Practice
-                                                                        License</span>
-                                                                    <i class="mdi mdi-open-in-new ms-1 font-size-13"></i>
-                                                                </a>
+                                                            @if ($doctor->getMedia('practice_licenses')->count() > 0)
+                                                                <div data-modal-target="practiceLicensesModal{{ $doctor->id }}"
+                                                                    data-modal-toggle="practiceLicensesModal{{ $doctor->id }}"
+                                                                    class="cursor-pointer">
+                                                                    Practice License
+                                                                </div>
                                                             @else
-                                                                <span class="text-muted font-size-13">No
+                                                                <span class="text-muted font-size-13">No Practice
                                                                     License</span>
                                                             @endif
                                                         </div>
@@ -196,9 +194,59 @@
                                                                         class="text-lg font-medium text-gray-900 dark:text-white mb-3">
                                                                         Certificate {{ $loop->iteration }}
                                                                     </h6>
-                                                                    <a href="{{ $certificate->getUrl() }}" target="_blank"
+                                                                    <a href="{{ $certificate->getUrl() }}"
+                                                                        target="_blank"
                                                                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                                                         View Certificate
+                                                                    </a>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Practice Licenses Modal -->
+                                        <div id="practiceLicensesModal{{ $doctor->id }}" tabindex="-1"
+                                            aria-hidden="true"
+                                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                            <div class="relative p-4 w-full max-w-2xl max-h-full">
+                                                <!-- Modal content -->
+                                                <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                                                    <!-- Modal header -->
+                                                    <div
+                                                        class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                                                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                                            Medical Certificates
+                                                        </h3>
+                                                        <button type="button"
+                                                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                            data-modal-hide="practiceLicensesModal{{ $doctor->id }}">
+                                                            <svg class="w-3 h-3" aria-hidden="true"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                viewBox="0 0 14 14">
+                                                                <path stroke="currentColor" stroke-linecap="round"
+                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                                            </svg>
+                                                            <span class="sr-only">Close modal</span>
+                                                        </button>
+                                                    </div>
+                                                    <!-- Modal body -->
+                                                    <div class="p-4 md:p-5 space-y-4">
+                                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                            @foreach ($doctor->getMedia('practice_licenses') as $certificate)
+                                                                <div
+                                                                    class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 border border-gray-200 dark:border-gray-600">
+                                                                    <h6
+                                                                        class="text-lg font-medium text-gray-900 dark:text-white mb-3">
+                                                                        Practice Licenses {{ $loop->iteration }}
+                                                                    </h6>
+                                                                    <a href="{{ $certificate->getUrl() }}"
+                                                                        target="_blank"
+                                                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                                        View Practice Licenses
                                                                     </a>
                                                                 </div>
                                                             @endforeach

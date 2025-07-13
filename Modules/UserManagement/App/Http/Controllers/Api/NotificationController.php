@@ -25,4 +25,15 @@ class NotificationController extends Controller
             200
         );
     }
+
+    public function markAllAsRead(Request $request)
+    {
+        $request->user()->unreadNotifications->markAsRead();
+
+        return $this->successResponse(
+            [],
+            'Notifications marked as read successfully',
+            200
+        );
+    }
 }

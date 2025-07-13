@@ -20,11 +20,15 @@ class PatientProfileService
             [
                 'birth_date' => $data['birth_date'],
                 'gender' => $data['gender'],
+                'medical_history' => $data['medical_history'],
+                'current_medications' => $data['current_medications'],
                 // 'allergies' => $data['allergies'] ?? null,
             ]
         );
 
         $profile->allergies()->sync($data['allergies']);
+
+        $profile->chronicConditions()->sync($data['chronic_conditions']);
 
         if (isset($data['files'])) {
             foreach ($data['files'] as $file) {

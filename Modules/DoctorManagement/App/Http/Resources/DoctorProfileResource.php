@@ -26,7 +26,7 @@ class DoctorProfileResource extends ApiResource
             'address' => $this->address,
             'files' => $this->whenLoaded('media', function () {
                 return [
-                    'practice_license' => $this->getMedia('practice_license')->map(function ($media) {
+                    'practice_licenses' => $this->getMedia('practice_licenses')->map(function ($media) {
                         return [
                             'id' => $media->id,
                             'url' => $media->getUrl(),
@@ -34,7 +34,7 @@ class DoctorProfileResource extends ApiResource
                             'mime_type' => $media->mime_type,
                             'size' => $media->size,
                         ];
-                    })->first(),
+                    }),
                     'medical_certificates' => $this->getMedia('medical_certificates')->map(function ($media) {
                         return [
                             'id' => $media->id,

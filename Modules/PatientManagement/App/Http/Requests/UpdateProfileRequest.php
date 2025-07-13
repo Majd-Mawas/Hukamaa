@@ -21,7 +21,11 @@ class UpdateProfileRequest extends FormRequest
             'files' => 'nullable|array',
             'files.*' => 'file|mimes:pdf,jpg,jpeg,png|max:10240',
             'allergies' => ['required', 'array'],
-            'allergies.*' => ['required', 'integer', 'exists:allergies,id']
+            'allergies.*' => ['required', 'integer', 'exists:allergies,id'],
+            'chronic_conditions' => ['required', 'array'],
+            'chronic_conditions.*' => ['required', 'integer', 'exists:chronic_conditions,id'],
+            'medical_history' => ['nullable', 'string'],
+            'current_medications' => ['nullable', 'string'],
         ];
     }
 }

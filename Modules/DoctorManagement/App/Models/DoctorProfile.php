@@ -51,7 +51,7 @@ class DoctorProfile extends Model implements HasMedia
     {
         $this->addMediaCollection('profile_picture')->singleFile();
         $this->addMediaCollection('identity_document')->singleFile();
-        $this->addMediaCollection('practice_license')->singleFile();
+        $this->addMediaCollection('practice_licenses');
         $this->addMediaCollection('medical_certificates');
     }
 

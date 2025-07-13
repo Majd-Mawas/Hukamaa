@@ -14,9 +14,10 @@ class DocumentsRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'practice_license' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'], // 10MB max
+            'practice_licenses' => ['nullable', 'array'],
+            'practice_licenses.*' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
             'medical_certificates' => ['nullable', 'array'],
-            'medical_certificates.*' => ['file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'], // 10MB max
+            'medical_certificates.*' => ['file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
             'expertise_focus' => ['nullable', 'string'],
         ];
     }

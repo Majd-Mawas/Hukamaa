@@ -26,4 +26,5 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('auth:sanctum')->prefix('user')->group(function () {
     Route::get('notifications', [NotificationController::class, 'index']);
+    Route::get('notifications/read-all', [NotificationController::class, 'markAllAsRead']);
 });

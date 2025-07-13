@@ -109,7 +109,7 @@
                     @endforelse
 
                     {{-- Practice License --}}
-                    @forelse ($doctor->getMedia('practice_license') as $document)
+                    @forelse ($doctor->getMedia('practice_licenses') as $document)
                         <div
                             class="hover-scale-img border border-neutral-200 dark:border-neutral-600 rounded-2xl overflow-hidden">
                             <div class="max-h-[266px] overflow-hidden">
