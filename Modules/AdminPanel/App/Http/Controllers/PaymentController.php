@@ -37,15 +37,15 @@ class PaymentController extends Controller
         $appointment = $payment->appointment;
         $user = $appointment->patient;
 
-        $data = [
-            'title' => 'تم تأكيد موعدك مع الطبيب.',
-            'message' => "تم تأكيد موعدك بنجاح. شكراً لاستخدامك منصة حكماء. سوف يصلك تذكير بالموعد.",
-            'data' => ['appointment_id' => $appointment->id]
-        ];
+        $template = $this->notification_template_builder->confirmedAppointment($user);
 
-        $user->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
+        $user->notify(new SystemNotification(
+            $template['title'],
+            $template['message'],
+            $template['data']
+        ));
 
-        sendDataMessage($user->fcm_token, $data);
+        sendDataMessage($user->fcm_token, $template);
 
         return back()->with('success', 'Payment approved successfully.');
     }

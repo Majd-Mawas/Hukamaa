@@ -58,13 +58,13 @@ class DoctorOnboardingController extends Controller
         );
         $doctor = $request->user();
 
-        $data = [
-            'title' => 'طبيب جديد سجل في النظام',
-            'message' => "مرحباً، تم تسجيل طبيب جديد ({$doctor->name}) على المنصة ويحتاج إلى مراجعة طلبه. يرجى الدخول إلى لوحة الإدارة لمراجعة التفاصيل والموافقة على الحساب أو رفضه.",
-            'data' => ['doctor_id' => $doctor->id]
-        ];
+        $template = $this->notification_template_builder->newDoctorSignup($doctor);
 
-        getAdminUser()->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
+        getAdminUser()->notify(new SystemNotification(
+            $template['title'],
+            $template['message'],
+            $template['data']
+        ));
 
         return $this->successResponse(
             new DoctorProfileResource($result->load('media', 'user', 'specialization')),

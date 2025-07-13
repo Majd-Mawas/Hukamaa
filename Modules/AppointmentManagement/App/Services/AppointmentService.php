@@ -3,6 +3,7 @@
 namespace Modules\AppointmentManagement\App\Services;
 
 use App\Notifications\SystemNotification;
+use App\Services\NotificationTemplateBuilder;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,8 @@ use Modules\UserManagement\App\Models\User;
 class AppointmentService
 {
     public function __construct(
-        private readonly DoctorAvailabilityService $doctorAvailabilityService
+        private readonly DoctorAvailabilityService $doctorAvailabilityService,
+        public NotificationTemplateBuilder $notification_template_builder
     ) {}
     public function getUserAppointments(int $userId)
     {
@@ -53,16 +55,15 @@ class AppointmentService
 
             $user = $doctorProfile->user;
 
-            $data = [
-                'title' => 'لديك حالة جديدة من مريض.',
-                'message' => "لديك حالة جديدة من أحد المرضى بحاجة إلى المراجعة.
-                    يرجى الدخول إلى المنصة للاطلاع على تفاصيل الحالة واتخاذ الإجراءات اللازمة.",
-                'data' => ['appointment_id' => $appointment->id]
-            ];
+            $template = $this->notification_template_builder->newPatientCase($user);
 
-            $user->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
+            $user->notify(new SystemNotification(
+                $template['title'],
+                $template['message'],
+                $template['data']
+            ));
 
-            sendDataMessage($user->fcm_token, $data);
+            // sendDataMessage($user->fcm_token, $template);
 
             if (isset($data['files'])) {
                 foreach ($data['files'] as $file) {
@@ -131,15 +132,13 @@ class AppointmentService
             $appointment->addMedia($data['invoice_file'])
                 ->toMediaCollection('payment_invoices');
         }
+        $template = $this->notification_template_builder->paymentNeedsApproval($appointment);
 
-        $data = [
-            'title' => 'تأكيد دفع موعد جديد',
-            'message' => "
-                قام مريض {$appointment->patient->name} بحجز موعد جديد ويحتاج إلى التحقق من الدفع. يرجى مراجعة الحجز في لوحة الإدارة.",
-            'data' => ['appointment_id' => $appointment->id]
-        ];
-
-        getAdminUser()->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
+        getAdminUser()->notify(new SystemNotification(
+            $template['title'],
+            $template['message'],
+            $template['data']
+        ));
 
         return $appointment->fresh();
     }
@@ -178,23 +177,9 @@ class AppointmentService
 
         $user = User::findOrFail($appointment->patient_id);
 
-        if ($data['action'] === 'accept') {
-            $data = [
-                'title' => 'تم قبول حالتك من الطبيب - الرجاء اكمال عملية الدفع.',
-                'message' => "تم قبول حالتك الطبية من قبل الطبيب - الرجاء اكمال عملية الدفع - سيتم التواصل معك قريباً لمتابعة الاستشارة",
-                'data' => ['appointment_id' => $appointment->id]
-            ];
-        } else {
-            $data = [
-                'title' => 'نعتذر، لم يتم قبول حالتك.',
-                'message' => "نعتذر، لم يتم قبول حالتك الطبية من قبل الطبيب حالياً. يمكنك التواصل مع الدعم الفني",
-                'data' => ['appointment_id' => $appointment->id]
-            ];
-        }
+        $template = $this->notification_template_builder->appointmentDecision($appointment, $data['action']);
 
-        $user->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
-
-        sendDataMessage($user->fcm_token, $data);
+        $user->notify(new SystemNotification($template['title'], $template['message'], $template['data']));
 
         return $appointment->fresh();
     }

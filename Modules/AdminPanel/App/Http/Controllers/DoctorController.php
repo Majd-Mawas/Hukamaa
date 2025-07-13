@@ -189,16 +189,15 @@ class DoctorController extends Controller
 
         $user = $doctorProfile->user;
 
-        $data = [
-            'title' => 'تمت الموافقة على حسابك في حكماء',
-            'message' => "تهانينا دكتور/دكتورة،
-                    تمت الموافقة على طلب انضمامك إلى منصة حكماء، يمكنك الآن تسجيل الدخول والبدء بتقديم خدماتك الطبية.",
-            'data' => ['doctor_id' => $user->id]
-        ];
+        $template = $this->notification_template_builder->approvedDoctorAccount($user);
 
-        $user->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
+        $user->notify(new SystemNotification(
+            $template['title'],
+            $template['message'],
+            $template['data']
+        ));
 
-        sendDataMessage($user->fcm_token, $data);
+        sendDataMessage($user->fcm_token, $template);
 
         return redirect()->route('admin.doctors.doctorApprovals')->with('success', 'Doctor approved successfully.');
     }
@@ -209,16 +208,15 @@ class DoctorController extends Controller
 
         $user = $doctorProfile->user;
 
-        $data = [
-            'title' => 'نأسف، لم يتم قبول طلبك حالياً',
-            'message' => "نعتذر منك،
-                    لم يتم قبول طلب انضمامك إلى منصة حكماء حالياً. إذا كان لديك أي استفسار يرجى التواصل مع الدعم الفني.",
-            'data' => ['doctor_id' => $user->id]
-        ];
+        $template = $this->notification_template_builder->rejectedDoctorAccount($user);
 
-        $user->notify(new SystemNotification($data['title'], $data['message'], $data['data']));
+        $user->notify(new SystemNotification(
+            $template['title'],
+            $template['message'],
+            $template['data']
+        ));
 
-        sendDataMessage($user->fcm_token, $data);
+        sendDataMessage($user->fcm_token, $template);
 
         return redirect()->route('admin.doctors.doctorApprovals')->with('success', 'Doctor rejected successfully.');
     }

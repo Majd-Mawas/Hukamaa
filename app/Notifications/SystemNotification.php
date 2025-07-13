@@ -29,9 +29,14 @@ class SystemNotification extends Notification
 
     public function toMail($notifiable): MailMessage
     {
-        return (new MailMessage)
-            ->subject($this->title)
-            ->line($this->message);
+        $mail = (new MailMessage)
+            ->subject($this->title);
+
+        foreach (preg_split("/\r\n|\n|\r/", $this->message) as $line) {
+            $mail->line(trim($line));
+        }
+
+        return $mail;
     }
 
     public function toDatabase($notifiable): array
