@@ -24,17 +24,27 @@ function getAdminUser()
 
 function sendDataMessage(string $fcmToken, array $data): void
 {
-    // Convert any nested arrays in data to JSON strings to prevent Array to string conversion errors
-    $sanitizedData = array_map(function($value) {
-        return is_array($value) ? json_encode($value) : $value;
-    }, $data);
+    $sanitizedData = array_map(fn($v) => is_array($v) ? json_encode($v) : (string)$v, $data);
 
-    $factory = (new Factory)->withServiceAccount(config('services.firebase.credentials_file'));
+    try {
+        $factory = (new Factory)->withServiceAccount(config('services.firebase.credentials_file'));
+        $messaging = $factory->createMessaging();
 
-    $messaging = $factory->createMessaging();
+        $messaging->send([
+            'token' => $fcmToken,
+            'data' => $sanitizedData,
+        ]);
+    } catch (\Kreait\Firebase\Exception\Messaging\NotFound $e) {
+        \Log::warning("FCM token not found. Removing token.", [
+            'token' => $fcmToken,
+            'error' => $e->getMessage(),
+        ]);
 
-    $messaging->send([
-        'token' => $fcmToken,
-        'data' => $sanitizedData,
-    ]);
+        \DB::table('users')->where('fcm_token', $fcmToken)->update(['fcm_token' => null]);
+    } catch (\Throwable $e) {
+        \Log::error("FCM sending failed", [
+            'token' => $fcmToken,
+            'error' => $e->getMessage(),
+        ]);
+    }
 }

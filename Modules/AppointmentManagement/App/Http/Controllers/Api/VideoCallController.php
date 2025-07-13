@@ -82,34 +82,38 @@ class VideoCallController extends Controller
             $videoCall->patient_token = $this->zego->generateToken("patient_{$user->id}");
         }
 
-        $token = $patient->fcm_token;
 
         $videoCall->save();
         $videoCall->refresh();
-        $factory = (new Factory)->withServiceAccount(config('services.firebase.credentials_file'));
 
-        $messaging = $factory->createMessaging();
-        $videoCallData = [
-            'started_at' => $videoCall->started_at?->toISOString(),
-            'ended_at' => $videoCall->ended_at?->toISOString(),
-            'call_duration' => $videoCall->call_duration,
-            'status' => $videoCall->status,
-            'room_id' => $videoCall->room_id,
-            'appointment_id' => $videoCall->appointment_id,
-            'token' => $videoCall->patient_token,
-            'user_id' => "patient_{$user->id}",
-            'app_id' => config('services.zegocloud.app_id'),
-            'app_sign' => config('services.zegocloud.app_sign'),
-            "title" => 'مكالمة فيديو واردة',
-            "message" => 'طبيبك يتصل بك لموعدك.',
-        ];
+        $token = $patient->fcm_token;
+        if ($token) {
 
-        $messaging->send([
-            'token' => $patient->fcm_token,
-            'data' => collect(['event' => 'call_invitation'])
-                ->merge($this->stringifyArray($videoCallData))
-                ->all(),
-        ]);
+            $factory = (new Factory)->withServiceAccount(config('services.firebase.credentials_file'));
+
+            $messaging = $factory->createMessaging();
+            $videoCallData = [
+                'started_at' => $videoCall->started_at?->toISOString(),
+                'ended_at' => $videoCall->ended_at?->toISOString(),
+                'call_duration' => $videoCall->call_duration,
+                'status' => $videoCall->status,
+                'room_id' => $videoCall->room_id,
+                'appointment_id' => $videoCall->appointment_id,
+                'token' => $videoCall->patient_token,
+                'user_id' => "patient_{$user->id}",
+                'app_id' => config('services.zegocloud.app_id'),
+                'app_sign' => config('services.zegocloud.app_sign'),
+                "title" => 'مكالمة فيديو واردة',
+                "message" => 'طبيبك يتصل بك لموعدك.',
+            ];
+
+            $messaging->send([
+                'token' => $patient->fcm_token,
+                'data' => collect(['event' => 'call_invitation'])
+                    ->merge($this->stringifyArray($videoCallData))
+                    ->all(),
+            ]);
+        }
 
         $patient->notify(new SystemNotification(
             title: 'مكالمة فيديو واردة',
