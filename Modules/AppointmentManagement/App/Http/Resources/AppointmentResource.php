@@ -23,6 +23,7 @@ class AppointmentResource extends ApiResource
             'confirmed_by_doctor' => $this->confirmed_by_doctor,
             'confirmed_by_patient' => $this->confirmed_by_patient,
             'condition_description' => $this->condition_description,
+            'service' => $this->service,
             'patient' => $this->whenLoaded('patient', function () {
                 return [
                     'id' => $this->patient->id,

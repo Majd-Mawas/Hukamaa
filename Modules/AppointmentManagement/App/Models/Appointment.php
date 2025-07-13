@@ -15,17 +15,7 @@ class Appointment extends Model implements HasMedia
 {
     use HasFactory, SoftDeletes, InteractsWithMedia;
 
-    protected $fillable = [
-        'patient_id',
-        'doctor_id',
-        'date',
-        'start_time',
-        'end_time',
-        'status',
-        'confirmed_by_doctor',
-        'confirmed_by_patient',
-        'condition_description',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'date' => 'date',

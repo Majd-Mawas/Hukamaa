@@ -45,6 +45,7 @@ class AppointmentService
                 'status' => AppointmentStatus::PENDING,
                 'confirmed_by_doctor' => false,
                 'confirmed_by_patient' => true,
+                'service' => $data['service'],
             ]);
 
             $appointment->refresh();

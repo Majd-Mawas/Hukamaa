@@ -18,6 +18,7 @@ class CreateAppointmentRequest extends BaseRequest
             'doctor_id' => ['required', 'exists:doctor_profiles,id'],
             'condition_description' => ['required', 'string', 'max:1000'],
             'files.*' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
+            'service' => ['required', 'string', 'in:remote_video_consultation,home_visit'],
             // 'schedule' => ['required', 'array'],
             // 'schedule.date' => ['required', 'date', 'after:today'],
             // 'schedule.start_time' => ['required', 'date_format:H:i'],
