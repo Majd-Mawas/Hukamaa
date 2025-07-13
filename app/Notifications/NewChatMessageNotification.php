@@ -22,7 +22,7 @@ class NewChatMessageNotification extends Notification
             sendDataMessage($notifiable->fcm_token, [
                 'title' => 'رسالة جديدة',
                 'body' => $this->message->message,
-                'appointment_id' => $this->message->appointment_id,
+                'appointment_id' => (string) $this->message->appointment_id,
             ]);
         }
 
