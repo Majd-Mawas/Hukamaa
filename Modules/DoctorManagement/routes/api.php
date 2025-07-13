@@ -24,6 +24,5 @@ Route::middleware('auth:sanctum')->group(function () {
                 Route::post('/medical', [DoctorOnboardingController::class, 'updateMedicalInfo']);
                 Route::post('/documents', [DoctorOnboardingController::class, 'uploadDocuments']);
             });
-        Route::get('/verify-status', [DoctorProfileController::class, 'verifyStatus'])->name('verify-status');
     });
 });

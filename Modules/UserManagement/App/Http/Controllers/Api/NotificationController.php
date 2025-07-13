@@ -12,10 +12,15 @@ class NotificationController extends Controller
     use ApiResponse;
     public function index(Request $request)
     {
-
-        $notifications = $request->user()->notifications()
+        $notifications = Auth::user()->notifications()
             ->latest()
             ->paginate(15);
+
+        if (request()->header('fcm-token')) {
+            Auth::user()->update([
+                'fcm_token' => request()->header('fcm-token')
+            ]);
+        }
 
         return $this->successResponse(
             [
@@ -28,7 +33,7 @@ class NotificationController extends Controller
 
     public function markAllAsRead(Request $request)
     {
-        $request->user()->unreadNotifications->markAsRead();
+        Auth::user()->unreadNotifications->markAsRead();
 
         return $this->successResponse(
             [],
