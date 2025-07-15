@@ -18,18 +18,27 @@ class NewChatMessageNotification extends Notification
 
     public function toDatabase($notifiable): array
     {
+        $senderName = $this->message->sender->name;
+        $receiverName = $this->message->receiver->name;
+
+        $title = 'رسالة جديدة';
+
         if ($notifiable->fcm_token) {
             sendDataMessage($notifiable->fcm_token, [
-                'title' => 'رسالة جديدة',
+                'title' => $title,
                 'body' => $this->message->message,
                 'appointment_id' => (string) $this->message->appointment_id,
+                'sender_name' => $senderName,
+                'receiver_name' => $receiverName
             ]);
         }
 
         return [
-            'title' => 'رسالة جديدة',
+            'title' => $title,
             'body' => $this->message->message,
-            'appointment_id' => $this->message->appointment_id,
+            'appointment_id' => (string) $this->message->appointment_id,
+            'sender_name' => $senderName,
+            'receiver_name' => $receiverName
         ];
     }
 
