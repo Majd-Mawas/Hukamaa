@@ -16,7 +16,8 @@ class ConfirmAppointmentRequest extends BaseRequest
         return [
             'start_time' => ['required', 'date_format:H:i'],
             'end_time' => ['required', 'date_format:H:i', 'after:start_time'],
-            'date' => ['required', 'date', 'after:today'],
+            // 'date' => ['required', 'date', 'after:today'],
+            'date' => ['required', 'date'],
         ];
     }
 
