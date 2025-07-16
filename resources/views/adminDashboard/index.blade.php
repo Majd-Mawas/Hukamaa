@@ -8,18 +8,9 @@
         function createChartTwo(chartId, color1, color2, paymentData) {
             var options = {
                 series: [{
-                        name: "series1",
-                        data: paymentData
-                        // data: [48, 35, 55, 32, 48, 30, 55, 50, 57]
-                    },
-                    // {
-                    //     name: "series2",
-                    //     data: [12, 20, 15, 26, 22, 60, 40, 48, 25]
-                    // }
-                ],
-                legend: {
-                    show: false
-                },
+                    name: "series1",
+                    data: paymentData
+                }, ],
                 chart: {
                     type: "area",
                     width: "100%",
@@ -27,11 +18,8 @@
                     toolbar: {
                         show: false
                     },
-                    padding: {
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0
+                    zoom: {
+                        enabled: true
                     }
                 },
                 dataLabels: {
@@ -41,61 +29,16 @@
                     curve: "smooth",
                     width: 3,
                     colors: [color1, color2], // Use two colors for the lines
-                    lineCap: "round"
-                },
-                grid: {
-                    show: true,
-                    borderColor: "#D1D5DB",
-                    strokeDashArray: 1,
-                    position: "back",
-                    xaxis: {
-                        lines: {
-                            show: false
-                        }
-                    },
-                    yaxis: {
-                        lines: {
-                            show: true
-                        }
-                    },
-                    row: {
-                        colors: undefined,
-                        opacity: 0.5
-                    },
-                    column: {
-                        colors: undefined,
-                        opacity: 0.5
-                    },
-                    padding: {
-                        top: -20,
-                        right: 0,
-                        bottom: -10,
-                        left: 0
-                    },
+                    // lineCap: "round"
                 },
                 fill: {
                     type: "gradient",
-                    colors: [color1, color2], // Use two colors for the gradient
-                    // gradient: {
-                    //     shade: "light",
-                    //     type: "vertical",
-                    //     shadeIntensity: 0.5,
-                    //     gradientToColors: [`${color1}`, `${color2}00`], // Bottom gradient colors with transparency
-                    //     inverseColors: false,
-                    //     opacityFrom: .6,
-                    //     opacityTo: 0.3,
-                    //     stops: [0, 100],
-                    // },
                     gradient: {
-                        shade: "light",
-                        type: "vertical",
-                        shadeIntensity: 0.5,
-                        gradientToColors: [undefined, `${color2}00`], // Apply transparency to both colors
-                        inverseColors: false,
-                        opacityFrom: [0.4, 0.6], // Starting opacity for both colors
-                        opacityTo: [0.3, 0.3], // Ending opacity for both colors
-                        stops: [0, 100],
-                    },
+                        shadeIntensity: 1,
+                        opacityFrom: 0.7,
+                        opacityTo: 0.9,
+                        stops: [0, 90, 100]
+                    }
                 },
                 markers: {
                     colors: [color1, color2], // Use two colors for the markers
@@ -123,24 +66,13 @@
                     }
                 },
                 yaxis: {
-                    show: true,
-                    floating: false,
                     labels: {
-                        rotate: 0,
-                        formatter: function(value) {
-                            return "$" + value + "k";
-                        },
-                        offsetX: 2000,
-                        style: {
-                            fontSize: "14px",
-                        },
-                    },
-                    // axisBorder: {
-                    //     show: true,
-                    //     offsetX: 40
-                    // },
-                    tickAmount: 6, // Control number of y-axis ticks
+                        formatter: function(val) {
+                            return "$" + val;
+                        }
+                    }
                 },
+
                 tooltip: {
                     x: {
                         format: "dd/MM/yy HH:mm"
@@ -155,15 +87,10 @@
         const paymentData = ' . json_encode($stats->monthlyPayments ?? []) . ';
         createChartTwo("enrollmentChart", "#487FFF", "#FF9F29", paymentData);
 
-        // ===================== Average Enrollment Rate End ===============================
-
         // ================================= Multiple Radial Bar Chart Start =============================
 
         const specialtySeries = ' . json_encode($stats->top_specialties['counts'] ?? []) . ';
         const specialtyLabels = ' . json_encode($stats->top_specialties['names'] ?? []) . ';
-
-        console.log("specialtySeries:", specialtySeries);
-        console.log("specialtyLabels:", specialtyLabels);
 
         var options = {
             series: specialtySeries,
@@ -195,43 +122,6 @@
             },
             labels: specialtyLabels,
         };
-
-        // var options = {
-        //     series: [80, 40, 10],
-        //     chart: {
-        //         height: 300,
-        //         type: "radialBar",
-        //     },
-        //     colors: ["#3D7FF9", "#ff9f29", "#16a34a"],
-        //     stroke: {
-        //         lineCap: "round",
-        //     },
-        //     plotOptions: {
-        //         radialBar: {
-        //             hollow: {
-        //                 size: "10%", // Adjust this value to control the bar width
-        //             },
-        //             dataLabels: {
-        //                 name: {
-        //                     fontSize: "16px",
-        //                 },
-        //                 value: {
-        //                     fontSize: "16px",
-        //                 },
-        //                 // total: {
-        //                 //     show: true,
-        //                 //     formatter: function (w) {
-        //                 //         return "82%"
-        //                 //     }
-        //                 // }
-        //             },
-        //             track: {
-        //                 margin: 20, // Space between the bars
-        //             }
-        //         }
-        //     },
-        //     labels: ["Cardiology", "Psychiatry", "Pediatrics"],
-        // };
 
         var chart = new ApexCharts(document.querySelector("#radialMultipleBar"), options);
         chart.render();
@@ -373,7 +263,8 @@
                                     @endphp
                                     <div class="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
                                         <div class="flex-1">
-                                            <h4 class="text-lg font-medium">{{ $stats->top_specialties['names'][$index] }}</h4>
+                                            <h4 class="text-lg font-medium">{{ $stats->top_specialties['names'][$index] }}
+                                            </h4>
                                         </div>
                                         <div class="flex items-center gap-2">
                                             <div class="w-16 text-right">
@@ -381,7 +272,9 @@
                                                     {{ $stats->top_specialties['percentages'][$index] }}%
                                                 </span>
                                             </div>
-                                            <div class="w-2 h-2 rounded-full {{ str_replace('text', 'bg', $colorClasses[$index]) }}"></div>
+                                            <div
+                                                class="w-2 h-2 rounded-full {{ str_replace('text', 'bg', $colorClasses[$index]) }}">
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach
