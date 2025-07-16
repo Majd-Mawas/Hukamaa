@@ -50,7 +50,7 @@
                                                             <img src="{{ $doctor->getFirstMediaUrl('profile_picture') }}"
                                                                 class="rounded-full h-full w-full object-cover me-2"
                                                                 alt="Profile Picture"
-                                                                style="min-width: 6rem; min-height: 6rem max-width: 6rem; max-height: 6rem">
+                                                                style="min-width: 6rem; min-height: 6rem; max-width: 6rem; max-height: 6rem;">
                                                         @endif
                                                     </div>
                                                     <div>
@@ -194,8 +194,7 @@
                                                                         class="text-lg font-medium text-gray-900 dark:text-white mb-3">
                                                                         Certificate {{ $loop->iteration }}
                                                                     </h6>
-                                                                    <a href="{{ $certificate->getUrl() }}"
-                                                                        target="_blank"
+                                                                    <a href="{{ $certificate->getUrl() }}" target="_blank"
                                                                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                                                         View Certificate
                                                                     </a>
