@@ -26,6 +26,7 @@ class UpdateProfileRequest extends FormRequest
             'chronic_conditions.*' => ['required', 'integer', 'exists:chronic_conditions,id'],
             'medical_history' => ['nullable', 'string'],
             'current_medications' => ['nullable', 'string'],
+            'phone_number' => ['nullable', 'string', 'max:20'],
         ];
     }
 }

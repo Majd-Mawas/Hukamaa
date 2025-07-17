@@ -47,6 +47,10 @@
                             <td class="text-break">{{ $doctor->consultation_fee }}</td>
                         </tr>
                         <tr>
+                            <th>Phone</th>
+                            <td class="text-break">{{ $doctor->phone_number }}</td>
+                        </tr>
+                        <tr>
                             <th>Coverage Areas</th>
                             <td class="text-break">
                                 @foreach ($doctor->coverageAreas as $area)

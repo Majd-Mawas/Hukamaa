@@ -13,11 +13,11 @@ class PatientOnboardingService
                 'user_id' => $userId
             ],
             [
-
                 'is_profile_complete' => false,
                 'medical_history' => $data['medical_history'],
                 'birth_date' => $data['birth_date'],
                 'gender' => $data['gender'],
+                'phone_number' => $data['phone_number'],
             ]
         );
 

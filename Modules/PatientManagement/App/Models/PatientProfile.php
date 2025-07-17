@@ -15,14 +15,7 @@ class PatientProfile extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    protected $fillable = [
-        'user_id',
-        'gender',
-        'birth_date',
-        'medical_history',
-        'current_medications',
-        'is_profile_complete'
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'birth_date' => 'date',

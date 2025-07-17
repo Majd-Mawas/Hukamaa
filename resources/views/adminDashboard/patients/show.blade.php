@@ -39,20 +39,8 @@
                                     class="ml-2 text-gray-900 dark:text-white">{{ $patient->birth_date ? $patient->birth_date->format('Y-m-d') : 'Not set' }}</span>
                             </div>
                             <div>
-                                <span class="text-gray-500 dark:text-gray-400">Profile Status:</span>
-                                <span class="ml-2">
-                                    @if ($patient->is_profile_complete)
-                                        <span
-                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                            Complete
-                                        </span>
-                                    @else
-                                        <span
-                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                            Incomplete
-                                        </span>
-                                    @endif
-                                </span>
+                                <span class="text-gray-500 dark:text-gray-400">Phone:</span>
+                                <span class="ml-2 text-gray-900 dark:text-white">{{ $patient->phone_number }}</span>
                             </div>
                             <div>
                                 <span class="text-gray-500 dark:text-gray-400">Allergies:</span>
