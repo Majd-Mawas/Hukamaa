@@ -22,7 +22,7 @@ class PatientProfileService
                 'gender' => $data['gender'],
                 'medical_history' => $data['medical_history'],
                 'current_medications' => $data['current_medications'],
-                'phone_number' => $data['phone_number'],
+                'phone_number' => $data['phone_number'] ?? null,
                 // 'allergies' => $data['allergies'] ?? null,
             ]
         );

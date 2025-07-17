@@ -17,7 +17,7 @@ class PatientOnboardingService
                 'medical_history' => $data['medical_history'],
                 'birth_date' => $data['birth_date'],
                 'gender' => $data['gender'],
-                'phone_number' => $data['phone_number'],
+                'phone_number' => $data['phone_number'] ?? null,
             ]
         );
 
