@@ -17,6 +17,7 @@ class PatientProfileResource extends ApiResource
             'medical_history' => $this->medical_history,
             'current_medications' => $this->current_medications,
             'is_profile_complete' => $this->is_profile_complete,
+            'phone_number' => $this->phone_number,
             'files' => $this->whenLoaded('media', function () {
                 return $this->getMedia('patient_files')->map(function ($media) {
                     return [
