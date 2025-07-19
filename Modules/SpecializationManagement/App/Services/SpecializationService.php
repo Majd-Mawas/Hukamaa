@@ -12,7 +12,7 @@ class SpecializationService
      */
     public function index()
     {
-        return Specialization::all();
+        return Specialization::paginate(20);
     }
 
     /**

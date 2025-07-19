@@ -14,8 +14,8 @@ class DocumentsRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'practice_licenses' => ['nullable', 'array'],
-            'practice_licenses.*' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
+            'practice_license' => ['nullable', 'array'],
+            'practice_license.*' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
             'medical_certificates' => ['nullable', 'array'],
             'medical_certificates.*' => ['file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
             'expertise_focus' => ['nullable', 'string'],
