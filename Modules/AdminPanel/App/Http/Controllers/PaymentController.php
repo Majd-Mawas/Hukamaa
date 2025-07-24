@@ -42,11 +42,13 @@ class PaymentController extends Controller
 
         $template = $this->notification_template_builder->confirmedAppointment($user);
 
-        $user->notify(new SystemNotification(
-            $template['title'],
-            $template['message'],
-            $template['data']
-        ));
+        if (env('APP_NOTIFICATION')) {
+            $user->notify(new SystemNotification(
+                $template['title'],
+                $template['message'],
+                $template['data']
+            ));
+        }
 
         sendDataMessage($user->fcm_token, $template);
 

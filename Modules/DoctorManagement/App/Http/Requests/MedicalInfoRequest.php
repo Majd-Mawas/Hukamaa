@@ -17,7 +17,7 @@ class MedicalInfoRequest extends BaseRequest
         $rules = [
             'specialization_id' => ['required', 'exists:specializations,id'],
             'title' => ['nullable', 'string', 'in:Dr.,Prof.,Assoc. Prof.,Asst. Prof.'],
-            'experience_years' => ['required', 'integer', 'min:0', 'max:50'],
+            'experience_years' => ['required', 'integer', 'min:0', 'max:100'],
             'experience_description' => ['required', 'string'],
             'services' => ['required', 'array'],
             'services.*' => ['required', 'string', 'in:remote_video_consultation,home_visit'],

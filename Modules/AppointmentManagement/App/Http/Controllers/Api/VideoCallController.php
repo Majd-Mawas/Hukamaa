@@ -115,13 +115,15 @@ class VideoCallController extends Controller
             ]);
         }
 
-        $patient->notify(new SystemNotification(
-            title: 'مكالمة فيديو واردة',
-            message: 'طبيبك يتصل بك لموعدك.',
-            data: collect(['event' => 'call_invitation'])
-                ->merge($this->stringifyArray($videoCallData))
-                ->all()
-        ));
+        if (env('APP_NOTIFICATION')) {
+            $patient->notify(new SystemNotification(
+                title: 'مكالمة فيديو واردة',
+                message: 'طبيبك يتصل بك لموعدك.',
+                data: collect(['event' => 'call_invitation'])
+                    ->merge($this->stringifyArray($videoCallData))
+                    ->all()
+            ));
+        }
 
         return $this->successResponse(new VideoCallResource($videoCall));
     }

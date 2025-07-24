@@ -16,10 +16,14 @@ abstract class BaseRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         logger()->info($validator->errors());
+
+        $errorString = collect($validator->errors()->all())->implode(',\n ');
+
         throw new ValidationException($validator, response()->json([
             'success' => false,
             'message' => 'Validation failed',
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
+            'errors_string' => $errorString
         ], 422));
     }
 }

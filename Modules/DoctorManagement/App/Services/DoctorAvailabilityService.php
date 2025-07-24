@@ -28,9 +28,9 @@ class DoctorAvailabilityService
         }
 
         // Check if date is more than two weeks from now
-        if (Carbon::now()->diffInDays($parsedDate) > 14) {
-            return [];
-        }
+        // if (Carbon::now()->diffInDays($parsedDate) > 14) {
+        //     return [];
+        // }
 
         $dayOfWeek = strtolower($parsedDate->format('l'));
 

@@ -62,11 +62,13 @@ class DoctorOnboardingController extends Controller
 
         $template = $this->notification_template_builder->newDoctorSignup($doctor);
 
-        getAdminUser()->notify(new SystemNotification(
-            $template['title'],
-            $template['message'],
-            $template['data']
-        ));
+        if (env('APP_NOTIFICATION')) {
+            getAdminUser()->notify(new SystemNotification(
+                $template['title'],
+                $template['message'],
+                $template['data']
+            ));
+        }
 
         return $this->successResponse(
             new DoctorProfileResource($result->load('media', 'user', 'specialization')),

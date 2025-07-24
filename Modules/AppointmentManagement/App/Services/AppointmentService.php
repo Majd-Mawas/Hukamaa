@@ -58,11 +58,13 @@ class AppointmentService
 
             $template = $this->notification_template_builder->newPatientCase($user);
 
-            $user->notify(new SystemNotification(
-                $template['title'],
-                $template['message'],
-                $template['data']
-            ));
+            if (env('APP_NOTIFICATION')) {
+                $user->notify(new SystemNotification(
+                    $template['title'],
+                    $template['message'],
+                    $template['data']
+                ));
+            }
 
             // sendDataMessage($user->fcm_token, $template);
 
@@ -135,11 +137,13 @@ class AppointmentService
         }
         $template = $this->notification_template_builder->paymentNeedsApproval($appointment);
 
-        getAdminUser()->notify(new SystemNotification(
-            $template['title'],
-            $template['message'],
-            $template['data']
-        ));
+        if (env('APP_NOTIFICATION')) {
+            getAdminUser()->notify(new SystemNotification(
+                $template['title'],
+                $template['message'],
+                $template['data']
+            ));
+        }
 
         return $appointment->fresh();
     }
@@ -180,7 +184,9 @@ class AppointmentService
 
         $template = $this->notification_template_builder->appointmentDecision($appointment, $data['action']);
 
-        $user->notify(new SystemNotification($template['title'], $template['message'], $template['data']));
+        if (env('APP_NOTIFICATION')) {
+            $user->notify(new SystemNotification($template['title'], $template['message'], $template['data']));
+        }
 
         return $appointment->fresh();
     }

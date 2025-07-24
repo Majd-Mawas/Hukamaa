@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/privacy-policy', 'privacyPolicy')->name('privacy.policy');
+    Route::get('/privacy-policy-patient', 'privacyPolicyPatient')->name('privacy.policy.patient');
+    Route::get('/privacy-policy-doctor', 'privacyPolicyDoctor')->name('privacy.policy.doctor');
     Route::get('/', 'comingSoon')->name('comingSoon');
 });
 

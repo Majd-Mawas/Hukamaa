@@ -19,6 +19,26 @@ class HomeController extends Controller
         return view('privacy-policy');
     }
 
+    /**
+     * Show the privacy policy page.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function privacyPolicyPatient()
+    {
+        return view('privacy-policy-patient');
+    }
+
+    /**
+     * Show the privacy policy page.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function privacyPolicyDoctor()
+    {
+        return view('privacy-policy-doctor');
+    }
+
     public function comingSoon(): View|RedirectResponse
     {
         // if (Auth::check()) {

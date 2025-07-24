@@ -195,12 +195,13 @@ class DoctorController extends Controller
 
         $template = $this->notification_template_builder->approvedDoctorAccount($user);
 
-        $user->notify(new SystemNotification(
-            $template['title'],
-            $template['message'],
-            $template['data']
-        ));
-
+        if (env('APP_NOTIFICATION')) {
+            $user->notify(new SystemNotification(
+                $template['title'],
+                $template['message'],
+                $template['data']
+            ));
+        }
         sendDataMessage($user->fcm_token, $template);
 
         return redirect()->route('admin.doctors.doctorApprovals')->with('success', 'Doctor approved successfully.');
@@ -214,11 +215,13 @@ class DoctorController extends Controller
 
         $template = $this->notification_template_builder->rejectedDoctorAccount($user);
 
-        $user->notify(new SystemNotification(
-            $template['title'],
-            $template['message'],
-            $template['data']
-        ));
+        if (env('APP_NOTIFICATION')) {
+            $user->notify(new SystemNotification(
+                $template['title'],
+                $template['message'],
+                $template['data']
+            ));
+        }
 
         sendDataMessage($user->fcm_token, $template);
 
