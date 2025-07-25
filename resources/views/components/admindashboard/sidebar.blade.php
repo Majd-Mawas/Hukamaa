@@ -21,6 +21,14 @@
                     <span>Dashboard</span>
                 </a>
             </li>
+            <li class="sidebar-menu-group-title">User Management</li>
+            <li>
+                <a href="{{ route('admin.users.index') }}">
+                    <iconify-icon icon="solar:users-group-rounded-linear" class="menu-icon"></iconify-icon>
+                    <span>All Users</span>
+                </a>
+            </li>
+
             <li class="sidebar-menu-group-title">Doctors</li>
 
             <li>

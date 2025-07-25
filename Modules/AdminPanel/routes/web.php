@@ -34,6 +34,11 @@ Route::middleware(['auth'])->group(function () {
                     Route::post('/profile', 'updateProfile')->name('profile.update');
                 });
 
+                Route::prefix('users')->name('users.')->controller(UsersController::class)->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::delete('/{user}', 'destroy')->name('destroy');
+                });
+
                 Route::prefix('doctors')->name('doctors.')->group(function () {
                     Route::controller(DoctorController::class)->group(function () {
                         Route::get('/approvals', 'doctorApprovals')->name('doctorApprovals');
