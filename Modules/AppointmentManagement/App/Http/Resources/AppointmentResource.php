@@ -3,8 +3,8 @@
 namespace Modules\AppointmentManagement\App\Http\Resources;
 
 use App\Http\Resources\ApiResource;
+use App\Services\TimezoneService;
 use Illuminate\Http\Request;
-use Modules\DoctorManagement\App\Http\Resources\DoctorProfileResource;
 use Modules\PatientManagement\App\Http\Resources\PatientProfileResource;
 use Modules\UserManagement\App\Http\Resources\UserResource;
 
@@ -12,13 +12,22 @@ class AppointmentResource extends ApiResource
 {
     public function toArray(Request $request): array
     {
+        $timezoneService = app(TimezoneService::class);
+        $userTimezone = $timezoneService->getUserTimezone();
+        if ($this->start_time && $this->end_time) {
+            $timeRange = $this?->getTimeRangeInTimezone($userTimezone, $this->patient->timezone) ?? null;
+        }
+
         return [
             ...parent::toArray($request),
             'patient_id' => $this->patient_id,
             'doctor_id' => $this->doctor_id,
             'date' => $this->date?->format('Y-m-d'),
-            'start_time' => $this->start_time,
-            'end_time' => $this->end_time,
+
+            // Timezone-aware times
+            'start_time' => $timeRange['start_time'] ?? null,
+            'end_time' => $timeRange['end_time'] ?? null,
+
             'status' => $this->status ? trans('appointmentmanagement::appointments.status.' . $this->status->value) : null,
             'confirmed_by_doctor' => $this->confirmed_by_doctor,
             'confirmed_by_patient' => $this->confirmed_by_patient,

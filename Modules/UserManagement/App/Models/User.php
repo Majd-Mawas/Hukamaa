@@ -22,7 +22,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'role',
         'is_verified',
         'status',
-        'fcm_token'
+        'fcm_token',
+        'timezone'
     ];
 
     protected $hidden = [

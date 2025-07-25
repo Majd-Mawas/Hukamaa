@@ -21,6 +21,11 @@ class NotificationController extends Controller
                 'fcm_token' => request()->header('fcm-token')
             ]);
         }
+        if (request()->header('time-zone')) {
+            Auth::user()->update([
+                'time_zone' => request()->header('time-zone')
+            ]);
+        }
 
         return $this->successResponse(
             [

@@ -42,8 +42,8 @@
                     <div>
                         <p class="text-gray-600 dark:text-gray-400 mb-2">Time</p>
                         <p class="font-medium dark:text-white">
-                            {{ \Carbon\Carbon::parse($appointment->start_time)->format('h:i A') }} -
-                            {{ \Carbon\Carbon::parse($appointment->end_time)->format('h:i A') }}
+                            {{ \Carbon\Carbon::parse($appointment?->time_range['start_time'] ?? null)->format('h:i A') }} -
+                            {{ \Carbon\Carbon::parse($appointment?->time_range['end_time'] ?? null)->format('h:i A') }}
                         </p>
                     </div>
                     <div>

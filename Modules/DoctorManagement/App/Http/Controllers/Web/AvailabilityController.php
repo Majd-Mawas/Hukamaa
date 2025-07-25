@@ -17,7 +17,7 @@ class AvailabilityController extends Controller
 
     public function index()
     {
-        $availabilities = Auth::user()->doctorProfile->availabilities;
+        $availabilities = Auth::user()?->doctorProfile?->availabilities ?? null;
 
         return view('doctorDashboard.availabilities.index', compact('availabilities'));
     }

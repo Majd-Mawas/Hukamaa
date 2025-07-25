@@ -6,20 +6,25 @@ use Carbon\Carbon;
 use Modules\DoctorManagement\App\Models\Availability;
 use Modules\AppointmentManagement\App\Models\Appointment;
 use Modules\DoctorManagement\App\Models\DoctorProfile;
+use App\Services\TimezoneService;
 use InvalidArgumentException;
 
 class DoctorAvailabilityService
 {
     private int $defaultSlotDuration = 30; // in minutes
 
-    public function __construct(private ?int $slotDuration = null)
-    {
+    public function __construct(
+        private ?int $slotDuration = null,
+        private ?TimezoneService $timezoneService = null
+    ) {
         $this->slotDuration = $slotDuration ?? $this->defaultSlotDuration;
+        $this->timezoneService = $timezoneService ?? new TimezoneService();
     }
 
-    public function getAvailableSlots(int $doctorProfileId, string $date): array
+    public function getAvailableSlots(int $doctorProfileId, string $date, ?string $patientTimezone = null): array
     {
-        // Validate date format
+        $patientTimezone = $patientTimezone ?? $this->timezoneService->getUserTimezone();
+
         try {
             $parsedDate = Carbon::parse($date);
             $date = $parsedDate->format('Y-m-d');
@@ -27,14 +32,8 @@ class DoctorAvailabilityService
             throw new InvalidArgumentException('Invalid date format provided');
         }
 
-        // Check if date is more than two weeks from now
-        // if (Carbon::now()->diffInDays($parsedDate) > 14) {
-        //     return [];
-        // }
-
         $dayOfWeek = strtolower($parsedDate->format('l'));
 
-        // 1. Fetch doctor's weekly availability for that weekday
         $availabilities = Availability::where('doctor_id', $doctorProfileId)
             ->where('weekday', $dayOfWeek)
             ->get();
@@ -43,13 +42,14 @@ class DoctorAvailabilityService
             return [];
         }
 
-        // 2. Fetch doctor's user ID
         $doctorProfile = DoctorProfile::find($doctorProfileId);
         if (!$doctorProfile) {
             return [];
         }
 
-        // 3. Fetch appointments on that date with timezone consideration
+        // Get doctor's timezone
+        $doctorTimezone = $doctorProfile->user->timezone ?? 'UTC';
+
         $appointments = Appointment::where('doctor_id', $doctorProfile->user_id)
             ->whereDate('date', $date)
             ->get()
@@ -60,25 +60,37 @@ class DoctorAvailabilityService
                 ];
             });
 
-        // 4. Generate slots and remove conflicts
         $slots = [];
 
         foreach ($availabilities as $availability) {
-            $start = Carbon::parse($availability->start_time);
-            $end = Carbon::parse($availability->end_time);
+            // Parse availability times in doctor's timezone
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $date . ' ' . $availability->start_time, $doctorTimezone);
+            $end = Carbon::createFromFormat('Y-m-d H:i:s', $date . ' ' . $availability->end_time, $doctorTimezone);
 
             while ($start->copy()->addMinutes($this->slotDuration)->lte($end)) {
                 $slotStart = $start->copy();
                 $slotEnd = $start->copy()->addMinutes($this->slotDuration);
 
-                $conflict = $appointments->contains(function ($range) use ($slotStart, $slotEnd) {
-                    return $slotStart->lt($range['end']) && $slotEnd->gt($range['start']);
+                // Convert to UTC for conflict checking
+                $slotStartUtc = $slotStart->copy()->utc();
+                $slotEndUtc = $slotEnd->copy()->utc();
+
+                $conflict = $appointments->contains(function ($range) use ($slotStartUtc, $slotEndUtc) {
+                    return $slotStartUtc->lt($range['end']) && $slotEndUtc->gt($range['start']);
                 });
 
                 if (!$conflict) {
+                    // Convert to patient's timezone for display
+                    $patientStartTime = $slotStart->copy()->setTimezone($patientTimezone);
+                    $patientEndTime = $slotEnd->copy()->setTimezone($patientTimezone);
+
                     $slots[] = [
-                        'start_time' => $slotStart->format('H:i'),
-                        'end_time' => $slotEnd->format('H:i'),
+                        'start_time' => $patientStartTime->format('H:i'),
+                        'end_time' => $patientEndTime->format('H:i'),
+                        // 'start_time_utc' => $slotStartUtc->format('H:i'), // Keep UTC for backend processing
+                        // 'end_time_utc' => $slotEndUtc->format('H:i'),
+                        // 'timezone' => $patientTimezone,
+                        // 'formatted_time' => $patientStartTime->format('h:i A') . ' - ' . $patientEndTime->format('h:i A')
                     ];
                 }
 
@@ -89,13 +101,89 @@ class DoctorAvailabilityService
         return $slots;
     }
 
-    public function isSlotAvailable(int $doctorProfileId, string $date, string $startTime, string $endTime): bool
+    public function isSlotAvailable(int $doctorProfileId, string $date, string $startTime, string $endTime, ?string $patientTimezone = null): bool
     {
-        $availableSlots = $this->getAvailableSlots($doctorProfileId, $date);
+        $patientTimezone = $patientTimezone ?? $this->timezoneService->getUserTimezone();
+
+        // Convert patient's time to UTC for comparison
+        $utcStartTime = $this->timezoneService->convertToUtc($startTime, $patientTimezone, $date);
+        $utcEndTime = $this->timezoneService->convertToUtc($endTime, $patientTimezone, $date);
+
+        $availableSlots = $this->getAvailableSlotsInUtc($doctorProfileId, $date);
 
         return in_array([
-            'start_time' => Carbon::parse($startTime)->format('H:i'),
-            'end_time' => Carbon::parse($endTime)->format('H:i')
+            'start_time' => Carbon::parse($utcStartTime)->format('H:i'),
+            'end_time' => Carbon::parse($utcEndTime)->format('H:i')
         ], $availableSlots);
+    }
+
+    private function getAvailableSlotsInUtc(int $doctorProfileId, string $date): array
+    {
+        try {
+            $parsedDate = Carbon::parse($date);
+            $date = $parsedDate->format('Y-m-d');
+        } catch (\Exception $e) {
+            throw new InvalidArgumentException('Invalid date format provided');
+        }
+
+        $dayOfWeek = strtolower($parsedDate->format('l'));
+
+        $availabilities = Availability::where('doctor_id', $doctorProfileId)
+            ->where('weekday', $dayOfWeek)
+            ->get();
+
+        if ($availabilities->isEmpty()) {
+            return [];
+        }
+
+        $doctorProfile = DoctorProfile::find($doctorProfileId);
+        if (!$doctorProfile) {
+            return [];
+        }
+
+        // Get doctor's timezone
+        $doctorTimezone = $doctorProfile->user->timezone ?? 'UTC';
+
+        $appointments = Appointment::where('doctor_id', $doctorProfile->user_id)
+            ->whereDate('date', $date)
+            ->get()
+            ->map(function ($appointment) {
+                return [
+                    'start' => Carbon::parse($appointment->start_time),
+                    'end' => Carbon::parse($appointment->end_time),
+                ];
+            });
+
+        $slots = [];
+
+        foreach ($availabilities as $availability) {
+            // Parse availability times in doctor's timezone
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $date . ' ' . $availability->start_time, $doctorTimezone);
+            $end = Carbon::createFromFormat('Y-m-d H:i:s', $date . ' ' . $availability->end_time, $doctorTimezone);
+
+            while ($start->copy()->addMinutes($this->slotDuration)->lte($end)) {
+                $slotStart = $start->copy();
+                $slotEnd = $start->copy()->addMinutes($this->slotDuration);
+
+                // Convert to UTC for conflict checking
+                $slotStartUtc = $slotStart->copy()->utc();
+                $slotEndUtc = $slotEnd->copy()->utc();
+
+                $conflict = $appointments->contains(function ($range) use ($slotStartUtc, $slotEndUtc) {
+                    return $slotStartUtc->lt($range['end']) && $slotEndUtc->gt($range['start']);
+                });
+
+                if (!$conflict) {
+                    $slots[] = [
+                        'start_time' => $slotStartUtc->format('H:i'),
+                        'end_time' => $slotEndUtc->format('H:i'),
+                    ];
+                }
+
+                $start->addMinutes($this->slotDuration);
+            }
+        }
+
+        return $slots;
     }
 }

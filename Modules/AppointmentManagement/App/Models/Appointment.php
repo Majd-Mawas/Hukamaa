@@ -2,6 +2,7 @@
 
 namespace Modules\AppointmentManagement\App\Models;
 
+use App\Traits\HasTimezoneAwareTimes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,7 +14,7 @@ use Modules\PatientManagement\App\Models\ChatMessage;
 
 class Appointment extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory, SoftDeletes, InteractsWithMedia, HasTimezoneAwareTimes;
 
     protected $guarded = [];
 
@@ -58,8 +59,19 @@ class Appointment extends Model implements HasMedia
     {
         return $this->hasOne(AppointmentReport::class);
     }
+
     public function chatMessages()
     {
         return $this->hasMany(ChatMessage::class);
+    }
+
+    public function getPatientTimezone(): string
+    {
+        return $this->patient?->timezone ?? 'UTC';
+    }
+
+    public function getDoctorTimezone(): string
+    {
+        return $this->doctor?->timezone ?? 'UTC';
     }
 }

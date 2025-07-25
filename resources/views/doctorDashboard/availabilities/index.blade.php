@@ -3,9 +3,8 @@
 @php
     $title = 'Availabilities Management';
     $subTitle = 'A list of all Availabilities in the system';
-    $version = '1.0.3';
     $script = '<script src="' . asset('assets/js/data-table.js') . '"></script>
-    <script src="' . asset(" assets/js/availability.js") . '?v=' . $version . '"></script>';
+    <script src="' . asset('assets/js/availability.js') .'"></script>';
 @endphp
 
 @section('content')
@@ -35,12 +34,13 @@
                             <tbody>
                                 @foreach (\Modules\DoctorManagement\App\Enums\Weekday::cases() as $weekday)
                                     @php
-                                        $dayAvailabilities = $availabilities->where('weekday', $weekday->value);
+                                        $dayAvailabilities =
+                                            $availabilities?->where('weekday', $weekday->value) ?? null;
                                     @endphp
                                     <tr data-weekday="{{ $weekday->value }}">
                                         <td>{{ $weekday->label() }}</td>
                                         <td class="time-slots">
-                                            @if ($dayAvailabilities->count() > 0)
+                                            @if ($dayAvailabilities?->count() > 0)
                                                 <div class="flex flex-col gap-2">
                                                     @foreach ($dayAvailabilities as $availability)
                                                         <div class="time-slot-item flex items-center gap-2"

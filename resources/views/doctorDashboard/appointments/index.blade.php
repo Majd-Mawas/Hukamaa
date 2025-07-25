@@ -53,9 +53,12 @@
                                             {{ $appointment->patient->name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                             {{ $appointment->date->format('M d, Y') }}</td>
+                                        {{-- @dd($appointment->time_range['start_time_doctor']) --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                                            {{ \Carbon\Carbon::parse($appointment->start_time)->format('h:i A') }} -
-                                            {{ \Carbon\Carbon::parse($appointment->end_time)->format('h:i A') }}</td>
+                                            {{ \Carbon\Carbon::parse($appointment?->time_range['start_time'] ?? null)->format('h:i A') }}
+                                            -
+                                            {{ \Carbon\Carbon::parse($appointment?->time_range['end_time'] ?? null)->format('h:i A') }}
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span
                                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full

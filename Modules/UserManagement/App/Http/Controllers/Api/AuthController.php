@@ -89,6 +89,12 @@ class AuthController extends Controller
             ]);
         }
 
+        if (request()->header('time-zone')) {
+            Auth::user()->update([
+                'time_zone' => request()->header('time-zone')
+            ]);
+        }
+
         return $this->successResponse(
             [
                 'user' => new UserResource($user->load('patientProfile', 'doctorProfile')),
@@ -128,6 +134,12 @@ class AuthController extends Controller
         if (request()->header('fcm-token')) {
             $user->update([
                 'fcm_token' => request()->header('fcm-token')
+            ]);
+        }
+
+        if (request()->header('time-zone')) {
+            Auth::user()->update([
+                'time_zone' => request()->header('time-zone')
             ]);
         }
 
