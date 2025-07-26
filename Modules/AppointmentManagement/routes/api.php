@@ -10,13 +10,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ->name('appointments.')
         ->group(function () {
 
-            Route::apiResource('/', AppointmentController::class);
-            Route::post('/{appointment}/cancel', [AppointmentController::class, 'cancel']);
+            Route::post('/', [AppointmentController::class, 'confirmDateTime'])->name('store');
+            // Route::post('/datetime', [AppointmentController::class, 'confirmDateTime']);
             Route::get('/available-slots', [AppointmentController::class, 'getAvailableSlots']);
             Route::get('/upcoming', [AppointmentController::class, 'getUpcomingAppointments']);
             Route::get('/done', [AppointmentController::class, 'getDoneAppointments']);
+            Route::post('/{appointment}', [AppointmentController::class, 'update'])->name('update');
+            Route::post('/{appointment}/cancel', [AppointmentController::class, 'cancel']);
             Route::prefix('/{appointment}/confirm')->group(function () {
-                Route::post('datetime', [AppointmentController::class, 'confirmDateTime']);
                 Route::post('payment', [AppointmentController::class, 'confirmPayment']);
             });
             Route::prefix('doctor')

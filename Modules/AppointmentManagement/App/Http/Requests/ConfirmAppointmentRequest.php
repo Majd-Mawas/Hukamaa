@@ -18,6 +18,7 @@ class ConfirmAppointmentRequest extends BaseRequest
             'end_time' => ['required', 'date_format:H:i', 'after:start_time'],
             // 'date' => ['required', 'date', 'after:today'],
             'date' => ['required', 'date'],
+            'doctor_id' => ['required', 'exists:doctor_profiles,id'],
         ];
     }
 

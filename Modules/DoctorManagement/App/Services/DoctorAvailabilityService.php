@@ -59,7 +59,6 @@ class DoctorAvailabilityService
                     'end' => Carbon::parse($appointment->end_time),
                 ];
             });
-
         $slots = [];
 
         foreach ($availabilities as $availability) {
@@ -71,12 +70,10 @@ class DoctorAvailabilityService
                 $slotStart = $start->copy();
                 $slotEnd = $start->copy()->addMinutes($this->slotDuration);
 
-                // Convert to UTC for conflict checking
-                $slotStartUtc = $slotStart->copy()->utc();
-                $slotEndUtc = $slotEnd->copy()->utc();
-
-                $conflict = $appointments->contains(function ($range) use ($slotStartUtc, $slotEndUtc) {
-                    return $slotStartUtc->lt($range['end']) && $slotEndUtc->gt($range['start']);
+                $conflict = $appointments->contains(function ($range) use ($slotStart, $slotEnd, $date) {
+                    $rangeStart = Carbon::parse($range['start'])->setDateFrom(Carbon::parse($date));
+                    $rangeEnd = Carbon::parse($range['end'])->setDateFrom(Carbon::parse($date));
+                    return $slotStart->lt($rangeEnd) && $slotEnd->gt($rangeStart);
                 });
 
                 if (!$conflict) {
@@ -105,15 +102,11 @@ class DoctorAvailabilityService
     {
         $patientTimezone = $patientTimezone ?? $this->timezoneService->getUserTimezone();
 
-        // Convert patient's time to UTC for comparison
-        $utcStartTime = $this->timezoneService->convertToUtc($startTime, $patientTimezone, $date);
-        $utcEndTime = $this->timezoneService->convertToUtc($endTime, $patientTimezone, $date);
-
-        $availableSlots = $this->getAvailableSlotsInUtc($doctorProfileId, $date);
+        $availableSlots = $this->getAvailableSlots($doctorProfileId, $date);
 
         return in_array([
-            'start_time' => Carbon::parse($utcStartTime)->format('H:i'),
-            'end_time' => Carbon::parse($utcEndTime)->format('H:i')
+            'start_time' => Carbon::parse($startTime)->format('H:i'),
+            'end_time' => Carbon::parse($endTime)->format('H:i')
         ], $availableSlots);
     }
 

@@ -18,8 +18,10 @@ use Modules\AppointmentManagement\App\Http\Resources\AppointmentResource;
 use Modules\AppointmentManagement\App\Models\Appointment;
 use Modules\AppointmentManagement\App\Services\AppointmentService;
 use Modules\AppointmentManagement\App\Http\Requests\DoctorDecideAppointmentRequest;
+use Modules\AppointmentManagement\App\Http\Requests\UpdateAppointmentRequest;
 use Modules\DoctorManagement\App\Services\AvailabilityService;
 use Modules\DoctorManagement\App\Services\DoctorAvailabilityService;
+use Illuminate\Validation\ValidationException;
 
 class AppointmentController extends Controller
 {
@@ -60,7 +62,7 @@ class AppointmentController extends Controller
         );
     }
 
-    public function update(AppointmentRequest $request, Appointment $appointment): JsonResponse
+    public function update(UpdateAppointmentRequest $request, Appointment $appointment): JsonResponse
     {
         $updatedAppointment = $this->appointmentService->updateAppointment($appointment, $request->validated());
 
@@ -80,21 +82,41 @@ class AppointmentController extends Controller
         );
     }
 
-    public function confirmDateTime(ConfirmAppointmentRequest $request, Appointment $appointment): JsonResponse
+    public function confirmDateTime(ConfirmAppointmentRequest $request): JsonResponse
     {
-        $user = Auth::user();
-        $timeSlots = null;
+        try {
+            $timeSlots = $request->only(['start_time', 'end_time', 'date', 'doctor_id']);
 
-        // if ($user->role === 'doctor') {
-        // }
-        $timeSlots = $request->only(['start_time', 'end_time', 'date']);
+            if (!$this->doctorAvailabilityService->isSlotAvailable(
+                $timeSlots['doctor_id'],
+                $timeSlots['date'],
+                $timeSlots['start_time'],
+                $timeSlots['end_time']
+            )) {
+                throw ValidationException::withMessages([
+                    'schedule' => ['Selected time slot is not available.']
+                ]);
+            }
+            $appointment = $this->appointmentService->createAppointmentDateTime($timeSlots);
 
-        $updatedAppointment = $this->appointmentService->confirmAppointmentDateTime($appointment, $timeSlots);
+            if (!$appointment) {
+                return $this->errorResponse(
+                    __('appointmentmanagement::appointments.messages.appointment_not_found'),
+                    404
+                );
+            }
 
-        return $this->successResponse(
-            new AppointmentResource($updatedAppointment),
-            __('appointmentmanagement::appointments.messages.appointment_confirmed')
-        );
+            return $this->successResponse(
+                new AppointmentResource($appointment),
+                __('appointmentmanagement::appointments.messages.appointment_confirmed')
+            );
+        } catch (\Exception $e) {
+            logger()->info($e);
+            return $this->errorResponse(
+                $e->getMessage(),
+                500
+            );
+        }
     }
 
     public function confirmPayment(ConfirmPaymentRequest $request, Appointment $appointment): JsonResponse

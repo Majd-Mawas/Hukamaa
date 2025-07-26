@@ -85,8 +85,26 @@ class AppointmentService
 
     public function updateAppointment(Appointment $appointment, array $data): Appointment
     {
-        $appointment->update($data);
-        return $appointment->fresh();
+        DB::beginTransaction();
+        try {
+            $appointment->update([
+                'condition_description' => $data['condition_description'],
+                'service' => $data['service'],
+            ]);
+
+            if (isset($data['files'])) {
+                foreach ($data['files'] as $file) {
+                    $appointment->addMedia($file)
+                        ->toMediaCollection('appointment_files');
+                }
+            }
+
+            DB::commit();
+            return $appointment->fresh(['patient', 'doctor']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 
     public function deleteAppointment(Appointment $appointment): bool
@@ -94,18 +112,34 @@ class AppointmentService
         return $appointment->delete();
     }
 
-    public function confirmAppointmentDateTime(Appointment $appointment, ?array $timeSlots = null): Appointment
+    public function createAppointmentDateTime(array $timeSlots): Appointment
     {
-        $updates = [];
+        $appointmentTimes = [];
+        $doctorProfile = DoctorProfile::where('id', $timeSlots['doctor_id'])->firstOrFail();
 
         if ($timeSlots) {
-            $updates['start_time'] = Carbon::parse($timeSlots['start_time']);
-            $updates['end_time'] = $timeSlots['end_time'] ?? Carbon::parse($timeSlots['start_time'])->addHours(1);
-            $updates['date'] = Carbon::parse($timeSlots['date']);
+            $appointmentTimes['start_time'] = Carbon::parse($timeSlots['start_time']);
+            $appointmentTimes['end_time'] = $timeSlots['end_time'] ?? Carbon::parse($timeSlots['start_time'])->addMinutes(30);
+            $appointmentTimes['date'] = Carbon::parse($timeSlots['date']);
+
+            // Create new appointment
+            $appointment = Appointment::create([
+                'patient_id' => Auth::id(),
+                'doctor_id' => $doctorProfile->user_id,
+                'date' => $appointmentTimes['date'],
+                'start_time' => $appointmentTimes['start_time'],
+                'end_time' => $appointmentTimes['end_time'],
+                'status' => AppointmentStatus::PENDING,
+                'confirmed_by_doctor' => false,
+                'confirmed_by_patient' => true
+            ]);
+            logger()->info($appointment);
+            return $appointment->fresh(['patient', 'doctor']);
         }
 
-        $appointment->update($updates);
-        return $appointment->fresh();
+        throw ValidationException::withMessages([
+            'schedule' => ['Time slots are required.']
+        ]);
     }
 
     public function confirmPayment(Appointment $appointment, array $data): Appointment

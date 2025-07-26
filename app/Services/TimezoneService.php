@@ -14,44 +14,30 @@ class TimezoneService
     {
         $userTimezone = $userTimezone ?? $this->getUserTimezone();
 
-        // If no date provided, use today's date for proper timezone conversion
         $date = $date ?? now()->format('Y-m-d');
 
         try {
-            // Create a Carbon instance with the date and time in UTC
             $carbonTime = Carbon::createFromFormat('Y-m-d H:i:s', $date . ' ' . $time, $patientTimezone);
 
-            // Convert to user's timezone
             return $carbonTime->setTimezone($userTimezone)->format('H:i:s');
         } catch (\Exception $e) {
-            // Fallback: return original time if conversion fails
             return $time;
         }
     }
 
-    /**
-     * Convert time from user's timezone to UTC
-     */
     public function convertToUtc(string $time, ?string $userTimezone = null, ?string $date = null): string
     {
         $userTimezone = $userTimezone ?? $this->getUserTimezone();
         $date = $date ?? now()->format('Y-m-d');
 
         try {
-            // Create a Carbon instance with the date and time in user's timezone
             $carbonTime = Carbon::createFromFormat('Y-m-d H:i:s', $date . ' ' . $time, $userTimezone);
-
-            // Convert to UTC
             return $carbonTime->utc()->format('H:i:s');
         } catch (\Exception $e) {
-            // Fallback: return original time if conversion fails
             return $time;
         }
     }
 
-    /**
-     * Convert datetime to user's timezone
-     */
     public function convertDateTimeToUserTimezone(string $datetime, ?string $userTimezone = null): Carbon
     {
         $userTimezone = $userTimezone ?? $this->getUserTimezone();
@@ -63,9 +49,6 @@ class TimezoneService
         }
     }
 
-    /**
-     * Get the authenticated user's timezone
-     */
     public function getUserTimezone(): string
     {
         $user = Auth::user();
@@ -74,13 +57,9 @@ class TimezoneService
             return $user->timezone;
         }
 
-        // Default to UTC if no user timezone is set
         return 'UTC';
     }
 
-    /**
-     * Get timezone for a specific user
-     */
     public function getUserTimezoneById(int $userId): string
     {
         $user = \Modules\UserManagement\App\Models\User::find($userId);
@@ -92,9 +71,6 @@ class TimezoneService
         return 'UTC';
     }
 
-    /**
-     * Format appointment time range for display
-     */
     public function formatAppointmentTimeRange(string $startTime, string $endTime, ?string $userTimezone = null, ?string $patientTimezone = null, ?string $date = null): array
     {
         $userTimezone = $userTimezone ?? $this->getUserTimezone();
@@ -107,9 +83,6 @@ class TimezoneService
         ];
     }
 
-    /**
-     * Get formatted time range string
-     */
     private function getFormattedTimeRange(string $startTime, string $endTime, string $userTimezone, ?string $date = null): string
     {
         $date = $date ?? now()->format('Y-m-d');
@@ -126,9 +99,6 @@ class TimezoneService
         }
     }
 
-    /**
-     * Check if timezone is valid
-     */
     public function isValidTimezone(string $timezone): bool
     {
         try {
@@ -139,9 +109,6 @@ class TimezoneService
         }
     }
 
-    /**
-     * Get list of common timezones
-     */
     public function getCommonTimezones(): array
     {
         return [
@@ -163,21 +130,15 @@ class TimezoneService
         ];
     }
 
-    /**
-     * Convert time from one timezone to another
-     */
     public function convertTimeBetweenTimezones(string $time, string $fromTimezone, string $toTimezone, ?string $date = null): string
     {
         $date = $date ?? now()->format('Y-m-d');
 
         try {
-            // Create a Carbon instance with the date and time in the source timezone
             $carbonTime = Carbon::createFromFormat('Y-m-d H:i:s', $date . ' ' . $time, $fromTimezone);
 
-            // Convert to target timezone
             return $carbonTime->setTimezone($toTimezone)->format('H:i:s');
         } catch (\Exception $e) {
-            // Fallback: return original time if conversion fails
             return $time;
         }
     }
