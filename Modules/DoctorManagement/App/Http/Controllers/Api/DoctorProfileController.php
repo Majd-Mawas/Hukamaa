@@ -133,6 +133,8 @@ class DoctorProfileController extends Controller
             'phone_number' => $data['phone_number'],
             'address' => $data['address'],
             'services' => $data['services'],
+            'experience_description' => $data['experience_description'],
+            'experience_years' => $data['experience_years'],
         ]);
 
         if (isset($data['profile_picture'])) {
