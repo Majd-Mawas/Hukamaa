@@ -91,7 +91,7 @@ class AuthController extends Controller
 
         if (request()->header('time-zone')) {
             Auth::user()->update([
-                'time_zone' => request()->header('time-zone')
+                'timezone' => request()->header('time-zone')
             ]);
         }
 
@@ -139,7 +139,7 @@ class AuthController extends Controller
 
         if (request()->header('time-zone')) {
             Auth::user()->update([
-                'time_zone' => request()->header('time-zone')
+                'timezone' => request()->header('time-zone')
             ]);
         }
 
