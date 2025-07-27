@@ -119,6 +119,29 @@
             </div>
         </div>
 
+        <!-- Appointment Report (if available) -->
+        @if ($appointment->appointmentReport)
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden mb-6">
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold mb-4 dark:text-white">Appointment Report</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-400 mb-2">Diagnosis</p>
+                            <p class="font-medium dark:text-white">{{ $appointment->appointmentReport->diagnosis }}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-400 mb-2">Prescription</p>
+                            <p class="font-medium dark:text-white">{{ $appointment->appointmentReport->prescription }}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-400 mb-2">Additional Notes</p>
+                            <p class="font-medium dark:text-white">
+                                {{ $appointment->appointmentReport->additional_notes ?? 'No additional notes.' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
         <!-- Appointment Files -->
         @if ($appointment->getMedia('appointment_files')->count() > 0)
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden mb-6">
@@ -207,30 +230,6 @@
                                 </svg>
                                 Download Invoice
                             </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
-
-        <!-- Appointment Report (if available) -->
-        @if ($appointment->appointmentReport)
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden mb-6">
-                <div class="p-6">
-                    <h2 class="text-xl font-semibold mb-4 dark:text-white">Appointment Report</h2>
-                    <div class="space-y-4">
-                        <div>
-                            <p class="text-gray-600 dark:text-gray-400 mb-2">Diagnosis</p>
-                            <p class="font-medium dark:text-white">{{ $appointment->appointmentReport->diagnosis }}</p>
-                        </div>
-                        <div>
-                            <p class="text-gray-600 dark:text-gray-400 mb-2">Prescription</p>
-                            <p class="font-medium dark:text-white">{{ $appointment->appointmentReport->prescription }}</p>
-                        </div>
-                        <div>
-                            <p class="text-gray-600 dark:text-gray-400 mb-2">Additional Notes</p>
-                            <p class="font-medium dark:text-white">
-                                {{ $appointment->appointmentReport->additional_notes ?? 'No additional notes.' }}</p>
                         </div>
                     </div>
                 </div>
