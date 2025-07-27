@@ -59,7 +59,8 @@
                                         <div>
                                             <h6 class="text-sm fw-semibold mb-1">
                                                 {{ $notification->data['title'] ?? 'Notification' }}</h6>
-                                            <p class="mb-0 text-sm line-clamp-1">{{ $notification->data['message'] }}
+                                            <p class="mb-0 text-sm line-clamp-1">
+                                                {{ $notification?->data['message'] ?? 'يوجد رسالة جديدة' }}
                                             </p>
                                         </div>
                                     </div>

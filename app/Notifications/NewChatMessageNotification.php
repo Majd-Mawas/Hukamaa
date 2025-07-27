@@ -21,11 +21,13 @@ class NewChatMessageNotification extends Notification
         $senderName = $this->message->sender->name;
         $receiverName = $this->message->receiver->name;
 
-        $title = 'رسالة جديدة';
+        $data['title'] = 'رسالة جديدة';
+        $data['message'] = 'يوجد رسالة جديدة';
 
         if ($notifiable->fcm_token) {
             sendDataMessage($notifiable->fcm_token, [
-                'title' => $title,
+                'title' => $data['title'],
+                'message' => $data['message'],
                 'body' => $this->message->message,
                 'appointment_id' => (string) $this->message->appointment_id,
                 'sender_name' => $senderName,
@@ -34,7 +36,8 @@ class NewChatMessageNotification extends Notification
         }
 
         return [
-            'title' => $title,
+            'title' => $data['title'],
+            'message' => $data['message'],
             'body' => $this->message->message,
             'appointment_id' => (string) $this->message->appointment_id,
             'sender_name' => $senderName,

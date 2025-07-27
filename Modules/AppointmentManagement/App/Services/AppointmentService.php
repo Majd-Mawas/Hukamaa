@@ -66,7 +66,7 @@ class AppointmentService
                 ));
             }
 
-            // sendDataMessage($user->fcm_token, $template);
+            sendDataMessage($user->fcm_token, $template);
 
             if (isset($data['files'])) {
                 foreach ($data['files'] as $file) {
