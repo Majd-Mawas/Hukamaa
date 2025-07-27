@@ -197,7 +197,7 @@
         @endif
 
         <!-- Payment Invoice -->
-        @if ($appointment->payment_invoice)
+        {{-- @if ($appointment->payment_invoice)
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden mb-6">
                 <div class="p-6">
                     <h2 class="text-xl font-semibold mb-4 dark:text-white">Payment Invoice</h2>
@@ -234,7 +234,7 @@
                     </div>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
         <!-- Update Status Form -->
         {{-- <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
