@@ -235,6 +235,7 @@ class AppointmentService
     public function getDoctorDoneAppointments(int $userId)
     {
         return Appointment::where('doctor_id', $userId)
+            ->with('appointmentReport')
             ->where('status', AppointmentStatus::COMPLETED)
             ->get();
     }
