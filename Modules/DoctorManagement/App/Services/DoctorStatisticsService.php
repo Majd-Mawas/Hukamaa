@@ -82,6 +82,9 @@ class DoctorStatisticsService
     {
         $currentMonth = now()->month;
         $dues = Payment::where('doctor_id', $doctorId)
+            ->whereHas('appointment', function ($query) {
+                $query->where('status', AppointmentStatus::COMPLETED);
+            })
             ->selectRaw('MONTH(created_at) as month, SUM(doctor_earning) as total')
             ->whereStatus(PaymentStatus::APPROVED->value)
             ->whereMonth('created_at', '>=', $currentMonth - 5)
