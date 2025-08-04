@@ -135,15 +135,32 @@ class DoctorProfileController extends Controller
             'services' => $data['services'],
             'experience_description' => $data['experience_description'] ?? $profile->experience_description,
             'experience_years' => $data['experience_years'] ?? $profile->experience_years,
+            'expertise_focus' => $data['expertise_focus'] ?? null,
         ]);
 
         if (isset($data['profile_picture'])) {
+            $profile->clearMediaCollection('profile_picture');
             $profile->addMedia($data['profile_picture'])
                 ->toMediaCollection('profile_picture');
         }
 
-        // Update coverage areas
         $profile->coverageAreas()->sync($data['coverage_areas']);
+
+        if (isset($data['practice_license'])) {
+            $profile->clearMediaCollection('practice_license');
+            foreach ($data['practice_license'] as $certificate) {
+                $profile->addMedia($certificate)
+                    ->toMediaCollection('practice_licenses');
+            }
+        }
+
+        if (isset($data['medical_certificates'])) {
+            $profile->clearMediaCollection('medical_certificates');
+            foreach ($data['medical_certificates'] as $certificate) {
+                $profile->addMedia($certificate)
+                    ->toMediaCollection('medical_certificates');
+            }
+        }
 
         return $this->successResponse(
             new DoctorProfileResource($profile->load('media', 'user', 'specialization', 'availabilities')),

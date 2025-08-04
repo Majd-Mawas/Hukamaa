@@ -8,6 +8,7 @@ use Modules\AppointmentManagement\App\Models\Appointment;
 use Modules\DoctorManagement\App\Models\DoctorProfile;
 use App\Services\TimezoneService;
 use InvalidArgumentException;
+use Modules\AppointmentManagement\App\Enums\AppointmentStatus;
 
 class DoctorAvailabilityService
 {
@@ -50,7 +51,13 @@ class DoctorAvailabilityService
         // Get doctor's timezone
         $doctorTimezone = $doctorProfile->user->timezone ?? 'UTC';
 
+        // Get current time in doctor's timezone
+        $now = Carbon::now()->setTimezone($doctorTimezone);
+        // Calculate minimum start time (3 hours from now)
+        $minStartTime = $now->copy()->addHours(3);
+
         $appointments = Appointment::where('doctor_id', $doctorProfile->user_id)
+            ->whereNotIn('status', [AppointmentStatus::PENDING->value, AppointmentStatus::CANCELLED->value])
             ->whereDate('date', $date)
             ->get()
             ->map(function ($appointment) {
@@ -69,6 +76,12 @@ class DoctorAvailabilityService
             while ($start->copy()->addMinutes($this->slotDuration)->lte($end)) {
                 $slotStart = $start->copy();
                 $slotEnd = $start->copy()->addMinutes($this->slotDuration);
+
+                // Skip slots that start less than 3 hours from now
+                if ($slotStart->lt($minStartTime) && $parsedDate->isToday()) {
+                    $start->addMinutes($this->slotDuration);
+                    continue;
+                }
 
                 $conflict = $appointments->contains(function ($range) use ($slotStart, $slotEnd, $date) {
                     $rangeStart = Carbon::parse($range['start'])->setDateFrom(Carbon::parse($date));
