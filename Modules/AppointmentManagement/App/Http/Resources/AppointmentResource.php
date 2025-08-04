@@ -61,9 +61,7 @@ class AppointmentResource extends ApiResource
                     'updated_at' => $this->appointmentReport->updated_at?->toISOString(),
                 ];
             }),
-            'files' => collect()
-                ->concat($this->getMedia('appointment_files'))
-                // ->concat([$this->getFirstMedia('payment_invoices')])
+            'files' => $this->getMedia('appointment_files')
                 ->filter()
                 ->map(function ($media) {
                     return [

@@ -38,6 +38,10 @@
                             <td class="text-break">{{ $doctor->birth_date->format('F d, Y') }}</td>
                         </tr>
                         <tr>
+                            <th>Gender</th>
+                            <td class="text-break">{{ ucfirst($doctor->gender) }}</td>
+                        </tr>
+                        <tr>
                             <th>Address</th>
                             <td class="text-break" style="max-width: 400px; word-wrap: break-word;">
                                 {{ $doctor->address }}</td>
