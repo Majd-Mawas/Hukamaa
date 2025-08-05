@@ -3,12 +3,18 @@
 namespace Modules\UserManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Services\NotificationTemplateBuilder;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
+    public function __construct(
+        public NotificationTemplateBuilder $notification_template_builder
+
+    ) {}
+
     use ApiResponse;
     public function index(Request $request)
     {
@@ -26,6 +32,9 @@ class NotificationController extends Controller
                 'timezone' => request()->header('time-zone')
             ]);
         }
+        $user = Auth::user();
+        $template = $this->notification_template_builder->newPatientCase($user);
+        sendDataMessage($user->fcm_token, $template);
 
         return $this->successResponse(
             [
