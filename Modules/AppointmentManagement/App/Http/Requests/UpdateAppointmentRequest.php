@@ -18,6 +18,8 @@ class UpdateAppointmentRequest extends BaseRequest
             'condition_description' => ['required', 'string', 'max:1000'],
             'files.*' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
             'service' => ['required', 'string', 'in:remote_video_consultation,home_visit'],
+            'home_visit_phone' => ['nullable', 'string', 'max:20'],
+            'home_visit_address' => ['nullable', 'string', 'max:1000'],
         ];
     }
 

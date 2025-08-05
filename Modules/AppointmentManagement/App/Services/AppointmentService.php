@@ -91,6 +91,8 @@ class AppointmentService
             $appointment->update([
                 'condition_description' => $data['condition_description'],
                 'service' => $data['service'],
+                'home_visit_address' => $data['home_visit_address'],
+                'home_visit_phone' => $data['home_visit_phone'],
             ]);
 
             if (isset($data['files'])) {
