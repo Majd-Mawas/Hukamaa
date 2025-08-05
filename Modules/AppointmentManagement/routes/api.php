@@ -27,6 +27,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
                     Route::get('/done', [AppointmentController::class, 'getDoctorDoneAppointments']);
                     Route::post('/{appointment}/decide', [AppointmentController::class, 'decideAppointment']);
                     Route::post('/{appointment}/report', [AppointmentController::class, 'submitReport']);
+                    Route::put('/{appointment}/report', [AppointmentController::class, 'updateReport']);
                 });
         });
 

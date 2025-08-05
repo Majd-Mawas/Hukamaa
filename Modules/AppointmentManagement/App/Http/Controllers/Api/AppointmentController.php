@@ -200,6 +200,29 @@ class AppointmentController extends Controller
         }
     }
 
+    public function updateReport(AppointmentReportRequest $request, Appointment $appointment): JsonResponse
+    {
+        try {
+            $report = $appointment->appointmentReport;
+
+            if (!$report) {
+                return $this->errorResponse(
+                    'No report found for this appointment. Please submit a report first.',
+                    404
+                );
+            }
+
+            $report->update($request->validated());
+
+            return $this->successResponse(
+                new AppointmentResource($appointment->load('appointmentReport')),
+                'Report Updated Successfully'
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
     public function decideAppointment(DoctorDecideAppointmentRequest $request, Appointment $appointment)
     {
         $appointment = $this->appointmentService->decideAppointment($appointment, $request->validated());
