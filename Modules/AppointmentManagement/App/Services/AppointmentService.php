@@ -136,7 +136,6 @@ class AppointmentService
                 'confirmed_by_doctor' => false,
                 'confirmed_by_patient' => true
             ]);
-            logger()->info($appointment);
             return $appointment->fresh(['patient', 'doctor']);
         }
 

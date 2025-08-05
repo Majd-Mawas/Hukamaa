@@ -32,9 +32,6 @@ class NotificationController extends Controller
                 'timezone' => request()->header('time-zone')
             ]);
         }
-        $user = Auth::user();
-        $template = $this->notification_template_builder->newPatientCase($user);
-        sendDataMessage($user->fcm_token, $template);
 
         return $this->successResponse(
             [
