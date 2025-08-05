@@ -220,6 +220,7 @@ class AppointmentService
 
         $template = $this->notification_template_builder->appointmentDecision($appointment, $data['action']);
 
+        sendDataMessage($user->fcm_token, $template);
         // if (env('APP_NOTIFICATION')) {
         $user->notify(new SystemNotification($template['title'], $template['message'], $template['data']));
         // }
