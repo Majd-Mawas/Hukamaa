@@ -24,7 +24,11 @@ class SystemNotification extends Notification
 
     public function via($notifiable): array
     {
-        return ['mail', 'database'];
+        if (env('APP_NOTIFICATION')) {
+            return ['database'];
+        } else {
+            return ['mail', 'database'];
+        }
     }
 
     public function toMail($notifiable): MailMessage
