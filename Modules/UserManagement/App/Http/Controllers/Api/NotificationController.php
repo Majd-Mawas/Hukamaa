@@ -19,7 +19,7 @@ class NotificationController extends Controller
     public function index(Request $request)
     {
         $notifications = Auth::user()->notifications()
-            ->latest()
+            ->orderBy('created_at', 'desc')
             ->paginate(15);
 
         if (request()->header('fcm-token')) {
