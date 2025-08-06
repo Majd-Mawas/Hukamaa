@@ -39,7 +39,7 @@ class PaymentController extends Controller
 
         $appointment = $payment->appointment;
         $user = $appointment->patient;
-        $user = $appointment->doctor;
+        // $user = $appointment->doctor;
 
         $template = $this->notification_template_builder->confirmedAppointment($user);
 
