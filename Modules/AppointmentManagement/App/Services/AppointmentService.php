@@ -88,6 +88,7 @@ class AppointmentService
     {
         DB::beginTransaction();
         try {
+
             $appointment->update([
                 'condition_description' => $data['condition_description'],
                 'service' => $data['service'],
@@ -101,6 +102,22 @@ class AppointmentService
                         ->toMediaCollection('appointment_files');
                 }
             }
+
+
+            $user = User::findOrFail($appointment->doctor_id);
+
+            $template = $this->notification_template_builder->newPatientCase($user);
+            sendDataMessage($user->fcm_token, $template);
+
+            // if (env('APP_NOTIFICATION')) {
+            $user->notify(new SystemNotification(
+                $template['title'],
+                $template['message'],
+                $template['data']
+            ));
+            // }
+
+            sendDataMessage($user->fcm_token, $template);
 
             DB::commit();
             return $appointment->fresh(['patient', 'doctor']);

@@ -39,15 +39,16 @@ class PaymentController extends Controller
 
         $appointment = $payment->appointment;
         $user = $appointment->patient;
+        $user = $appointment->doctor;
 
         $template = $this->notification_template_builder->confirmedAppointment($user);
 
         // if (env('APP_NOTIFICATION')) {
-            $user->notify(new SystemNotification(
-                $template['title'],
-                $template['message'],
-                $template['data']
-            ));
+        $user->notify(new SystemNotification(
+            $template['title'],
+            $template['message'],
+            $template['data']
+        ));
         // }
 
         sendDataMessage($user->fcm_token, $template);
