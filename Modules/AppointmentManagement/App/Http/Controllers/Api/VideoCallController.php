@@ -3,7 +3,6 @@
 namespace Modules\AppointmentManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Notifications\SystemNotification;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
@@ -16,6 +15,7 @@ use Modules\AppointmentManagement\App\Models\Appointment;
 use Modules\AppointmentManagement\App\Models\VideoCall;
 use Modules\AppointmentManagement\App\Services\VideoCallService;
 use Modules\AppointmentManagement\App\Services\ZegoTokenService;
+use Modules\UserManagement\App\Models\User;
 
 class VideoCallController extends Controller
 {

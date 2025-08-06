@@ -3,7 +3,6 @@
 namespace Modules\DoctorManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Notifications\SystemNotification;
 use App\Services\NotificationTemplateBuilder;
 use App\Traits\ApiResponse;

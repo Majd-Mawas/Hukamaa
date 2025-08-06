@@ -7,6 +7,7 @@ use App\Services\NotificationTemplateBuilder;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Modules\UserManagement\App\Models\User;
 
 class NotificationController extends Controller
 {
@@ -18,6 +19,7 @@ class NotificationController extends Controller
     use ApiResponse;
     public function index(Request $request)
     {
+        $user = User::findOrFail(Auth::id());
         $notifications = Auth::user()->notifications()
             ->orderBy('created_at', 'desc')
             ->paginate(15);

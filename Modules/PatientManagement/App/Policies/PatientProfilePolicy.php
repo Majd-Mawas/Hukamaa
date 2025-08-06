@@ -2,8 +2,8 @@
 
 namespace Modules\PatientManagement\App\Policies;
 
-use App\Models\User;
 use Modules\PatientManagement\App\Models\PatientProfile;
+use Modules\UserManagement\App\Models\User;
 
 class PatientProfilePolicy
 {
