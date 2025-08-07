@@ -22,11 +22,27 @@ class VideoCallService
     public function endVideoCall(Appointment $appointment): VideoCall
     {
         $videoCall = $appointment->videoCall;
-        $videoCall->update([
-            'ended_at' => now(),
-            'call_duration' => $videoCall->started_at->diffInSeconds(now()),
-            'status' => 'completed'
-        ]);
+
+        if (!$videoCall) {
+            $videoCall = VideoCall::create([
+                'appointment_id' => $appointment->id,
+                'status' => 'completed',
+                'started_at' => now(),
+                'ended_at' => now(),
+            ]);
+        } else {
+            $data = [
+                'ended_at' => now(),
+                'status' => 'completed'
+            ];
+            if ($videoCall->started_at) {
+                $data['call_duration'] = $videoCall->started_at->diffInSeconds(now());
+            } else {
+                $data['status'] = 'failed';
+            }
+
+            $videoCall->update($data);
+        }
 
         $appointment->update([
             'status' => AppointmentStatus::COMPLETED->value

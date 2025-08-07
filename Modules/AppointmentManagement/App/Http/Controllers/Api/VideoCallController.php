@@ -47,16 +47,6 @@ class VideoCallController extends Controller
         );
     }
 
-    public function end(Appointment $appointment): JsonResponse
-    {
-        $endedVideoCall = $this->videoCallService->endVideoCall($appointment);
-
-        return $this->successResponse(
-            new VideoCallResource($endedVideoCall),
-            'Video call session ended successfully'
-        );
-    }
-
     public function start(Appointment $appointment)
     {
         $user = Auth::user();
@@ -126,6 +116,16 @@ class VideoCallController extends Controller
         // }
 
         return $this->successResponse(new VideoCallResource($videoCall));
+    }
+
+    public function end(Appointment $appointment): JsonResponse
+    {
+        $endedVideoCall = $this->videoCallService->endVideoCall($appointment);
+
+        return $this->successResponse(
+            new VideoCallResource($endedVideoCall),
+            'Video call session ended successfully'
+        );
     }
 
     private function stringifyArray(array $array, string $prefix = '')
