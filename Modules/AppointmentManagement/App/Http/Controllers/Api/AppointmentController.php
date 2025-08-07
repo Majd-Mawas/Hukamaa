@@ -3,6 +3,8 @@
 namespace Modules\AppointmentManagement\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\SystemNotification;
+use App\Services\NotificationTemplateBuilder;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -191,6 +193,19 @@ class AppointmentController extends Controller
                 'status' => AppointmentStatus::COMPLETED->value
             ]);
 
+            $patient = $appointment->patient;
+            $template = app(NotificationTemplateBuilder::class)->appointmentReportAdded($appointment);
+
+            $patient->notify(new SystemNotification(
+                $template['title'],
+                $template['message'],
+                $template['data']
+            ));
+
+            if ($patient->fcm_token) {
+                sendDataMessage($patient->fcm_token, $template);
+            }
+
             return $this->successResponse(
                 new AppointmentResource($appointment->load('appointmentReport')),
                 'Report Submitted Successfully'
@@ -213,6 +228,19 @@ class AppointmentController extends Controller
             }
 
             $report->update($request->validated());
+
+            $patient = $appointment->patient;
+            $template = app(NotificationTemplateBuilder::class)->appointmentReportUpdated($appointment);
+
+            $patient->notify(new SystemNotification(
+                $template['title'],
+                $template['message'],
+                $template['data']
+            ));
+
+            if ($patient->fcm_token) {
+                sendDataMessage($patient->fcm_token, $template);
+            }
 
             return $this->successResponse(
                 new AppointmentResource($appointment->load('appointmentReport')),

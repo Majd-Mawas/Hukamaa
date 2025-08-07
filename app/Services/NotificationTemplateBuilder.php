@@ -67,6 +67,22 @@ class NotificationTemplateBuilder
         ];
     }
 
+    public static function paymentApprovedForDoctor($appointment): array
+    {
+        return [
+            'title' => 'تم تأكيد دفع الموعد',
+            'message' => implode("\n", [
+                'تم تأكيد دفع الموعد من قبل المريض.',
+                'يمكنك الآن متابعة الحالة والتواصل مع المريض.',
+                'شكراً لاستخدامك منصة حكماء.',
+            ]),
+            'data' => [
+                'appointment_id' => $appointment->id,
+                'event' => 'payment_approved'
+            ],
+        ];
+    }
+
     public static function appointmentDecision($appointment, string $decision): array
     {
         return $decision === 'accept'
@@ -95,6 +111,38 @@ class NotificationTemplateBuilder
             'title' => 'طبيب جديد سجل في النظام',
             'message' => "مرحباً، تم تسجيل طبيب جديد ({$doctor->name}) على المنصة ويحتاج إلى مراجعة طلبه.",
             'data' => ['doctor_id' => $doctor->id],
+        ];
+    }
+
+    public static function appointmentReportAdded($appointment): array
+    {
+        return [
+            'title' => 'تم إضافة تقرير الجلسة',
+            'message' => implode("\n", [
+                'تم إضافة تقرير الجلسة الخاص بك من قبل الطبيب.',
+                'يمكنك الآن الاطلاع على التشخيص والوصفة الطبية والإرشادات.',
+                'شكراً لاستخدامك منصة حكماء.',
+            ]),
+            'data' => [
+                'appointment_id' => $appointment->id,
+                'event' => 'appointment_report_added'
+            ],
+        ];
+    }
+
+    public static function appointmentReportUpdated($appointment): array
+    {
+        return [
+            'title' => 'تم تحديث تقرير الجلسة',
+            'message' => implode("\n", [
+                'تم تحديث تقرير الجلسة الخاص بك من قبل الطبيب.',
+                'يمكنك الآن الاطلاع على التشخيص والوصفة الطبية والإرشادات المحدثة.',
+                'شكراً لاستخدامك منصة حكماء.',
+            ]),
+            'data' => [
+                'appointment_id' => $appointment->id,
+                'event' => 'appointment_report_updated'
+            ],
         ];
     }
 }

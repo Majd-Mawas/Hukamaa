@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Carbon\Carbon;
-use App\Notifications\AppointmentReminderEmail;
 use App\Notifications\AppointmentReminderPush;
 use Modules\AppointmentManagement\App\Models\Appointment;
 
@@ -26,10 +25,10 @@ class SendAppointmentReminders extends Command
             });
 
         foreach ($appointments24h as $appointment) {
-            $appointment->doctor?->notify(new AppointmentReminderEmail($appointment));
-            $appointment->patient?->notify(new AppointmentReminderEmail($appointment));
+            $appointment->doctor?->notify(new AppointmentReminderPush($appointment, '24h'));
+            $appointment->patient?->notify(new AppointmentReminderPush($appointment, '24h'));
         }
-        
+
         $target20m = $now->copy()->addMinutes(20)->format('Y-m-d H:i');
         $appointments20m = Appointment::whereNotNull('start_time')
             ->get()

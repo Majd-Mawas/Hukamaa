@@ -3,6 +3,8 @@
 namespace Modules\DoctorManagement\App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\SystemNotification;
+use App\Services\NotificationTemplateBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\PaymentManagement\App\Models\Payment;
@@ -28,6 +30,35 @@ class PaymentController extends Controller
             'approved_by' => Auth::id(),
             'approved_at' => now()
         ]);
+
+        $appointment = $payment->appointment;
+        if ($appointment) {
+            $patient = $appointment->patient;
+            $patientTemplate = app(NotificationTemplateBuilder::class)->confirmedAppointment($appointment);
+
+            $patient->notify(new SystemNotification(
+                $patientTemplate['title'],
+                $patientTemplate['message'],
+                $patientTemplate['data']
+            ));
+
+            if ($patient->fcm_token) {
+                sendDataMessage($patient->fcm_token, $patientTemplate);
+            }
+
+            $doctor = $appointment->doctor;
+            $doctorTemplate = app(NotificationTemplateBuilder::class)->paymentApprovedForDoctor($appointment);
+
+            $doctor->notify(new SystemNotification(
+                $doctorTemplate['title'],
+                $doctorTemplate['message'],
+                $doctorTemplate['data']
+            ));
+
+            if ($doctor->fcm_token) {
+                sendDataMessage($doctor->fcm_token, $doctorTemplate);
+            }
+        }
 
         return back()->with('success', 'Payment approved successfully.');
     }

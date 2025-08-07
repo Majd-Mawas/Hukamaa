@@ -2,26 +2,35 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Messages\BroadcastMessage;
-use App\Services\FirebaseService; // assume you have a service
 
 class AppointmentReminderPush extends Notification
 {
-    public function __construct(public $appointment) {}
+    protected $reminderType;
+
+    public function __construct(public $appointment, $reminderType = '20m')
+    {
+        $this->reminderType = $reminderType;
+    }
 
     public function via($notifiable)
     {
-        return ['database', 'fcm'];
+        return ['database'];
     }
 
     public function toDatabase($notifiable): array
     {
-        return  [
+
+        if ($notifiable->fcm_token) {
+            sendDataMessage($notifiable->fcm_token, [
+                'title' => 'تذكير بالموعد',
+                'message' => $this->getMessage(),
+                'appointment_id' => $this->appointment->id,
+            ]);
+        }
+        return [
             'title' => 'تذكير بالموعد',
-            'body' => 'موعدك بعد 20 دقيقة يرجى التحقق من توفر اتصال جيد بالشبكة',
+            'message' => $this->getMessage(),
             'appointment_id' => $this->appointment->id,
         ];
     }
@@ -29,19 +38,16 @@ class AppointmentReminderPush extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'موعدك بعد 20 دقيقة يرجى التحقق من توفر اتصال جيد بالشبكة',
+            'message' => $this->getMessage(),
             'appointment_id' => $this->appointment->id,
         ];
     }
-
-    public function toFcm($notifiable)
+    protected function getMessage()
     {
-        if ($notifiable->fcm_token) {
-            sendDataMessage($notifiable->fcm_token, [
-                'title' => 'تذكير بالموعد',
-                'body' => 'موعدك بعد 20 دقيقة يرجى التحقق من توفر اتصال جيد بالشبكة',
-                'appointment_id' => $this->appointment->id,
-            ]);
+        if ($this->reminderType === '24h') {
+            return 'تذكير: تبقى 24 ساعة على موعد الاستشارة عبر منصة حكماء. يرجى التأكد من جاهزيتك.';
         }
+
+        return 'موعدك بعد 20 دقيقة يرجى التحقق من توفر اتصال جيد بالشبكة';
     }
 }
