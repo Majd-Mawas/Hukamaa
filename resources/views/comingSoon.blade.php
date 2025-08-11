@@ -100,12 +100,12 @@
                 <div class="mt-12 flex gap-12">
                     <a href="#" target="_blank" rel="noopener noreferrer" aria-label="تحميل التطبيق من App Store">
                         <img src="{{ asset('assets/landingPage/imgs/appstore.png') }}" class="w-72"
-                            alt="تحميل من App Store" >
+                            alt="تحميل من App Store">
                     </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer"
-                        aria-label="تحميل التطبيق من Google Play">
+                    <a href="https://play.google.com/store/apps/details?id=com.ahmadalbetar.hukamaa&pcampaignid=web_share"
+                        target="_blank" rel="noopener noreferrer" aria-label="تحميل التطبيق من Google Play">
                         <img src="{{ asset('assets/landingPage/imgs/googleplay.png') }}" class="w-72"
-                            alt="تحميل من Google Play" >
+                            alt="تحميل من Google Play">
                     </a>
                 </div>
             </section>
@@ -113,11 +113,11 @@
             <section class="flex md:max-w-1/2 gap-12">
                 <div>
                     <img src="{{ asset('assets/landingPage/imgs/Blue@2x.png') }}" class="w-80" alt="صورة تطبيق حكماء"
-                         loading="lazy">
+                        loading="lazy">
                 </div>
                 <div>
                     <img src="{{ asset('assets/landingPage/imgs/Blue@1x.png') }}" class="w-96" alt="صورة تطبيق حكماء"
-                         loading="lazy">
+                        loading="lazy">
                 </div>
             </section>
         </div>

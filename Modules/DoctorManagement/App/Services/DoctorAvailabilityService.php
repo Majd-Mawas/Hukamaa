@@ -239,7 +239,7 @@ class DoctorAvailabilityService
             $rangeEnd = Carbon::createFromFormat('H:i:s', $range['end']->format('H:i:s'), new DateTimeZone($doctorTimezone));
             $rangeStart = $rangeStart->setDateFrom(Carbon::parse($date, new DateTimeZone($doctorTimezone)));
             $rangeEnd = $rangeEnd->setDateFrom(Carbon::parse($date, new DateTimeZone($doctorTimezone)));
-            return $slotStart < $rangeEnd && $slotEnd > $rangeStart;
+            return $slotStart->lt($rangeEnd) && $slotEnd->gt($rangeStart);
         });
     }
 

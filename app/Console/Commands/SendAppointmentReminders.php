@@ -20,7 +20,8 @@ class SendAppointmentReminders extends Command
         $appointments24h = Appointment::whereNotNull('start_time')
             ->get()
             ->filter(function ($appointment) use ($target24h) {
-                $scheduled = Carbon::parse($appointment->date . ' ' . $appointment->start_time)->format('Y-m-d H:i');
+                // Use the date's Y-m-d format instead of the full string representation
+                $scheduled = Carbon::parse($appointment->date->format('Y-m-d') . ' ' . $appointment->start_time)->format('Y-m-d H:i');
                 return $scheduled === $target24h;
             });
 
@@ -33,7 +34,8 @@ class SendAppointmentReminders extends Command
         $appointments20m = Appointment::whereNotNull('start_time')
             ->get()
             ->filter(function ($appointment) use ($target20m) {
-                $scheduled = Carbon::parse($appointment->date . ' ' . $appointment->start_time)->format('Y-m-d H:i');
+                // Use the date's Y-m-d format instead of the full string representation
+                $scheduled = Carbon::parse($appointment->date->format('Y-m-d') . ' ' . $appointment->start_time)->format('Y-m-d H:i');
                 return $scheduled === $target20m;
             });
 
