@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/{appointment}/accept', 'accept')->name('accept');
                     Route::get('/{appointment}/reject', 'reject')->name('reject');
                     Route::post('/{appointment}/status', 'updateStatus')->name('update-status');
+                    Route::post('/{appointment}/update-time', 'updateTime')->name('update-time'); // New route for updating appointment time
                 });
 
                 Route::prefix('patients')->name('patients.')->controller(PatientController::class)->group(function () {

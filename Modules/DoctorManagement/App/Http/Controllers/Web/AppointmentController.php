@@ -8,14 +8,19 @@ use Auth;
 use Illuminate\Http\Request;
 use Modules\AppointmentManagement\App\Models\Appointment;
 use Modules\AppointmentManagement\App\Enums\AppointmentStatus;
+use Modules\DoctorManagement\App\Services\DoctorAvailabilityService;
 
 class AppointmentController extends Controller
 {
     protected $timezoneService;
+    protected $doctorAvailabilityService;
 
-    public function __construct(TimezoneService $timezoneService)
-    {
+    public function __construct(
+        TimezoneService $timezoneService,
+        DoctorAvailabilityService $doctorAvailabilityService
+    ) {
         $this->timezoneService = $timezoneService;
+        $this->doctorAvailabilityService = $doctorAvailabilityService;
     }
 
     public function index()
@@ -124,5 +129,59 @@ class AppointmentController extends Controller
         }
 
         return null;
+    }
+
+    public function updateTime(Request $request, Appointment $appointment)
+    {
+        try {
+            $validated = $request->validate([
+                'start_time' => 'required|date_format:H:i',
+            ]);
+
+            $doctorTimezone = $this->timezoneService->getUserTimezone();
+            $patientTimezone = $appointment->patient->timezone ?? 'UTC';
+
+            $startTime = $this->timezoneService->convertTimeBetweenTimezones(
+                $validated['start_time'] . ':00',
+                $doctorTimezone,
+                $patientTimezone,
+                $appointment->date->format('Y-m-d')
+            );
+
+            $startCarbon = \Carbon\Carbon::parse($startTime);
+            $endTime = $startCarbon->copy()->addMinutes(30)->format('H:i:s');
+
+            // Check if the new time slot is available
+            // if (!$this->doctorAvailabilityService->isSlotAvailable(
+            //     $appointment->doctor->doctorProfile->id,
+            //     $appointment->date->format('Y-m-d'),
+            //     $startTime,
+            //     $endTime,
+            //     $patientTimezone
+            // )) {
+            //     \Log::error('Appointment time slot not available', [
+            //         'appointment_id' => $appointment->id,
+            //         'doctor_id' => $appointment->doctor->id,
+            //         'date' => $appointment->date->format('Y-m-d'),
+            //         'start_time' => $startTime,
+            //         'end_time' => $endTime
+            //     ]);
+            //     return back()->withErrors(['time' => 'The selected time slot is not available.']);
+            // }
+
+            $appointment->update([
+                'start_time' => $startTime,
+                'end_time' => $endTime,
+            ]);
+
+            return back()->with('success', 'Appointment time updated successfully.');
+        } catch (\Exception $e) {
+            \Log::error('Error updating appointment time', [
+                'appointment_id' => $appointment->id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return back()->withErrors(['error' => 'An error occurred while updating the appointment time.']);
+        }
     }
 }
