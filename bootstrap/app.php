@@ -17,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSchedule(function (Schedule $schedule) {
         $schedule->command('appointments:send-reminders')->everyMinute();
-        $schedule->command('appointments:handle-expired')->hourly();
+        // $schedule->command('appointments:handle-expired')->hourly();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
