@@ -25,13 +25,13 @@ class AppointmentReminderPush extends Notification
             sendDataMessage($notifiable->fcm_token, [
                 'title' => 'تذكير بالموعد',
                 'message' => $this->getMessage(),
-                'appointment_id' => $this->appointment->id,
+                'appointment_id' => (int)$this->appointment->id,
             ]);
         }
         return [
             'title' => 'تذكير بالموعد',
             'message' => $this->getMessage(),
-            'appointment_id' => $this->appointment->id,
+            'appointment_id' => (int)$this->appointment->id,
         ];
     }
 
@@ -39,7 +39,7 @@ class AppointmentReminderPush extends Notification
     {
         return [
             'message' => $this->getMessage(),
-            'appointment_id' => $this->appointment->id,
+            'appointment_id' => (int)$this->appointment->id,
         ];
     }
     protected function getMessage()

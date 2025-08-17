@@ -29,7 +29,7 @@ class NewChatMessageNotification extends Notification
                 'title' => $data['title'],
                 'message' => $data['message'],
                 'body' => $this->message->message,
-                'appointment_id' => (string) $this->message->appointment_id,
+                'appointment_id' => (int) $this->message->appointment_id,
                 'sender_name' => $senderName,
                 'receiver_name' => $receiverName
             ]);
@@ -39,7 +39,7 @@ class NewChatMessageNotification extends Notification
             'title' => $data['title'],
             'message' => $data['message'],
             'body' => $this->message->message,
-            'appointment_id' => (string) $this->message->appointment_id,
+            'appointment_id' => (int) $this->message->appointment_id,
             'sender_name' => $senderName,
             'receiver_name' => $receiverName
         ];

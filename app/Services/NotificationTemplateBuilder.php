@@ -16,7 +16,7 @@ class NotificationTemplateBuilder
                 'يمكنك الآن تسجيل الدخول والبدء بتقديم خدماتك الطبية.',
                 'مع تحيات فريق حكماء.',
             ]),
-            'data' => ['doctor_id' => $user->id],
+            'data' => ['doctor_id' => (int)$user->id],
         ];
     }
 
@@ -29,7 +29,7 @@ class NotificationTemplateBuilder
                 'لم يتم قبول طلب انضمامك إلى منصة حكماء حالياً.',
                 'إذا كان لديك أي استفسار يرجى التواصل مع الدعم الفني.',
             ]),
-            'data' => ['doctor_id' => $user->id],
+            'data' => ['doctor_id' => (int)$user->id],
         ];
     }
 
@@ -42,7 +42,7 @@ class NotificationTemplateBuilder
                 'شكراً لاستخدامك منصة حكماء.',
                 'سوف يصلك تذكير بالموعد.',
             ]),
-            'data' => ['appointment_id' => $appointment->id],
+            'data' => ['appointment_id' => (int)$appointment->id],
         ];
     }
 
@@ -54,7 +54,7 @@ class NotificationTemplateBuilder
                 'لديك حالة جديدة من أحد المرضى بحاجة إلى المراجعة.',
                 'يرجى الدخول إلى المنصة للاطلاع على تفاصيل الحالة واتخاذ الإجراءات اللازمة.',
             ]),
-            'data' => ['appointment_id' => $appointment->id],
+            'data' => ['appointment_id' => (int)$appointment->id],
         ];
     }
 
@@ -63,7 +63,7 @@ class NotificationTemplateBuilder
         return [
             'title' => 'تأكيد دفع موعد جديد',
             'message' => "قام مريض {$appointment->patient->name} بحجز موعد جديد ويحتاج إلى التحقق من الدفع. يرجى مراجعة الحجز في لوحة الإدارة.",
-            'data' => ['appointment_id' => $appointment->id],
+            'data' => ['appointment_id' => (int)$appointment->id],
         ];
     }
 
@@ -77,7 +77,7 @@ class NotificationTemplateBuilder
                 'شكراً لاستخدامك منصة حكماء.',
             ]),
             'data' => [
-                'appointment_id' => $appointment->id,
+                'appointment_id' => (int)$appointment->id,
                 'event' => 'payment_approved'
             ],
         ];
@@ -93,7 +93,7 @@ class NotificationTemplateBuilder
                     'الرجاء اكمال عملية الدفع.',
                     'سيتم التواصل معك قريباً لمتابعة الاستشارة.',
                 ]),
-                'data' => ['appointment_id' => $appointment->id],
+                'data' => ['appointment_id' => (int)$appointment->id],
             ]
             : [
                 'title' => 'نعتذر، لم يتم قبول حالتك.',
@@ -101,7 +101,7 @@ class NotificationTemplateBuilder
                     'نعتذر، لم يتم قبول حالتك الطبية من قبل الطبيب حالياً.',
                     'يمكنك التواصل مع الدعم الفني.',
                 ]),
-                'data' => ['appointment_id' => $appointment->id],
+                'data' => ['appointment_id' => (int)$appointment->id],
             ];
     }
 
@@ -110,7 +110,7 @@ class NotificationTemplateBuilder
         return [
             'title' => 'طبيب جديد سجل في النظام',
             'message' => "مرحباً، تم تسجيل طبيب جديد ({$doctor->name}) على المنصة ويحتاج إلى مراجعة طلبه.",
-            'data' => ['doctor_id' => $doctor->id],
+            'data' => ['doctor_id' => (int)$doctor->id],
         ];
     }
 
@@ -124,7 +124,7 @@ class NotificationTemplateBuilder
                 'شكراً لاستخدامك منصة حكماء.',
             ]),
             'data' => [
-                'appointment_id' => $appointment->id,
+                'appointment_id' => (int)$appointment->id,
                 'event' => 'appointment_report_added'
             ],
         ];
@@ -140,7 +140,7 @@ class NotificationTemplateBuilder
                 'شكراً لاستخدامك منصة حكماء.',
             ]),
             'data' => [
-                'appointment_id' => $appointment->id,
+                'appointment_id' => (int)$appointment->id,
                 'event' => 'appointment_report_updated'
             ],
         ];

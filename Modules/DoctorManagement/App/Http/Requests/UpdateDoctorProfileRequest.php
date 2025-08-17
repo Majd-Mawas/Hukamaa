@@ -16,28 +16,28 @@ class UpdateDoctorProfileRequest extends BaseRequest
     {
         return [
             // Personal Information
-            'name' => ['required', 'string', 'max:255'],
-            'birth_date' => ['required', 'date', 'before:today'],
-            'gender' => ['required', 'string', Rule::in(['male', 'female'])],
-            'phone_number' => ['required', 'string', 'max:20'],
-            'address' => ['required', 'string', 'max:500'],
+            'name' => ['nullable', 'string', 'max:255'],
+            'birth_date' => ['nullable', 'date', 'before:today'],
+            'gender' => ['nullable', 'string', Rule::in(['male', 'female'])],
+            'phone_number' => ['nullable', 'string', 'max:20'],
+            'address' => ['nullable', 'string', 'max:500'],
             'profile_picture' => ['nullable', 'file', 'image', 'max:5120'],
 
-            'coverage_areas' => ['required', 'array', 'min:1'],
-            'coverage_areas.*' => ['required', 'exists:coverage_areas,id'],
+            'coverage_areas' => ['nullable', 'array', 'min:1'],
+            'coverage_areas.*' => ['nullable', 'exists:coverage_areas,id'],
 
-            'services' => ['required', 'array'],
-            'services.*' => ['required', 'string', 'in:remote_video_consultation,home_visit'],
+            'services' => ['nullable', 'array'],
+            'services.*' => ['nullable', 'string', 'in:remote_video_consultation,home_visit'],
 
             'experience_description' => ['nullable', 'string'],
             'experience_years' => ['nullable', 'integer', 'min:0', 'max:100'],
 
             'practice_license' => ['nullable', 'array'],
-            'practice_license.*' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
+            'practice_license.*' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
 
             'medical_certificates' => ['nullable', 'array'],
             'medical_certificates.*' => ['file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
-            
+
             'expertise_focus' => ['nullable', 'string'],
 
         ];
