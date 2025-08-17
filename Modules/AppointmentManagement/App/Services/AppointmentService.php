@@ -153,19 +153,19 @@ class AppointmentService
                 'confirmed_by_doctor' => false,
                 'confirmed_by_patient' => true
             ]);
-            $user = $doctorProfile->user;
+            // $user = $doctorProfile->user;
 
-            $template = $this->notification_template_builder->newPatientCase($user);
+            // $template = $this->notification_template_builder->newPatientCase($user);
 
-            // if (env('APP_NOTIFICATION')) {
-            $user->notify(new SystemNotification(
-                $template['title'],
-                $template['message'],
-                $template['data']
-            ));
-            // }
+            // // if (env('APP_NOTIFICATION')) {
+            // $user->notify(new SystemNotification(
+            //     $template['title'],
+            //     $template['message'],
+            //     $template['data']
+            // ));
+            // // }
 
-            sendDataMessage($user->fcm_token, $template);
+            // sendDataMessage($user->fcm_token, $template);
             return $appointment->fresh(['patient', 'doctor']);
         }
 
