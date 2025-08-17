@@ -88,7 +88,7 @@ class VideoCallController extends Controller
                 'call_duration' => $videoCall->call_duration,
                 'status' => $videoCall->status,
                 'room_id' => $videoCall->room_id,
-                'appointment_id' => $videoCall->appointment_id,
+                'appointment_id' => (int)$videoCall->appointment_id,
                 'token' => $videoCall->patient_token,
                 'user_id' => "patient_{$user->id}",
                 'app_id' => config('services.zegocloud.app_id'),
