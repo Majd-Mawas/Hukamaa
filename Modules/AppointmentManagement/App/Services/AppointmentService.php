@@ -153,6 +153,20 @@ class AppointmentService
                 'confirmed_by_doctor' => false,
                 'confirmed_by_patient' => true
             ]);
+            $user = $doctorProfile->user;
+
+            $template = $this->notification_template_builder->newPatientCase($user);
+            sendDataMessage($user->fcm_token, $template);
+
+            // if (env('APP_NOTIFICATION')) {
+            $user->notify(new SystemNotification(
+                $template['title'],
+                $template['message'],
+                $template['data']
+            ));
+            // }
+
+            sendDataMessage($user->fcm_token, $template);
             return $appointment->fresh(['patient', 'doctor']);
         }
 
