@@ -156,7 +156,6 @@ class AppointmentService
             $user = $doctorProfile->user;
 
             $template = $this->notification_template_builder->newPatientCase($user);
-            sendDataMessage($user->fcm_token, $template);
 
             // if (env('APP_NOTIFICATION')) {
             $user->notify(new SystemNotification(
