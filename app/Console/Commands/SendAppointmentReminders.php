@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 use Carbon\Carbon;
 use App\Notifications\AppointmentReminderPush;
 use Modules\AppointmentManagement\App\Models\Appointment;
-use Illuminate\Support\Facades\Log;
 use App\Services\TimezoneService;
 
 class SendAppointmentReminders extends Command
@@ -63,18 +62,11 @@ class SendAppointmentReminders extends Command
                 return $scheduled === $target20m;
             });
 
-        Log::info('Found ' . $appointments20m->count() . ' appointments for 20min reminders');
-
         foreach ($appointments20m as $appointment) {
-            Log::info('Sending 20min reminder for appointment ID: ' . $appointment->id, [
-                'doctor_id' => $appointment->doctor?->id,
-                'patient_id' => $appointment->patient?->id
-            ]);
             $appointment->doctor?->notify(new AppointmentReminderPush($appointment));
             $appointment->patient?->notify(new AppointmentReminderPush($appointment));
         }
 
-        Log::info('Reminder check completed');
         $this->info('Reminders checked and sent.');
     }
 }
