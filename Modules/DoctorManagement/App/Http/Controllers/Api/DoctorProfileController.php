@@ -17,7 +17,6 @@ use Modules\DoctorManagement\App\Models\CoverageArea;
 use Modules\DoctorManagement\App\Models\DoctorProfile;
 use Modules\DoctorManagement\App\Services\DoctorProfileService;
 use Modules\DoctorManagement\App\Services\DoctorStatisticsService;
-use Modules\UserManagement\App\Http\Resources\UserResource;
 
 class DoctorProfileController extends Controller
 {
@@ -120,12 +119,10 @@ class DoctorProfileController extends Controller
         $user = $request->user();
         $data = $request->validated();
 
-        // Update user's name
         $user->update([
             'name' => $data['name']
         ]);
 
-        // Update doctor profile
         $profile = $user->doctorProfile;
         $profile->update([
             'birth_date' => $data['birth_date'],
@@ -144,10 +141,14 @@ class DoctorProfileController extends Controller
                 ->toMediaCollection('profile_picture');
         }
 
-        $profile->coverageAreas()->sync($data['coverage_areas']);
+        if (isset($data['coverage_areas']) && count($data['coverage_areas']) > 0) {
+            $profile->coverageAreas()->sync($data['coverage_areas']);
+        } else {
+            $profile->coverageAreas()->sync([]);
+        }
 
         if (isset($data['practice_license'])) {
-            $profile->clearMediaCollection('practice_license');
+            $profile->clearMediaCollection('practice_licenses');
             foreach ($data['practice_license'] as $certificate) {
                 $profile->addMedia($certificate)
                     ->toMediaCollection('practice_licenses');
