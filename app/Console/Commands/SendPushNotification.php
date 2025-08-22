@@ -58,8 +58,9 @@ class SendPushNotification extends Command
             $this->info("Push notification sent to user {$userId} successfully.");
             return 0;
         } catch (\Exception $e) {
-            $this->error("Failed to send push notification: {$e->getMessage()}");
-            return 1;
+            logger()->info("Failed to send push notification: {$e->getMessage()}");
+            // $this->error("Failed to send push notification: {$e->getMessage()}");
+            // return 1;
         }
     }
 }
