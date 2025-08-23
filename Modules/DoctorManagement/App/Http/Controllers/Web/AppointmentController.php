@@ -3,12 +3,15 @@
 namespace Modules\DoctorManagement\App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\SystemNotification;
+use App\Services\NotificationTemplateBuilder;
 use App\Services\TimezoneService;
 use Auth;
 use Illuminate\Http\Request;
 use Modules\AppointmentManagement\App\Models\Appointment;
 use Modules\AppointmentManagement\App\Enums\AppointmentStatus;
 use Modules\DoctorManagement\App\Services\DoctorAvailabilityService;
+use Modules\UserManagement\App\Models\User;
 
 class AppointmentController extends Controller
 {
@@ -17,7 +20,8 @@ class AppointmentController extends Controller
 
     public function __construct(
         TimezoneService $timezoneService,
-        DoctorAvailabilityService $doctorAvailabilityService
+        DoctorAvailabilityService $doctorAvailabilityService,
+        public NotificationTemplateBuilder $notification_template_builder
     ) {
         $this->timezoneService = $timezoneService;
         $this->doctorAvailabilityService = $doctorAvailabilityService;
@@ -103,6 +107,12 @@ class AppointmentController extends Controller
             'status' => AppointmentStatus::PENDING_PAYMENT->value
         ]);
 
+        $template = $this->notification_template_builder->appointmentDecision($appointment, 'accept');
+        $user = User::findOrFail($appointment->patient_id);
+
+        sendDataMessage($user->fcm_token, $template);
+        $user->notify(new SystemNotification($template['title'], $template['message'], $template['data']));
+
         return back()->with('success', 'Appointment status updated successfully.');
     }
 
@@ -111,6 +121,12 @@ class AppointmentController extends Controller
         $appointment->update([
             'status' => AppointmentStatus::CANCELLED->value
         ]);
+
+        $template = $this->notification_template_builder->appointmentDecision($appointment, 'reject');
+        $user = User::findOrFail($appointment->patient_id);
+
+        sendDataMessage($user->fcm_token, $template);
+        $user->notify(new SystemNotification($template['title'], $template['message'], $template['data']));
 
         return back()->with('success', 'Appointment status updated successfully.');
     }
