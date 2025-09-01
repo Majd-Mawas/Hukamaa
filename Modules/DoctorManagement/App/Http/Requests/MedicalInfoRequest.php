@@ -3,6 +3,7 @@
 namespace Modules\DoctorManagement\App\Http\Requests;
 
 use App\Http\Requests\BaseRequest;
+use App\Rules\ArabicNumeric;
 use Illuminate\Validation\Rule;
 
 class MedicalInfoRequest extends BaseRequest
@@ -17,7 +18,7 @@ class MedicalInfoRequest extends BaseRequest
         $rules = [
             'specialization_id' => ['required', 'exists:specializations,id'],
             'title' => ['nullable', 'string', 'in:Dr.,Prof.,Assoc. Prof.,Asst. Prof.'],
-            'experience_years' => ['required', 'integer', 'min:0', 'max:100'],
+            'experience_years' => ['required', new ArabicNumeric(), 'min:0', 'max:50'],
             'experience_description' => ['required', 'string'],
             'services' => ['required', 'array'],
             'services.*' => ['required', 'string', 'in:remote_video_consultation,home_visit'],
