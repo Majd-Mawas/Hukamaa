@@ -15,9 +15,9 @@ class DocumentsRequest extends BaseRequest
     {
         return [
             'practice_license' => ['nullable', 'array'],
-            'practice_license.*' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
+            'practice_license.*' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:51200'],
             'medical_certificates' => ['nullable', 'array'],
-            'medical_certificates.*' => ['file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
+            'medical_certificates.*' => ['file', 'mimes:pdf,jpg,jpeg,png', 'max:51200'],
             'expertise_focus' => ['nullable', 'string'],
         ];
     }

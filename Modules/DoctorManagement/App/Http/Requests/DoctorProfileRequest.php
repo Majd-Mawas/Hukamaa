@@ -15,13 +15,13 @@ class DoctorProfileRequest extends BaseRequest
     {
         return [
             'user_id' => ['required', 'exists:users,id'],
-            'birth_date' => ['required', 'integer', 'min:18', 'max:100'],
+            'birth_date' => ['required', 'date'],
             'gender' => ['required', 'string', 'in:male,female'],
             'profile_picture' => ['nullable', 'string', 'max:255'],
             'specialization_id' => ['required', 'exists:specializations,id'],
             'consultation_fee' => ['required', 'numeric', 'min:0', 'max:10000'],
             'title' => ['required', 'string', 'max:255'],
-            'experience_years' => ['required', 'integer', 'min:0', 'max:50'],
+            'experience_years' => ['required', 'numeric', 'regex:/^[0-9]+$/', 'min:0', 'max:50'],
             'experience_description' => ['required', 'string'],
             'certificates' => ['required', 'array'],
             'certificates.*' => ['required', 'string'],
