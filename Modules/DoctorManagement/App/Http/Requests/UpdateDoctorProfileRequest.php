@@ -3,6 +3,7 @@
 namespace Modules\DoctorManagement\App\Http\Requests;
 
 use App\Http\Requests\BaseRequest;
+use App\Rules\ArabicNumeric;
 use Illuminate\Validation\Rule;
 
 class UpdateDoctorProfileRequest extends BaseRequest
@@ -30,7 +31,7 @@ class UpdateDoctorProfileRequest extends BaseRequest
             'services.*' => ['nullable', 'string', 'in:remote_video_consultation,home_visit'],
 
             'experience_description' => ['nullable', 'string'],
-            'experience_years' => ['nullable', 'integer', 'min:0', 'max:100'],
+            'experience_years' => ['required', new ArabicNumeric(), 'min:0', 'max:50'],
 
             'practice_license' => ['nullable', 'array'],
             'practice_license.*' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],

@@ -2,6 +2,7 @@
 
 namespace Modules\DoctorManagement\App\Services;
 
+use App\Helpers\ArabicNumeralsHelper;
 use Modules\DoctorManagement\App\Models\DoctorProfile;
 use Modules\DoctorManagement\App\Enums\DoctorStatus;
 
@@ -36,6 +37,11 @@ class DoctorOnboardingService
     public function updateMedicalInfo(int $userId, array $data): DoctorProfile
     {
         $profile = DoctorProfile::where('user_id', $userId)->firstOrFail();
+
+        // Convert experience_years from Arabic numerals to standard numerals if needed
+        if (isset($data['experience_years'])) {
+            $data['experience_years'] = ArabicNumeralsHelper::convertToStandardNumerals($data['experience_years']);
+        }
 
         $updateData = [
             'specialization_id' => $data['specialization_id'],

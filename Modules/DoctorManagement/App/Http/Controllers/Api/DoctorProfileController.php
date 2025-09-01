@@ -2,6 +2,7 @@
 
 namespace Modules\DoctorManagement\App\Http\Controllers\Api;
 
+use App\Helpers\ArabicNumeralsHelper;
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
@@ -123,6 +124,9 @@ class DoctorProfileController extends Controller
             'name' => $data['name']
         ]);
 
+        if (isset($data['experience_years'])) {
+            $data['experience_years'] = ArabicNumeralsHelper::convertToStandardNumerals($data['experience_years']);
+        }
         $profile = $user->doctorProfile;
         $profile->update([
             'birth_date' => $data['birth_date'],
@@ -134,6 +138,7 @@ class DoctorProfileController extends Controller
             'experience_years' => $data['experience_years'] ?? $profile->experience_years,
             'expertise_focus' => $data['expertise_focus'] ?? null,
         ]);
+
 
         if (isset($data['profile_picture'])) {
             $profile->clearMediaCollection('profile_picture');
