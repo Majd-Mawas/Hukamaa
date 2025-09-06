@@ -12,6 +12,7 @@ return [
             'required' => 'The email address is required.',
             'email' => 'Please enter a valid email address.',
             'exists' => 'We could not find this email address in our records.',
+            'unique' => 'This email address is already registered.',
         ],
         'password' => [
             'required' => 'The password is required.',
