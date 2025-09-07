@@ -17,7 +17,7 @@ class UpdateDoctorProfileRequest extends BaseRequest
     {
         return [
             // Personal Information
-            'name' => ['nullable', 'string', 'max:255'],
+            // 'name' => ['nullable', 'string', 'max:255'],
             'birth_date' => ['nullable', 'date', 'before:today'],
             'gender' => ['nullable', 'string', Rule::in(['male', 'female'])],
             'phone_number' => ['nullable', 'string', 'max:20'],
@@ -31,7 +31,7 @@ class UpdateDoctorProfileRequest extends BaseRequest
             'services.*' => ['nullable', 'string', 'in:remote_video_consultation,home_visit'],
 
             'experience_description' => ['nullable', 'string'],
-            'experience_years' => ['required', new ArabicNumeric(), 'min:0', 'max:50'],
+            // 'experience_years' => ['required', new ArabicNumeric(), 'min:0', 'max:50'],
 
             'practice_license' => ['nullable', 'array'],
             'practice_license.*' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
