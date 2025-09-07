@@ -120,9 +120,9 @@ class DoctorProfileController extends Controller
         $user = $request->user();
         $data = $request->validated();
 
-        $user->update([
-            'name' => $data['name']
-        ]);
+        // $user->update([
+        //     'name' => $data['name']
+        // ]);
 
         if (isset($data['experience_years'])) {
             $data['experience_years'] = ArabicNumeralsHelper::convertToStandardNumerals($data['experience_years']);
