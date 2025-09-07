@@ -38,6 +38,7 @@ class AuthController extends Controller
                 ]
             );
 
+            // Send verification email using the notification class which now uses PHPMailer
             $user->notify(new \Modules\UserManagement\App\Notifications\VerifyEmailNotification($code));
         }
 
