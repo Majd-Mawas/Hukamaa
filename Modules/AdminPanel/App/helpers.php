@@ -22,6 +22,11 @@ function getAdminUser()
     return User::where('role', 'admin')->first();
 }
 
+function getAdminUsers()
+{
+    return User::where('role', 'admin')->get();
+}
+
 function sendDataMessage(?string $fcmToken, array $data): void
 {
     $sanitizedData = array_map(fn($v) => is_array($v) ? json_encode($v) : (string)$v, $data);

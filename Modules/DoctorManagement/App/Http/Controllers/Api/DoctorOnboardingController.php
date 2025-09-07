@@ -62,11 +62,14 @@ class DoctorOnboardingController extends Controller
         $template = $this->notification_template_builder->newDoctorSignup($doctor);
 
         // if (env('APP_NOTIFICATION')) {
-        getAdminUser()->notify(new SystemNotification(
-            $template['title'],
-            $template['message'],
-            $template['data']
-        ));
+        $adminUsers = getAdminUsers();
+        foreach ($adminUsers as $admin) {
+            $admin->notify(new SystemNotification(
+                $template['title'],
+                $template['message'],
+                $template['data']
+            ));
+        }
         // }
 
         return $this->successResponse(
