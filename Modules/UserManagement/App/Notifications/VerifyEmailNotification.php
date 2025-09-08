@@ -31,34 +31,30 @@ class VerifyEmailNotification extends Notification
      * Get the mail representation of the notification.
      *
      * @param mixed $notifiable
-     * @return void
+     * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable): void
+    public function toMail($notifiable): \Illuminate\Notifications\Messages\MailMessage
     {
         try {
-            $mailer = app(PHPMailerService::class);
-            
-            $subject = 'التحقق من البريد الإلكتروني';
-            
-            // Create HTML email body
-            $body = '<div dir="rtl" style="font-family: Arial, sans-serif; line-height: 1.6;">';
-            $body .= '<h2>مرحباً ' . $notifiable->name . '!</h2>';
-            $body .= '<p>شكراً لتسجيلك. يرجى استخدام الرمز التالي للتحقق من بريدك الإلكتروني:</p>';
-            $body .= '<p style="font-size: 24px; font-weight: bold; text-align: center; padding: 10px; background-color: #f5f5f5; border-radius: 5px;">' . $this->code . '</p>';
-            $body .= '<p>سينتهي صلاحية هذا الرمز خلال 60 دقيقة.</p>';
-            $body .= '<p>إذا لم تقم بإنشاء حساب، فلا يلزم اتخاذ أي إجراء آخر.</p>';
-            $body .= '</div>';
-            
-            // Send email using PHPMailer
-            $mailer->send(
-                $notifiable->email,
-                $subject,
-                $body,
-                $notifiable->name
-            );
+            // Using Laravel's built-in mail message builder
+            return (new MailMessage)
+                ->subject('التحقق من البريد الإلكتروني')
+                ->view(
+                    'emails.verify-email',
+                    [
+                        'name' => $notifiable->name,
+                        'code' => $this->code
+                    ]
+                );
+                
+            // Note: The custom PHPMailer implementation is removed as we're using Laravel's built-in mail system
         } catch (Exception $e) {
             // Log the error
             logger()->error('Failed to send verification email: ' . $e->getMessage());
+            // Still need to return a MailMessage object even in case of error
+            return (new MailMessage)
+                ->subject('التحقق من البريد الإلكتروني')
+                ->line('حدث خطأ أثناء إرسال رمز التحقق. يرجى المحاولة مرة أخرى لاحقًا.');
         }
     }
 }
