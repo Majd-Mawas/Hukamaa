@@ -43,6 +43,8 @@ return [
     'dimensions' => ':attribute يحتوي على أبعاد صورة غير صالحة.',
     'distinct' => 'حقل :attribute يحتوي على قيمة مكررة.',
     'email' => 'يجب أن يكون :attribute عنوان بريد إلكتروني صالح.',
+    'email_invalid_or_nonexistent' => 'البريد الإلكتروني غير صالح أو غير موجود. يرجى التحقق من عنوان البريد الإلكتروني الخاص بك.',
+    'registration_failed' => 'حدث خطأ أثناء التسجيل. يرجى المحاولة مرة أخرى.',
     'ends_with' => 'يجب أن ينتهي :attribute بأحد القيم التالية: :values.',
     'enum' => ':attribute المحدد غير صالح.',
     'exists' => ':attribute المحدد غير صالح.',

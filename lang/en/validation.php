@@ -43,6 +43,8 @@ return [
     'dimensions' => 'The :attribute has invalid image dimensions.',
     'distinct' => 'The :attribute field has a duplicate value.',
     'email' => 'The :attribute must be a valid email address.',
+    'email_invalid_or_nonexistent' => 'The email address is invalid or does not exist. Please check your email address.',
+    'registration_failed' => 'An error occurred during registration. Please try again.',
     'ends_with' => 'The :attribute must end with one of the following: :values.',
     'enum' => 'The selected :attribute is invalid.',
     'exists' => 'The selected :attribute is invalid.',

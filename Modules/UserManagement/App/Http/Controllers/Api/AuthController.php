@@ -14,6 +14,7 @@ use Modules\UserManagement\App\Http\Requests\LoginRequest;
 use Modules\UserManagement\App\Http\Requests\RegisterRequest;
 use Modules\UserManagement\App\Http\Resources\UserResource;
 use Modules\UserManagement\App\Models\User;
+use Modules\UserManagement\App\Notifications\VerifyEmailNotification;
 
 class AuthController extends Controller
 {
@@ -21,41 +22,96 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request): JsonResponse
     {
-        $user = User::create($request->validated());
-        $token = $user->createToken('auth_token')->plainTextToken;
+        // Validate if email exists and is real
+        $email = $request->validated()['email'];
 
+        // Check if email domain exists and verify email format
+        $domain = substr(strrchr($email, "@"), 1);
 
-        if ($user->role !== UserRole::PATIENT->value) {
-
-            $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-
-            DB::table('email_verifications')->updateOrInsert(
-                ['user_id' => $user->id],
-                [
-                    'code' => $code,
-                    'created_at' => now(),
-                    'expires_at' => now()->addMinutes(60),
-                ]
+        if (!checkdnsrr($domain, "MX")) {
+            return $this->errorResponse(
+                __('validation.email'),
+                422
             );
-
-            // Send verification email using the notification class which now uses PHPMailer
-            $user->notify(new \Modules\UserManagement\App\Notifications\VerifyEmailNotification($code));
         }
 
-        if (isset(request()->fcm_token)) {
-            $user->update([
-                'fcm_token' => request()->fcm_token
-            ]);
+        // Additional check for common email providers
+        if (in_array($domain, ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com'])) {
+            // You could integrate with email verification services here
+            // For now, we'll proceed with basic validation
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return $this->errorResponse(
+                    __('validation.email'),
+                    422
+                );
+            }
         }
 
-        return $this->successResponse(
-            [
-                'user' => new UserResource($user),
-                'token' => $token
-            ],
-            'Registration successful. Please check your email for verification.',
-            201
-        );
+        // Start a database transaction
+        DB::beginTransaction();
+
+        try {
+            $user = User::create($request->validated());
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            if ($user->role !== UserRole::PATIENT->value) {
+                $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+
+                DB::table('email_verifications')->updateOrInsert(
+                    ['user_id' => $user->id],
+                    [
+                        'code' => $code,
+                        'created_at' => now(),
+                        'expires_at' => now()->addMinutes(60),
+                    ]
+                );
+
+                try {
+                    // Attempt to send verification email
+                    $user->notify(new VerifyEmailNotification($code));
+                } catch (\Exception $e) {
+                    // If email sending fails, rollback the transaction and return error
+                    DB::rollBack();
+
+                    // Log the error for debugging
+                    logger()->error('Email verification failed: ' . $e->getMessage());
+
+                    return $this->errorResponse(
+                        __('validation.email_invalid_or_nonexistent'),
+                        422
+                    );
+                }
+            }
+
+            if (isset(request()->fcm_token)) {
+                $user->update([
+                    'fcm_token' => request()->fcm_token
+                ]);
+            }
+
+            // If everything is successful, commit the transaction
+            DB::commit();
+
+            return $this->successResponse(
+                [
+                    'user' => new UserResource($user),
+                    'token' => $token
+                ],
+                'Registration successful. Please check your email for verification.',
+                201
+            );
+        } catch (\Exception $e) {
+            // If any other error occurs, rollback the transaction
+            DB::rollBack();
+
+            // Log the error for debugging
+            logger()->error('Registration failed: ' . $e->getMessage());
+
+            return $this->errorResponse(
+                __('validation.registration_failed'),
+                500
+            );
+        }
     }
 
     public function login(LoginRequest $request): JsonResponse
