@@ -39,10 +39,10 @@
                                         Specialization</th>
                                     <th
                                         class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                        Experience</th>
+                                        Phone Number</th>
                                     <th
                                         class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                        Status</th>
+                                        Expertise Focus</th>
                                     <th
                                         class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                         Actions</th>
@@ -74,15 +74,20 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 dark:text-white">
-                                                {{ $doctor->experience_years }} years
+                                                {{ $doctor->phone_number }}
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">
+                                                {{ $doctor->expertise_focus }}
+                                            </div>
+                                        </td>
+                                        {{-- <td class="px-6 py-4 whitespace-nowrap">
                                             <span
                                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $doctor->status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                                 {{ ucfirst($doctor->status) }}
                                             </span>
-                                        </td>
+                                        </td> --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <a href="{{ route('admin.doctors.show', ['doctor' => $doctor->id]) }}"
                                                 class="text-primary-600 hover:text-primary-900 mr-3">View</a>

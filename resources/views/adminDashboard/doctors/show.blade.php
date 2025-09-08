@@ -58,7 +58,9 @@
                             <th>Coverage Areas</th>
                             <td class="text-break">
                                 @foreach ($doctor->coverageAreas as $area)
-                                    {{ $area->name }}@if (!$loop->last),@endif
+                                    {{ $area->name }}@if (!$loop->last)
+                                        ,
+                                    @endif
                                 @endforeach
                             </td>
                         </tr>
@@ -66,6 +68,11 @@
                             <th>Bio</th>
                             <td class="text-break" style="max-width: 400px; word-wrap: break-word;">
                                 {!! nl2br(e($doctor->experience_description)) !!}</td>
+                        </tr>
+                        <tr>
+                            <th>Expertise Focus</th>
+                            <td class="text-break" style="max-width: 400px; word-wrap: break-word;">
+                                {!! nl2br(e($doctor->expertise_focus)) !!}</td>
                         </tr>
                         <tr>
                             <th>Created At</th>
