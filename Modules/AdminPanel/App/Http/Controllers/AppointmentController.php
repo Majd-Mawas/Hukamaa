@@ -62,7 +62,10 @@ class AppointmentController extends Controller
 
     public function destroy(Appointment $appointment)
     {
-        if ($appointment->status !== AppointmentStatus::PENDING) {
+        if (
+            $appointment->status !== AppointmentStatus::PENDING
+            || $appointment->status !== AppointmentStatus::PENDING_PAYMENT
+        ) {
             return back()->with('error', 'Only pending appointments can be deleted.');
         }
 

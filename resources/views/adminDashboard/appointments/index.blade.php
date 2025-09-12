@@ -13,7 +13,7 @@
                 <span class="block sm:inline">{{ session('success') }}</span>
             </div>
         @endif
-        
+
         @if (session('error'))
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
                 <span class="block sm:inline">{{ session('error') }}</span>
@@ -84,11 +84,15 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <a href="{{ route('admin.appointments.show', $appointment) }}"
                                                 class="text-blue-600 hover:text-blue-900 mr-4">View</a>
-                                            @if ($appointment->status === \Modules\AppointmentManagement\App\Enums\AppointmentStatus::PENDING)
-                                                <form action="{{ route('admin.appointments.destroy', $appointment) }}" method="POST" class="inline">
+                                            @if (
+                                                $appointment->status === \Modules\AppointmentManagement\App\Enums\AppointmentStatus::PENDING ||
+                                                    $appointment->status === \Modules\AppointmentManagement\App\Enums\AppointmentStatus::PENDING_PAYMENT)
+                                                <form action="{{ route('admin.appointments.destroy', $appointment) }}"
+                                                    method="POST" class="inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this appointment?')">
+                                                    <button type="submit" class="text-red-600 hover:text-red-900"
+                                                        onclick="return confirm('Are you sure you want to delete this appointment?')">
                                                         Delete
                                                     </button>
                                                 </form>
