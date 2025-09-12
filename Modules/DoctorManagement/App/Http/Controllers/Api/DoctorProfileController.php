@@ -143,6 +143,7 @@ class DoctorProfileController extends Controller
         if (isset($data['profile_picture'])) {
             $profile->clearMediaCollection('profile_picture');
             $profile->addMedia($data['profile_picture'])
+                ->usingFileName(time() . '_' . $data['profile_picture']->getClientOriginalName())
                 ->toMediaCollection('profile_picture');
         }
 
@@ -156,6 +157,7 @@ class DoctorProfileController extends Controller
             $profile->clearMediaCollection('practice_licenses');
             foreach ($data['practice_license'] as $certificate) {
                 $profile->addMedia($certificate)
+                    ->usingFileName(time() . '_' . $certificate->getClientOriginalName())
                     ->toMediaCollection('practice_licenses');
             }
         }
@@ -164,6 +166,7 @@ class DoctorProfileController extends Controller
             $profile->clearMediaCollection('medical_certificates');
             foreach ($data['medical_certificates'] as $certificate) {
                 $profile->addMedia($certificate)
+                    ->usingFileName(time() . '_' . $certificate->getClientOriginalName())
                     ->toMediaCollection('medical_certificates');
             }
         }

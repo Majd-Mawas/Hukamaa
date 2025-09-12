@@ -88,13 +88,17 @@ class DoctorProfileService
                 'name' => $request->name,
                 // 'email' => $request->email,
             ]);
-
             if ($request->hasFile('profile_picture')) {
                 // Clear existing media collection before adding new one
                 $doctor->clearMediaCollection('profile_picture');
 
-                // Add new profile_picture to the media collection
+                // Generate unique name for the profile picture
+                $fileName = 'profile_' . time() . '_' . uniqid();
+
+                // Add new profile_picture to the media collection with custom name
                 $doctor->addMediaFromRequest('profile_picture')
+                    ->usingName($fileName)
+                    ->usingFileName($fileName . '.' . $request->file('profile_picture')->getClientOriginalExtension())
                     ->toMediaCollection('profile_picture');
             }
 

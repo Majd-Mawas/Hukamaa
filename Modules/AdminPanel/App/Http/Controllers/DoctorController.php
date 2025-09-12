@@ -163,12 +163,14 @@ class DoctorController extends Controller
         if ($request->hasFile('profile_picture')) {
             $doctor->clearMediaCollection('profile_picture');
             $doctor->addMediaFromRequest('profile_picture')
+                ->usingFileName('profile_' . time() . '.' . $request->profile_picture->extension())
                 ->toMediaCollection('profile_picture');
         }
 
         if ($request->hasFile('certificates')) {
-            foreach ($request->file('certificates') as $certificate) {
+            foreach ($request->file('certificates') as $key => $certificate) {
                 $doctor->addMedia($certificate)
+                    ->usingFileName('certificate_' . time() . '_' . $key . '.' . $certificate->extension())
                     ->toMediaCollection('medical_certificates');
             }
         }

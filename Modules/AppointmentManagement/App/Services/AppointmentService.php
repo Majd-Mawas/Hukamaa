@@ -71,7 +71,10 @@ class AppointmentService
 
             if (isset($data['files'])) {
                 foreach ($data['files'] as $file) {
+                    $fileName = time() . '_' . $file->getClientOriginalName();
                     $appointment->addMedia($file)
+                        ->usingName($fileName)
+                        ->usingFileName($fileName)
                         ->toMediaCollection('appointment_files');
                 }
             }
@@ -98,7 +101,10 @@ class AppointmentService
 
             if (isset($data['files'])) {
                 foreach ($data['files'] as $file) {
+                    $fileName = time() . '_' . $file->getClientOriginalName();
                     $appointment->addMedia($file)
+                        ->usingName($fileName)
+                        ->usingFileName($fileName)
                         ->toMediaCollection('appointment_files');
                 }
             }
@@ -197,7 +203,10 @@ class AppointmentService
 
         // Add the invoice file to the payment_invoices collection
         if (isset($data['invoice_file'])) {
+            $fileName = time() . '_' . $data['invoice_file']->getClientOriginalName();
             $appointment->addMedia($data['invoice_file'])
+                ->usingName($fileName)
+                ->usingFileName($fileName)
                 ->toMediaCollection('payment_invoices');
         }
         $template = $this->notification_template_builder->paymentNeedsApproval($appointment);

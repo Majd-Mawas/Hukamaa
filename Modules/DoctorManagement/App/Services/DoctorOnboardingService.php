@@ -23,11 +23,15 @@ class DoctorOnboardingService
 
         if (isset($data['profile_picture'])) {
             $profile->addMedia($data['profile_picture'])
+                ->usingName('profile_' . time())
+                ->usingFileName('profile_' . time() . '.' . $data['profile_picture']->getClientOriginalExtension())
                 ->toMediaCollection('profile_picture');
         }
 
         if (isset($data['identity_document'])) {
             $profile->addMedia($data['identity_document'])
+                ->usingName('identity_' . time())
+                ->usingFileName('identity_' . time() . '.' . $data['identity_document']->getClientOriginalExtension())
                 ->toMediaCollection('identity_document');
         }
 

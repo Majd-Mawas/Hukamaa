@@ -34,6 +34,8 @@ class PatientProfileService
         if (isset($data['files'])) {
             foreach ($data['files'] as $file) {
                 $profile->addMedia($file)
+                    ->usingName(time() . '_' . $file->getClientOriginalName())
+                    ->usingFileName(time() . '_' . $file->getClientOriginalName())
                     ->toMediaCollection('patient_files');
             }
         }

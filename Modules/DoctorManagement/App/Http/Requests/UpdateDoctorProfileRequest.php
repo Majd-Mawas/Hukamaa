@@ -24,7 +24,7 @@ class UpdateDoctorProfileRequest extends BaseRequest
             'address' => ['nullable', 'string', 'max:500'],
             'profile_picture' => ['nullable', 'file', 'image', 'max:5120'],
 
-            'coverage_areas' => ['nullable', 'array', 'min:1'],
+            'coverage_areas' => ['nullable', 'array'],
             'coverage_areas.*' => ['nullable', 'exists:coverage_areas,id'],
 
             'services' => ['nullable', 'array'],
