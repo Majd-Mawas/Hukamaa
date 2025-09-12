@@ -172,7 +172,7 @@ class DoctorAvailabilityService
     private function getDoctorAppointments(int $doctorUserId, string $date)
     {
         return Appointment::where('doctor_id', $doctorUserId)
-            ->whereNotIn('status', [AppointmentStatus::PENDING->value, AppointmentStatus::CANCELLED->value])
+            ->whereNotIn('status', [AppointmentStatus::CANCELLED->value])
             ->whereDate('date', $date)
             ->get()
             ->map(function ($appointment) {
