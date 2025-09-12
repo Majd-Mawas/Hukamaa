@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/completed', 'completed')->name('completed');
                     Route::get('/{appointment}', 'show')->name('show');
                     Route::post('/{appointment}/status', 'updateStatus')->name('update-status');
+                    Route::delete('/{appointment}', 'destroy')->name('destroy');
                 });
 
                 Route::prefix('specializations')->name('specializations.')->controller(SpecializationController::class)->group(function () {

@@ -43,7 +43,7 @@ class AppointmentController extends Controller
     public function show(Appointment $appointment)
     {
         $appointment->load(['patient', 'doctor', 'appointmentReport']);
-        
+
         return view('adminDashboard.appointments.show', compact('appointment'));
     }
 
@@ -58,5 +58,16 @@ class AppointmentController extends Controller
         ]);
 
         return back()->with('success', 'Appointment status updated successfully.');
+    }
+
+    public function destroy(Appointment $appointment)
+    {
+        if ($appointment->status !== AppointmentStatus::PENDING) {
+            return back()->with('error', 'Only pending appointments can be deleted.');
+        }
+
+        $appointment->delete();
+
+        return back()->with('success', 'Appointment deleted successfully.');
     }
 }
