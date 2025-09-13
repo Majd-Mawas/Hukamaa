@@ -64,7 +64,7 @@ class AppointmentController extends Controller
     {
         if (
             $appointment->status !== AppointmentStatus::PENDING
-            || $appointment->status !== AppointmentStatus::PENDING_PAYMENT
+            && $appointment->status !== AppointmentStatus::PENDING_PAYMENT
         ) {
             return back()->with('error', 'Only pending appointments can be deleted.');
         }
