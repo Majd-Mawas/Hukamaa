@@ -105,8 +105,8 @@ class DoctorProfileService
             // Update doctor details
             $doctor->update([
                 'specialization_id' => $request->specialization,
-                'experience_description' => $request->experience,
-                // 'experience_years' => $request->experience_years,
+                'experience_years' => $request->experience_years,
+                // 'experience_description' => $request->experience,
                 // 'consultation_fee' => $request->consultation_fee,
                 'phone_number' => $request->phone
             ]);
