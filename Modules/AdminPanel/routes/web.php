@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
                         Route::get('/approvals', 'doctorApprovals')->name('doctorApprovals');
                         Route::post('/{doctorProfile}/approve', 'approveDoctor')->name('approve');
                         Route::post('/{doctorProfile}/reject', 'rejectDoctor')->name('reject');
+                        Route::patch('/{doctor}/update-fees', 'updateFees')->name('update-fees');
                     });
                     Route::resource('/', DoctorController::class)->parameters(['' => 'doctor']);
                 });

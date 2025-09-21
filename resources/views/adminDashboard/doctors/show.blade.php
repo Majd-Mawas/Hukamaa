@@ -51,6 +51,10 @@
                             <td class="text-break">{{ $doctor->consultation_fee }}</td>
                         </tr>
                         <tr>
+                            <th>Commission Percent</th>
+                            <td class="text-break">{{ round($doctor->commission_percent) . '%' }}</td>
+                        </tr>
+                        <tr>
                             <th>Phone</th>
                             <td class="text-break">{{ $doctor->phone_number }}</td>
                         </tr>
@@ -63,6 +67,11 @@
                                     @endif
                                 @endforeach
                             </td>
+                        </tr>
+                        <tr>
+                            <th>Title</th>
+                            <td class="text-break" style="max-width: 400px; word-wrap: break-word;">
+                                {!! nl2br(e($doctor->title)) !!}</td>
                         </tr>
                         <tr>
                             <th>Bio</th>

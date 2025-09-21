@@ -5,6 +5,7 @@ namespace Modules\AdminPanel\App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Notifications\SystemNotification;
 use App\Services\NotificationTemplateBuilder;
+use Illuminate\Http\Request;
 use Modules\DoctorManagement\App\Models\DoctorProfile;
 use Modules\UserManagement\App\Models\User;
 use Modules\SpecializationManagement\App\Models\Specialization;
@@ -12,7 +13,6 @@ use Modules\AdminPanel\App\Http\Requests\StoreDoctorRequest;
 use Modules\AdminPanel\App\Http\Requests\UpdateDoctorRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Request;
 use Modules\DoctorManagement\App\Enums\DoctorStatus;
 
 class DoctorController extends Controller
@@ -228,5 +228,25 @@ class DoctorController extends Controller
         sendDataMessage($user->fcm_token, $template);
 
         return redirect()->route('admin.doctors.doctorApprovals')->with('success', 'Doctor rejected successfully.');
+    }
+
+    public function updateFees(Request $request, DoctorProfile $doctor)
+    {
+        try {
+            $validated = $request->validate([
+                'consultation_fee' => 'required|numeric|min:0',
+                'commission_percent' => 'required|numeric|min:0|max:100',
+            ]);
+
+            $doctor->update([
+                'consultation_fee' => $validated['consultation_fee'],
+                'commission_percent' => $validated['commission_percent'],
+            ]);
+
+            return redirect()->route('admin.doctors.index')
+                ->with('success', 'Doctor fees updated successfully.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error updating doctor fees: ' . $e->getMessage());
+        }
     }
 }
