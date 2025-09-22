@@ -54,34 +54,34 @@ class AuthController extends Controller
             $user = User::create($request->validated());
             $token = $user->createToken('auth_token')->plainTextToken;
 
-            if ($user->role !== UserRole::PATIENT->value) {
-                $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+            // if ($user->role !== UserRole::PATIENT->value) {
+            //     $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
 
-                DB::table('email_verifications')->updateOrInsert(
-                    ['user_id' => $user->id],
-                    [
-                        'code' => $code,
-                        'created_at' => now(),
-                        'expires_at' => now()->addMinutes(60),
-                    ]
-                );
+            //     DB::table('email_verifications')->updateOrInsert(
+            //         ['user_id' => $user->id],
+            //         [
+            //             'code' => $code,
+            //             'created_at' => now(),
+            //             'expires_at' => now()->addMinutes(60),
+            //         ]
+            //     );
 
-                try {
-                    // Attempt to send verification email
-                    $user->notify(new VerifyEmailNotification($code));
-                } catch (\Exception $e) {
-                    // If email sending fails, rollback the transaction and return error
-                    DB::rollBack();
+            //     try {
+            //         // Attempt to send verification email
+            //         $user->notify(new VerifyEmailNotification($code));
+            //     } catch (\Exception $e) {
+            //         // If email sending fails, rollback the transaction and return error
+            //         DB::rollBack();
 
-                    // Log the error for debugging
-                    logger()->error('Email verification failed: ' . $e->getMessage());
+            //         // Log the error for debugging
+            //         logger()->error('Email verification failed: ' . $e->getMessage());
 
-                    return $this->errorResponse(
-                        __('validation.email_invalid_or_nonexistent'),
-                        422
-                    );
-                }
-            }
+            //         return $this->errorResponse(
+            //             __('validation.email_invalid_or_nonexistent'),
+            //             422
+            //         );
+            //     }
+            // }
 
             if (isset(request()->fcm_token)) {
                 $user->update([
