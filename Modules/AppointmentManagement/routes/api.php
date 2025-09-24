@@ -7,39 +7,47 @@ use Modules\AppointmentManagement\App\Http\Controllers\Api\VideoCallController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('appointments')
+        ->controller(AppointmentController::class)
         ->name('appointments.')
         ->group(function () {
-
-            Route::post('/', [AppointmentController::class, 'confirmDateTime'])->name('store');
+            Route::post('/', 'confirmDateTime')->name('store');
             // Route::post('/datetime', [AppointmentController::class, 'confirmDateTime']);
-            Route::get('/available-slots', [AppointmentController::class, 'getAvailableSlots']);
-            Route::get('/upcoming', [AppointmentController::class, 'getUpcomingAppointments']);
-            Route::get('/done', [AppointmentController::class, 'getDoneAppointments']);
-            Route::post('/{appointment}', [AppointmentController::class, 'update'])->name('update');
-            Route::post('/{appointment}/cancel', [AppointmentController::class, 'cancel']);
+            Route::get('/available-slots', 'getAvailableSlots');
+            Route::get('/upcoming', 'getUpcomingAppointments');
+            Route::get('/done', 'getDoneAppointments');
+            Route::post('/{appointment}', 'update')->name('update');
+            Route::post('/{appointment}/cancel', 'cancel');
             Route::prefix('/{appointment}/confirm')->group(function () {
-                Route::post('payment', [AppointmentController::class, 'confirmPayment']);
+                Route::post('payment', 'confirmPayment');
             });
             Route::prefix('doctor')
+                ->controller(AppointmentController::class)
+                ->name('doctor.')
                 ->group(function () {
-                    Route::get('/pending', [AppointmentController::class, 'pendingAppointments']);
-                    Route::get('/upcoming', [AppointmentController::class, 'getDoctorUpcomingAppointments']);
-                    Route::get('/done', [AppointmentController::class, 'getDoctorDoneAppointments']);
-                    Route::post('/{appointment}/decide', [AppointmentController::class, 'decideAppointment']);
-                    Route::post('/{appointment}/report', [AppointmentController::class, 'submitReport']);
-                    Route::put('/{appointment}/report', [AppointmentController::class, 'updateReport']);
+                    Route::get('/pending', 'pendingAppointments');
+                    Route::get('/upcoming', 'getDoctorUpcomingAppointments');
+                    Route::get('/done', 'getDoctorDoneAppointments');
+                    Route::post('/{appointment}/decide', 'decideAppointment');
+                    Route::post('/{appointment}/report', 'submitReport');
+                    Route::put('/{appointment}/report', 'updateReport');
                 });
         });
 
-    Route::prefix('video-calls')->group(function () {
-        Route::post('/', [VideoCallController::class, 'store']);
-        Route::get('/start/{appointment}', [VideoCallController::class, 'start']);
-        Route::post('/end/{appointment}', [VideoCallController::class, 'end']);
-        Route::put('/{videoCall}', [VideoCallController::class, 'update']);
-    });
+    Route::prefix('video-calls')
+        ->controller(VideoCallController::class)
+        ->name('video-calls.')
+        ->group(function () {
+            Route::post('/', 'store');
+            Route::get('/start/{appointment}', 'start');
+            Route::post('/end/{appointment}', 'end');
+            Route::put('/{videoCall}', 'update');
+        });
 
-    Route::prefix('home-visit')->group(function () {
-        Route::get('/start/{appointment}', [HomeVisitController::class, 'start']);
-        Route::post('/end/{appointment}', [HomeVisitController::class, 'end']);
-    });
+    Route::prefix('home-visit')
+        ->controller(HomeVisitController::class)
+        ->name('home-visit.')
+        ->group(function () {
+            Route::get('/start/{appointment}', 'start');
+            Route::post('/end/{appointment}', 'end');
+        });
 });

@@ -17,10 +17,9 @@ Route::middleware(['auth:sanctum'])
     });
 
 Route::middleware(['auth:sanctum'])
-    ->prefix('chat')->group(function () {
-        Route::get('/{appointment}', [ChatController::class, 'getChat']);
-        // Route::get('/{receiver}', [ChatController::class, 'getChatMessages']);
-        Route::post('/start/{appointment}', [ChatController::class, 'startChat']);
-        Route::post('/send/{appointment}', [ChatController::class, 'sendMessage']);
-        Route::post('/{sender}/read', [ChatController::class, 'markAsRead']);
+    ->prefix('chat')->controller(ChatController::class)->group(function () {
+        Route::get('/{appointment}', 'getChat');
+        Route::post('/start/{appointment}', 'startChat');
+        Route::post('/send/{appointment}', 'sendMessage');
+        Route::post('/{sender}/read', 'markAsRead');
     });

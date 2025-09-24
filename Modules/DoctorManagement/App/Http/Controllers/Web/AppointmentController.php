@@ -131,22 +131,6 @@ class AppointmentController extends Controller
         return back()->with('success', 'Appointment status updated successfully.');
     }
 
-    private function getTimeRange(Appointment $appointment)
-    {
-        $doctorTimezone = $this->timezoneService->getUserTimezone();
-
-        if ($appointment->start_time && $appointment->end_time) {
-            $timeRange = $appointment->getTimeRangeInTimezone($doctorTimezone, $appointment->patient->timezone);
-
-            return [
-                'start_time' => $timeRange['start_time'] ?? null,
-                'end_time' => $timeRange['end_time'] ?? null,
-            ];
-        }
-
-        return null;
-    }
-
     public function updateTime(Request $request, Appointment $appointment)
     {
         try {
@@ -167,24 +151,6 @@ class AppointmentController extends Controller
             $startCarbon = \Carbon\Carbon::parse($startTime);
             $endTime = $startCarbon->copy()->addMinutes(30)->format('H:i:s');
 
-            // Check if the new time slot is available
-            // if (!$this->doctorAvailabilityService->isSlotAvailable(
-            //     $appointment->doctor->doctorProfile->id,
-            //     $appointment->date->format('Y-m-d'),
-            //     $startTime,
-            //     $endTime,
-            //     $patientTimezone
-            // )) {
-            //     \Log::error('Appointment time slot not available', [
-            //         'appointment_id' => $appointment->id,
-            //         'doctor_id' => $appointment->doctor->id,
-            //         'date' => $appointment->date->format('Y-m-d'),
-            //         'start_time' => $startTime,
-            //         'end_time' => $endTime
-            //     ]);
-            //     return back()->withErrors(['time' => 'The selected time slot is not available.']);
-            // }
-
             $appointment->update([
                 'start_time' => $startTime,
                 'end_time' => $endTime,
@@ -199,5 +165,21 @@ class AppointmentController extends Controller
             ]);
             return back()->withErrors(['error' => 'An error occurred while updating the appointment time.']);
         }
+    }
+
+    private function getTimeRange(Appointment $appointment)
+    {
+        $doctorTimezone = $this->timezoneService->getUserTimezone();
+
+        if ($appointment->start_time && $appointment->end_time) {
+            $timeRange = $appointment->getTimeRangeInTimezone($doctorTimezone, $appointment->patient->timezone);
+
+            return [
+                'start_time' => $timeRange['start_time'] ?? null,
+                'end_time' => $timeRange['end_time'] ?? null,
+            ];
+        }
+
+        return null;
     }
 }

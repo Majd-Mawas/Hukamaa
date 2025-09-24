@@ -38,20 +38,6 @@ class ChatController extends Controller
     }
 
     /**
-     * Get messages for a specific chat
-     */
-    public function getChatMessages(User $receiver): JsonResponse
-    {
-        $user = Auth::user();
-        $messages = $this->chatService->getChatMessages($user->id, $receiver->id);
-
-        return $this->successResponse(
-            ChatMessageResource::collection($messages),
-            'Chat messages retrieved successfully'
-        );
-    }
-
-    /**
      * Start a new chat (only doctors can initiate)
      */
     public function startChat(StartChatRequest $request, Appointment $appointment): JsonResponse
