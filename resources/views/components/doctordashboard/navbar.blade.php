@@ -9,11 +9,6 @@
                 <button type="button" class="sidebar-mobile-toggle d-flex !leading-[0]">
                     <iconify-icon icon="heroicons:bars-3-solid" class="icon !text-[30px]"></iconify-icon>
                 </button>
-                {{-- <form class="navbar-search">
-                    <input type="text" name="search" placeholder="Search">
-                    <iconify-icon icon="ion:search-outline" class="icon"></iconify-icon>
-                </form> --}}
-
             </div>
         </div>
         <div class="col-auto">
@@ -117,18 +112,6 @@
                                     Profile
                                 </a>
                             </li>
-                            {{-- <li>
-                                <a class="text-black px-0 py-2 hover:text-primary-600 flex items-center gap-4" href="{{ route('email') }}">
-                                    <iconify-icon icon="tabler:message-check" class="icon text-xl"></iconify-icon>  Inbox
-                                </a>
-                            </li> --}}
-                            {{-- <li>
-                                <a class="text-black px-0 py-2 hover:text-primary-600 flex items-center gap-4"
-                                    href="{{ route('company') }}">
-                                    <iconify-icon icon="icon-park-outline:setting-two"
-                                        class="icon text-xl"></iconify-icon> Setting
-                                </a>
-                            </li> --}}
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf

@@ -64,12 +64,6 @@
 @endpush
 @section('content')
     <div>
-        {{-- <div class="flex justify-between items-center">
-            <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Doctors Management</h1>
-            <a href="{{ route('admin.doctors.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus mr-2"></i>Add New Doctor
-            </a>
-        </div> --}}
 
         @if (session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
@@ -139,19 +133,11 @@
                                                 {{ $doctor->expertise_focus }}
                                             </div>
                                         </td>
-                                        {{-- <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $doctor->status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                                {{ ucfirst($doctor->status) }}
-                                            </span>
-                                        </td> --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <a href="{{ route('admin.doctors.show', ['doctor' => $doctor->id]) }}"
                                                 class="text-primary-600 hover:text-primary-900 mr-3">View</a>
                                             <button type="button" data-modal-target="editFeesModal{{ $doctor->id }}" data-modal-toggle="editFeesModal{{ $doctor->id }}"
                                                 class="text-blue-600 hover:text-blue-900 mr-3">Edit Fees</button>
-                                            {{-- <a href="{{ route('admin.doctors.edit', ['doctor'=>$doctor->id]) }}"
-                                        class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a> --}}
                                             <form action="{{ route('admin.doctors.destroy', ['doctor' => $doctor->id]) }}"
                                                 method="POST" class="inline">
                                                 @csrf

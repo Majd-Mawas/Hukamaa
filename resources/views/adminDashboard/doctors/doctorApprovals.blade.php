@@ -133,15 +133,6 @@
                                                         type="button">
                                                         <iconify-icon icon="mdi:check"></iconify-icon>
                                                     </button>
-                                                    {{-- <div>
-                                                        <form action="{{ route('admin.doctors.approve', $doctor->id) }}"
-                                                            method="POST" class="d-inline">
-                                                            @csrf
-                                                            <button type="submit" data-bs-toggle="tooltip" title="Approve">
-                                                                <iconify-icon icon="mdi:check"></iconify-icon>
-                                                            </button>
-                                                        </form>
-                                                    </div> --}}
                                                     @if ($doctor->status == 'pending')
                                                         <div>
                                                             <form action="{{ route('admin.doctors.reject', $doctor->id) }}"
@@ -297,11 +288,6 @@
                                                                     max="100" name="commission_percent">
                                                             </div>
                                                         </div>
-
-                                                        {{-- <button type="submit" data-bs-toggle="tooltip" title="Approve">
-                                                            <iconify-icon icon="mdi:check"></iconify-icon>
-                                                        </button> --}}
-
                                                         <!-- Modal footer -->
                                                         <div
                                                             class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
@@ -321,9 +307,6 @@
                 </div>
             </div>
         @endif
-        {{-- </div>
-                </div>
-            </div> --}}
     </div>
 
 @endsection

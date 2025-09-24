@@ -53,7 +53,6 @@
                                             {{ $appointment->patient->name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                             {{ $appointment->date->format('M d, Y') }}</td>
-                                        {{-- @dd($appointment->time_range['start_time_doctor']) --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                             {{ \Carbon\Carbon::parse($appointment?->time_range['start_time'] ?? null)->format('h:i A') }}
                                             -

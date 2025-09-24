@@ -207,31 +207,9 @@
                         <div class="card-header">
                             <div class="flex items-center gap-2 justify-between">
                                 <h6 class="mb-0 font-bold text-lg">Earning Statistic</h6>
-                                {{-- <select
-                                    class="form-select form-select-sm w-auto bg-base border border-neutral-600/25 text-gray-600 dark:text-white dark:bg-gray-800 !pe-7">
-                                    <option>This Month</option>
-                                    <option>This Week</option>
-                                    <option>This Year</option>
-                                </select> --}}
                             </div>
                         </div>
                         <div class="card-body p-1.5">
-                            {{-- <ul class="flex flex-wrap items-center justify-center my-3 gap-3">
-                                <li class="flex items-center gap-2">
-                                    <span class="w-3 h-2 rounded-[50rem] bg-primary-600"></span>
-                                    <span class="text-gray-600 text-sm font-semibold">
-                                        New Patient:
-                                        <span class="text-gray-900 font-bold">50</span>
-                                    </span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <span class="w-3 h-2 rounded-[50rem] bg-warning-600"></span>
-                                    <span class="text-gray-600 text-sm font-semibold">
-                                        Old Patient:
-                                        <span class="text-gray-900 font-bold"> 500</span>
-                                    </span>
-                                </li>
-                            </ul> --}}
                             <div id="enrollmentChart" class="apexcharts-tooltip-style-1 apexcharts-yaxis"></div>
                         </div>
                     </div>
@@ -347,7 +325,6 @@
                                     <thead>
                                         <tr>
                                             <th scope="col" class="bg-transparent rounded-0">ID</th>
-                                            {{-- <th scope="col" class="bg-transparent rounded-0">Description</th> --}}
                                             <th scope="col" class="bg-transparent rounded-0">Date & Time</th>
                                             <th scope="col" class="bg-transparent rounded-0">Status</th>
                                         </tr>
@@ -359,7 +336,6 @@
                                         @foreach ($stats->appointment as $appointment)
                                             <tr>
                                                 <td>#{{ $appointment->id }}</td>
-                                                {{-- <td>{{ $appointment->description }}</td> --}}
                                                 <td>{{ \Carbon\Carbon::parse($appointment->date)->format('d M Y') }}
                                                     {{ \Carbon\Carbon::parse($appointment->start_time)->format('H:i') }} -
                                                     {{ \Carbon\Carbon::parse($appointment->end_time)->format('H:i') }}

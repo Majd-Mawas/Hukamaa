@@ -12,17 +12,6 @@
         </div>
         <div class="card-body">
             <div class="row">
-                {{-- <div class="col-md-4 text-center mb-4">
-                    @if ($doctor->getFirstMediaUrl('profile_picture'))
-                        <img src="{{ $doctor->getFirstMediaUrl('profile_picture') }}" alt="{{ $doctor->user->name }}"
-                            class="img-fluid rounded-circle" style="max-width: 200px">
-                    @else
-                        <div class="bg-secondary rounded-circle d-inline-flex align-items-center justify-content-center"
-                            style="width: 200px; height: 200px">
-                            <iconify-icon icon="solar:user-outline" style="font-size: 5em; color: white;"></iconify-icon>
-                        </div>
-                    @endif
-                </div> --}}
                 <div class="col-md-8">
                     <table class="table">
                         <tr>
@@ -100,25 +89,6 @@
                         <div
                             class="hover-scale-img border border-neutral-200 dark:border-neutral-600 rounded-2xl overflow-hidden">
                             <div class="max-h-[266px] overflow-hidden">
-                                {{-- @if (in_array($document->mime_type, ['image/jpeg', 'image/png', 'image/gif']))
-                                    <div class="h-[266px] flex items-center justify-center bg-light">
-                                        <iconify-icon icon="ph:image" class="text-primary"
-                                            style="font-size: 64px;"></iconify-icon>
-                                    </div>
-                                @else
-                                    <div class="h-[266px] flex items-center justify-center bg-light">
-                                        @if (str_contains($document->mime_type, 'pdf'))
-                                            <iconify-icon icon="ph:file-pdf" class="text-danger"
-                                                style="font-size: 64px;"></iconify-icon>
-                                        @elseif(str_contains($document->mime_type, 'word'))
-                                            <iconify-icon icon="ph:file-doc" class="text-primary"
-                                                style="font-size: 64px;"></iconify-icon>
-                                        @else
-                                            <iconify-icon icon="ph:file" class="text-secondary"
-                                                style="font-size: 64px;"></iconify-icon>
-                                        @endif
-                                    </div>
-                                @endif --}}
                             </div>
                             <div class="py-4 px-6">
                                 <h6 class="mb-1.5">Identity Document</h6>
@@ -137,28 +107,6 @@
                         <div
                             class="hover-scale-img border border-neutral-200 dark:border-neutral-600 rounded-2xl overflow-hidden">
                             <div class="max-h-[266px] overflow-hidden">
-                                {{-- @if (in_array($document->mime_type, ['image/jpeg', 'image/png', 'image/gif']))
-                                    <img src="{{ $document->getUrl() }}" alt="Practice License" class="hover-scale-img__img w-full h-full object-cover">
-                                @else --}}
-                                {{-- @if (in_array($document->mime_type, ['image/jpeg', 'image/png', 'image/gif']))
-                                    <div class="h-[266px] flex items-center justify-center bg-light">
-                                        <iconify-icon icon="ph:image" class="text-primary"
-                                            style="font-size: 64px;"></iconify-icon>
-                                    </div>
-                                @else
-                                    <div class="h-[266px] flex items-center justify-center bg-light">
-                                        @if (str_contains($document->mime_type, 'pdf'))
-                                            <iconify-icon icon="ph:file-pdf" class="text-danger"
-                                                style="font-size: 64px;"></iconify-icon>
-                                        @elseif(str_contains($document->mime_type, 'word'))
-                                            <iconify-icon icon="ph:file-doc" class="text-primary"
-                                                style="font-size: 64px;"></iconify-icon>
-                                        @else
-                                            <iconify-icon icon="ph:file" class="text-secondary"
-                                                style="font-size: 64px;"></iconify-icon>
-                                        @endif
-                                    </div>
-                                @endif --}}
                             </div>
                             <div class="py-4 px-6">
                                 <h6 class="mb-1.5">Practice License</h6>
@@ -177,29 +125,6 @@
                         <div
                             class="hover-scale-img border border-neutral-200 dark:border-neutral-600 rounded-2xl overflow-hidden">
                             <div class="max-h-[266px] overflow-hidden">
-                                {{-- @if (in_array($document->mime_type, ['image/jpeg', 'image/png', 'image/gif']))
-                                    <img src="{{ $document->getUrl() }}" alt="Medical Certificate"
-                                        class="hover-scale-img__img w-full h-full object-cover">
-                                @else --}}
-                                {{-- @if (in_array($document->mime_type, ['image/jpeg', 'image/png', 'image/gif']))
-                                    <div class="h-[266px] flex items-center justify-center bg-light">
-                                        <iconify-icon icon="ph:image" class="text-primary"
-                                            style="font-size: 64px;"></iconify-icon>
-                                    </div>
-                                @else
-                                    <div class="h-[266px] flex items-center justify-center bg-light">
-                                        @if (str_contains($document->mime_type, 'pdf'))
-                                            <iconify-icon icon="ph:file-pdf" class="text-danger"
-                                                style="font-size: 64px;"></iconify-icon>
-                                        @elseif(str_contains($document->mime_type, 'word'))
-                                            <iconify-icon icon="ph:file-doc" class="text-primary"
-                                                style="font-size: 64px;"></iconify-icon>
-                                        @else
-                                            <iconify-icon icon="ph:file" class="text-secondary"
-                                                style="font-size: 64px;"></iconify-icon>
-                                        @endif
-                                    </div>
-                                @endif --}}
                             </div>
                             <div class="py-4 px-6">
                                 <h6 class="mb-1.5">Medical Certificate</h6>
@@ -217,7 +142,6 @@
 
             <div class="text-end mt-4">
                 <a href="{{ route('admin.doctors.index') }}" class="btn btn-secondary">Back to List</a>
-                {{-- <a href="{{ route('admin.doctors.edit', $doctor) }}" class="btn btn-warning">Edit Doctor</a> --}}
             </div>
         </div>
     </div>

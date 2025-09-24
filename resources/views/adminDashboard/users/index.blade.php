@@ -26,9 +26,6 @@
                     <div class="card-header">
                         <div class="flex justify-between items-center">
                             <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Users</h2>
-                            {{-- <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
-                                <i class="fas fa-plus mr-2"></i>Add New User
-                            </a> --}}
                         </div>
                     </div>
                     <div class="card-body">

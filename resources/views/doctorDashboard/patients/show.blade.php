@@ -137,10 +137,6 @@
                                             <iconify-icon icon="solar:file-linear"
                                                 class="text-gray-500 text-xl mr-2"></iconify-icon>
                                         @endif
-                                        {{-- <span class="text-gray-900 dark:text-white font-medium truncate max-w-[200px]"
-                                            title="{{ $file->file_name }}">
-                                            {{ $file->file_name }}
-                                        </span> --}}
                                     </div>
                                 </div>
 
@@ -160,12 +156,6 @@
                                     </a>
                                 </div>
 
-                                {{-- @if (in_array($file->mime_type, ['image/jpeg', 'image/png', 'image/gif']))
-                                    <div class="mt-3">
-                                        <img src="{{ $file->getUrl() }}" alt="{{ $file->file_name }}"
-                                            class="rounded-md w-full h-32 object-cover">
-                                    </div>
-                                @endif --}}
                             </div>
                         @endforeach
                     </div>

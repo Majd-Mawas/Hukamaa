@@ -236,34 +236,5 @@
                 </div>
             </div>
         @endif
-
-        <!-- Update Status Form -->
-        {{-- <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-            <div class="p-6">
-                <h2 class="text-xl font-semibold mb-4 dark:text-white">Update Appointment Status</h2>
-                <form action="{{ route('admin.appointments.update-status', $appointment) }}" method="POST">
-                    @csrf
-                    <div class="mb-4">
-                        <label for="status"
-                            class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status</label>
-                        <select id="status" name="status"
-                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                            @foreach (\Modules\AppointmentManagement\App\Enums\AppointmentStatus::cases() as $status)
-                                <option value="{{ $status->value }}"
-                                    {{ $appointment->status === $status ? 'selected' : '' }}>
-                                    {{ $status->label() }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="flex justify-end">
-                        <button type="submit"
-                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Update Status
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div> --}}
     </div>
 @endsection

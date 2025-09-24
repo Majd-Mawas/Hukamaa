@@ -148,7 +148,6 @@
                 </div>
             </div>
         </div>
-        {{-- </div> --}}
 
         <!-- Create Allergy Modal -->
         <div id="createAllergiesModal" tabindex="-1" aria-hidden="true"

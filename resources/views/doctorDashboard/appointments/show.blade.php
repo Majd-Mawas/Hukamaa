@@ -197,134 +197,36 @@
         @endif
 
         <!-- Payment Invoice -->
-        {{-- @if ($appointment->payment_invoice)
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden mb-6">
-                <div class="p-6">
-                    <h2 class="text-xl font-semibold mb-4 dark:text-white">Payment Invoice</h2>
-                    <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3 gap-2">
-                                <div class="flex-shrink-0">
-                                    <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                                        </path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">
-                                        {{ $appointment->payment_invoice->human_readable_size }}
-                                    </p>
-                                    <p class="text-xs text-gray-400 dark:text-gray-500">
-                                        {{ $appointment->payment_invoice->created_at->format('M d, Y h:i A') }}
-                                    </p>
-                                </div>
-                            </div>
-                            <a href="{{ $appointment->payment_invoice->getUrl() }}" target="_blank"
-                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                                    </path>
-                                </svg>
-                                Download Invoice
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif --}}
-
-        <!-- Update Status Form -->
-        {{-- <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-            <div class="p-6">
-                <h2 class="text-xl font-semibold mb-4 dark:text-white">Update Appointment Status</h2>
-                <form action="{{ route('admin.appointments.update-status', $appointment) }}" method="POST">
-                    @csrf
-                    <div class="mb-4">
-                        <label for="status"
-                            class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status</label>
-                        <select id="status" name="status"
-                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                            @foreach (\Modules\AppointmentManagement\App\Enums\AppointmentStatus::cases() as $status)
-                                <option value="{{ $status->value }}"
-                                    {{ $appointment->status === $status ? 'selected' : '' }}>
-                                    {{ $status->label() }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="flex justify-end">
-                        <button type="submit"
-                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Update Status
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div> --}}
-
         <!-- Update Appointment Time Form (Only for SCHEDULED appointments) -->
         @if ($appointment->status === \Modules\AppointmentManagement\App\Enums\AppointmentStatus::SCHEDULED)
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden mb-6">
-            <div class="p-6">
-                <h2 class="text-xl font-semibold mb-4 dark:text-white">Update Appointment Time</h2>
-                <form action="{{ route('doctor.appointments.update-time', $appointment) }}" method="POST">
-                    @csrf
-                    <div class="grid grid-cols-1 gap-6 mb-4">
-                        <div>
-                            <label for="start_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Start Time</label>
-                            <input type="time" id="start_time" name="start_time"
-                                value="{{ \Carbon\Carbon::parse($appointment->time_range['start_time'])->format('H:i') }}"
-                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                            <p class="text-xs text-gray-500 mt-1">Time shown in your timezone ({{ Auth::user()->timezone }})</p>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden mb-6">
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold mb-4 dark:text-white">Update Appointment Time</h2>
+                    <form action="{{ route('doctor.appointments.update-time', $appointment) }}" method="POST">
+                        @csrf
+                        <div class="grid grid-cols-1 gap-6 mb-4">
+                            <div>
+                                <label for="start_time"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Start
+                                    Time</label>
+                                <input type="time" id="start_time" name="start_time"
+                                    value="{{ \Carbon\Carbon::parse($appointment->time_range['start_time'])->format('H:i') }}"
+                                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                <p class="text-xs text-gray-500 mt-1">Time shown in your timezone
+                                    ({{ Auth::user()->timezone }})</p>
+                            </div>
                         </div>
-                        {{-- <div>
-                            <label for="end_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">End Time</label>
-                            <input type="time" id="end_time" name="end_time"
-                                value="{{ \Carbon\Carbon::parse($appointment->time_range['end_time'])->format('H:i') }}"
-                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                            <p class="text-xs text-gray-500 mt-1">Time shown in your timezone ({{ Auth::user()->timezone }})</p>
-                        </div> --}}
-                    </div>
-                    <div class="flex justify-end">
-                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Update Appointment Time
-                        </button>
-                    </div>
-                </form>
+                        <div class="flex justify-end">
+                            <button type="submit"
+                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                Update Appointment Time
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
         @endif
 
         <!-- Rest of the existing content -->
-        {{-- <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-            <div class="p-6">
-                <h2 class="text-xl font-semibold mb-4 dark:text-white">Update Appointment Status</h2>
-                <form action="{{ route('admin.appointments.update-status', $appointment) }}" method="POST">
-                    @csrf
-                    <div class="mb-4">
-                        <label for="status"
-                            class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status</label>
-                        <select id="status" name="status"
-                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                            @foreach (\Modules\AppointmentManagement\App\Enums\AppointmentStatus::cases() as $status)
-                                <option value="{{ $status->value }}"
-                                    {{ $appointment->status === $status ? 'selected' : '' }}>
-                                    {{ $status->label() }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="flex justify-end">
-                        <button type="submit"
-                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Update Status
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div> --}}
     </div>
 @endsection
